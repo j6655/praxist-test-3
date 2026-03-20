@@ -1,40 +1,3 @@
-{
-  "name": "philo-app",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^5.0.0"
-  }
-}
-
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-})
-
-{
-  "name": "ΦΙΛΟ",
-  "short_name": "ΦΙΛΟ",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0A0A0A",
-  "theme_color": "#0A0A0A",
-  "description": "Philosophy for your everyday."
-}
-
 import React, { useState, useEffect, useRef } from "react";
 
 // ============================================================
@@ -74,7 +37,7 @@ const themes = {
 };
 
 // ============================================================
-// ONBOARDING QUESTIONS (updated with age group)
+// ONBOARDING QUESTIONS
 // ============================================================
 const onboardingQuestions = [
   {
@@ -228,7 +191,6 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
 
   const getSelectedAge = () => MIN_AGE + Math.round(clamp(offsetRef.current, 0, maxOffset) / ITEM_HEIGHT);
 
-  // Momentum + snap animation
   const animate = () => {
     let vel = velocityRef.current;
     const friction = 0.92;
@@ -239,7 +201,6 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
       offsetRef.current = clamp(offsetRef.current + vel, 0, maxOffset);
 
       if (Math.abs(vel) < threshold) {
-        // Snap to nearest
         const target = snap(offsetRef.current);
         const diff = target - offsetRef.current;
         if (Math.abs(diff) > 0.5) {
@@ -283,7 +244,6 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
     animate();
   };
 
-  // Handle wheel
   const handleWheel = (e) => {
     e.preventDefault();
     if (animRef.current) cancelAnimationFrame(animRef.current);
@@ -297,14 +257,12 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
     }, 100);
   };
 
-  // Init position
   useEffect(() => {
     offsetRef.current = (value - MIN_AGE) * ITEM_HEIGHT;
     forceRender((n) => n + 1);
   }, []);
 
   const currentOffset = offsetRef.current;
-  const centerIdx = Math.round(currentOffset / ITEM_HEIGHT);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px 0" }}>
@@ -316,7 +274,6 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
       >
-        {/* Selection highlight band */}
         <div style={{
           position: "absolute", top: ITEM_HEIGHT * 2, left: 0, right: 0, height: ITEM_HEIGHT,
           background: mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
@@ -325,8 +282,6 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
           borderRadius: "8px",
           pointerEvents: "none", zIndex: 1,
         }} />
-
-        {/* Fade overlays */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: ITEM_HEIGHT * 2,
           background: `linear-gradient(to bottom, ${t.bg}, ${t.bg}00)`,
@@ -337,12 +292,7 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
           background: `linear-gradient(to top, ${t.bg}, ${t.bg}00)`,
           pointerEvents: "none", zIndex: 2,
         }} />
-
-        {/* Items */}
-        <div style={{
-          transform: `translateY(${ITEM_HEIGHT * 2 - currentOffset}px)`,
-          transition: scrollingRef.current ? "none" : undefined,
-        }}>
+        <div style={{ transform: `translateY(${ITEM_HEIGHT * 2 - currentOffset}px)` }}>
           {Array.from({ length: totalItems }, (_, i) => {
             const age = MIN_AGE + i;
             const distFromCenter = Math.abs(i - currentOffset / ITEM_HEIGHT);
@@ -369,7 +319,7 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
 }
 
 // ============================================================
-// CONFETTI CELEBRATION
+// CONFETTI
 // ============================================================
 function Confetti({ active, theme: t }) {
   const [particles, setParticles] = useState([]);
@@ -433,7 +383,7 @@ function CelebrationBanner({ active, theme: t }) {
 }
 
 // ============================================================
-// SCROLLABLE PHILOSOPHER LIST WITH FADE
+// SCROLLABLE PHILOSOPHER LIST
 // ============================================================
 function ScrollPhilosopherList({ options, selected, onSelect, theme: t, mode }) {
   const scrollRef = useRef(null);
@@ -463,14 +413,12 @@ function ScrollPhilosopherList({ options, selected, onSelect, theme: t, mode }) 
         let translateY = 0;
         let scale = 1;
 
-        // Top fade — only when not at top
         if (!atTop && itemCenter < containerTop + fadeZone) {
           const pct = Math.max(0, (itemCenter - containerTop) / fadeZone);
           opacity = pct * pct;
           translateY = (1 - pct) * -8;
           scale = 0.96 + pct * 0.04;
         }
-        // Bottom fade — only when not at bottom
         if (!atBottom && itemCenter > containerBottom - fadeZone) {
           const pct = Math.max(0, (containerBottom - itemCenter) / fadeZone);
           opacity = pct * pct;
@@ -490,7 +438,6 @@ function ScrollPhilosopherList({ options, selected, onSelect, theme: t, mode }) 
 
   return (
     <div style={{ position: "relative", flex: 1, marginBottom: "8px", minHeight: 0, overflow: "hidden" }}>
-      {/* Top fade overlay — hidden at top */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: "60px",
         background: `linear-gradient(to bottom, ${t.bg}, ${t.bg}00)`,
@@ -498,7 +445,6 @@ function ScrollPhilosopherList({ options, selected, onSelect, theme: t, mode }) 
         opacity: scrollPos.atTop ? 0 : 1,
         transition: "opacity 0.25s ease",
       }} />
-      {/* Bottom fade overlay — hidden at bottom */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0, height: "60px",
         background: `linear-gradient(to top, ${t.bg}, ${t.bg}00)`,
@@ -506,7 +452,6 @@ function ScrollPhilosopherList({ options, selected, onSelect, theme: t, mode }) 
         opacity: scrollPos.atBottom ? 0 : 1,
         transition: "opacity 0.25s ease",
       }} />
-
       <div ref={scrollRef} style={{
         height: "100%", overflowY: "scroll", paddingTop: "8px", paddingBottom: "8px",
         WebkitOverflowScrolling: "touch",
@@ -560,7 +505,7 @@ export default function PhiloApp() {
   const [showIntro, setShowIntro] = useState(true);
   const [introStep, setIntroStep] = useState(0);
   const [introExiting, setIntroExiting] = useState(false);
-  const [screen, setScreen] = useState("onboarding"); // onboarding | home
+  const [screen, setScreen] = useState("onboarding");
   const [activeTab, setActiveTab] = useState("read");
   const [fontChoice, setFontChoice] = useState("nunito");
   const [showFontPicker, setShowFontPicker] = useState(false);
@@ -586,14 +531,11 @@ export default function PhiloApp() {
   };
   const [weekTasks, setWeekTasks] = useState(initWeekTasks);
   const [selectedTaskDay, setSelectedTaskDay] = useState(weekDays[new Date().getDay()]);
-
-  // Screen time state
   const [selectedDay, setSelectedDay] = useState("Wed");
 
   const t = themes[mode];
   const rf = fontOptions.find((f) => f.id === fontChoice)?.family || "'Nunito', sans-serif";
 
-  // Day accent colors
   const dayColors = {
     dark: {
       Sun: { bg: "#1C1917", border: "#3D2E1E", dot: "#D4A574" },
@@ -615,7 +557,6 @@ export default function PhiloApp() {
     },
   };
 
-  // ---- ONBOARDING ----
   const handleOnboardingSelect = (label) => {
     const q = onboardingQuestions[onboardingStep];
     const current = onboardingAnswers[q.id] || [];
@@ -632,8 +573,6 @@ export default function PhiloApp() {
 
   const onboardingNext = () => {
     const q = onboardingQuestions[onboardingStep];
-
-    // Handle age input on last question
     if (q.isAgeInput) {
       const age = parseInt(ageInput);
       if (!age || age < 1 || age > 100) return;
@@ -642,32 +581,27 @@ export default function PhiloApp() {
       setScreen("home");
       return;
     }
-
     const sel = onboardingAnswers[q.id] || [];
     if (sel.length === 0) return;
-
     if (onboardingStep < onboardingQuestions.length - 1) {
       setOnboardingStep(onboardingStep + 1);
     }
   };
 
-  // ---- WEEKLY TASKS ----
   const updateTaskText = (day, taskId, text) => {
     setWeekTasks({
       ...weekTasks,
-      [day]: weekTasks[day].map((t) => (t.id === taskId ? { ...t, text } : t)),
+      [day]: weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, text } : tk)),
     });
   };
 
   const [celebrating, setCelebrating] = useState(false);
 
   const toggleTask = (day, taskId) => {
-    const newTasks = weekTasks[day].map((t) => (t.id === taskId ? { ...t, done: !t.done } : t));
+    const newTasks = weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, done: !tk.done } : tk));
     setWeekTasks({ ...weekTasks, [day]: newTasks });
-    
-    // Check if all tasks with text are now done
-    const withText = newTasks.filter((t) => t.text.trim());
-    if (withText.length > 0 && withText.every((t) => t.done)) {
+    const withText = newTasks.filter((tk) => tk.text.trim());
+    if (withText.length > 0 && withText.every((tk) => tk.done)) {
       setCelebrating(true);
       setTimeout(() => setCelebrating(false), 2500);
     }
@@ -681,39 +615,21 @@ export default function PhiloApp() {
   };
 
   const deleteTask = (day, taskId) => {
-    const tasks = weekTasks[day].filter((t) => t.id !== taskId);
+    const tasks = weekTasks[day].filter((tk) => tk.id !== taskId);
     setWeekTasks({ ...weekTasks, [day]: tasks });
   };
 
   const todayKey = weekDays[new Date().getDay()];
-  const totalTasks = Object.values(weekTasks).flat().filter((t) => t.text.trim()).length;
-  const totalDone = Object.values(weekTasks).flat().filter((t) => t.text.trim() && t.done).length;
-
-  // ---- RENDER ----
+  const totalTasks = Object.values(weekTasks).flat().filter((tk) => tk.text.trim()).length;
+  const totalDone = Object.values(weekTasks).flat().filter((tk) => tk.text.trim() && tk.done).length;
 
   // INTRO SLIDES
   if (screen === "onboarding" && !onboardingDone && showIntro) {
     const slides = [
-      {
-        icon: "📖",
-        title: "📖 Daily Readings",
-        desc: "One passage a day from the greatest thinkers. Short enough to read in a minute.",
-      },
-      {
-        icon: "✅",
-        title: "✅ Daily Tasks",
-        desc: "Set goals for each day of the week. Check them off. Build momentum.",
-      },
-      {
-        icon: "📱",
-        title: "📱 Screen Time",
-        desc: "See where your hours actually go. Less scrolling, more living.",
-      },
-      {
-        icon: "⏳",
-        title: "⏳ Your Life in Years",
-        desc: "A dot for every year. See how much is left. Make it count.",
-      },
+      { icon: "📖", title: "📖 Daily Readings", desc: "One passage a day from the greatest thinkers. Short enough to read in a minute." },
+      { icon: "✅", title: "✅ Daily Tasks", desc: "Set goals for each day of the week. Check them off. Build momentum." },
+      { icon: "📱", title: "📱 Screen Time", desc: "See where your hours actually go. Less scrolling, more living." },
+      { icon: "⏳", title: "⏳ Your Life in Years", desc: "A dot for every year. See how much is left. Make it count." },
     ];
     const slide = slides[introStep];
     const isLast = introStep === slides.length - 1;
@@ -721,83 +637,61 @@ export default function PhiloApp() {
     return (
       <div style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", position: "relative", overflow: "hidden", maxWidth: "520px", margin: "0 auto" }}>
         <style>{globalCSS}</style>
-
-        {/* Intro slide content */}
-        <div style={{
-          display: "flex", flexDirection: "column", padding: "24px",
-          minHeight: "100vh", position: "relative",
-          background: t.bg,
-        }}>
-
-        {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>ΦΙΛΟ</span>
-          <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
-            background: "transparent", border: `1px solid ${t.borderLight}`, color: t.textMuted,
-            padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
-            fontFamily: "'DM Sans', sans-serif", fontWeight: 400, letterSpacing: "0.5px",
-          }}>Skip</button>
-        </div>
-
-        {/* Slide content */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "0 16px" }}>
-          <div key={introStep} style={{ animation: "fadeUp 0.35s ease forwards" }}>
-            <span style={{ fontSize: "64px", display: "block", marginBottom: "28px", opacity: 0.6 }}>{slide.icon}</span>
-            <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "30px", fontWeight: 800, margin: "0 0 12px", lineHeight: 1.2 }}>{slide.title}</h1>
-            <p style={{ fontSize: "15px", color: t.textSecondary, margin: 0, fontWeight: 300, lineHeight: 1.6, maxWidth: "300px" }}>{slide.desc}</p>
+        <div style={{ display: "flex", flexDirection: "column", padding: "24px", minHeight: "100vh", position: "relative", background: t.bg }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>ΦΙΛΟ</span>
+            <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
+              background: "transparent", border: `1px solid ${t.borderLight}`, color: t.textMuted,
+              padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 400, letterSpacing: "0.5px",
+            }}>Skip</button>
           </div>
-        </div>
-
-        {/* Dots */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "28px" }}>
-          {slides.map((_, i) => (
-            <div key={i} style={{
-              width: i === introStep ? "24px" : "8px", height: "8px",
-              borderRadius: "4px",
-              background: i === introStep ? t.accent : t.borderLight,
-              transition: "all 0.3s ease",
-            }} />
-          ))}
-        </div>
-
-        {/* Buttons */}
-        <div style={{ display: "flex", gap: "12px", paddingBottom: "16px" }}>
-          {introStep > 0 && (
-            <button
-              onClick={() => setIntroStep(introStep - 1)}
-              style={{
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "0 16px" }}>
+            <div key={introStep} style={{ animation: "fadeUp 0.35s ease forwards" }}>
+              <span style={{ fontSize: "64px", display: "block", marginBottom: "28px", opacity: 0.6 }}>{slide.icon}</span>
+              <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "30px", fontWeight: 800, margin: "0 0 12px", lineHeight: 1.2 }}>{slide.title}</h1>
+              <p style={{ fontSize: "15px", color: t.textSecondary, margin: 0, fontWeight: 300, lineHeight: 1.6, maxWidth: "300px" }}>{slide.desc}</p>
+            </div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "28px" }}>
+            {slides.map((_, i) => (
+              <div key={i} style={{
+                width: i === introStep ? "24px" : "8px", height: "8px", borderRadius: "4px",
+                background: i === introStep ? t.accent : t.borderLight,
+                transition: "all 0.3s ease",
+              }} />
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: "12px", paddingBottom: "16px" }}>
+            {introStep > 0 && (
+              <button onClick={() => setIntroStep(introStep - 1)} style={{
                 width: "52px", height: "52px", borderRadius: "50%",
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text, fontSize: "18px", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
+              }}>←</button>
+            )}
+            <button
+              className="btn-continue"
+              onPointerDown={() => setBtnPressed("intro")}
+              onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
+              onPointerLeave={() => setBtnPressed(false)}
+              onClick={() => {
+                if (isLast) { setIntroExiting(true); setShowIntro(false); setTimeout(() => setIntroExiting(false), 500); }
+                else { setIntroStep(introStep + 1); }
               }}
-            >←</button>
-          )}
-          <button
-            className="btn-continue"
-            onPointerDown={() => setBtnPressed("intro")}
-            onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
-            onPointerLeave={() => setBtnPressed(false)}
-            onClick={() => {
-              if (isLast) {
-                setIntroExiting(true);
-                setShowIntro(false); // immediately show real onboarding behind
-                setTimeout(() => { setIntroExiting(false); }, 500);
-              }
-              else { setIntroStep(introStep + 1); }
-            }}
-            style={{
-              flex: 1, padding: "16px", background: t.accentBg, border: "none", borderRadius: "32px",
-              color: t.accentText, fontSize: "15px", fontWeight: 700, cursor: "pointer",
-              fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px",
-              transform: btnPressed === "intro" ? "translateY(4px) scale(0.97)" : "translateY(0) scale(1)",
-              boxShadow: btnPressed === "intro"
-                ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
-                : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
-              transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease",
-            }}
-          >{isLast ? "Get Started" : "Next"}</button>
-        </div>
+              style={{
+                flex: 1, padding: "16px", background: t.accentBg, border: "none", borderRadius: "32px",
+                color: t.accentText, fontSize: "15px", fontWeight: 700, cursor: "pointer",
+                fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px",
+                transform: btnPressed === "intro" ? "translateY(4px) scale(0.97)" : "translateY(0) scale(1)",
+                boxShadow: btnPressed === "intro"
+                  ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
+                  : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
+                transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease",
+              }}
+            >{isLast ? "Get Started" : "Next"}</button>
+          </div>
         </div>
       </div>
     );
@@ -813,8 +707,6 @@ export default function PhiloApp() {
     return (
       <div style={{ height: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", padding: "24px", maxWidth: "520px", margin: "0 auto", overflow: "hidden", position: "relative" }}>
         <style>{globalCSS}</style>
-
-        {/* Falling intro overlay */}
         {introExiting && (
           <div style={{
             position: "fixed", top: 0, left: "50%",
@@ -849,7 +741,6 @@ export default function PhiloApp() {
         {q.multi && <p style={{ fontSize: "11px", color: t.textMuted, margin: "0 0 10px", textTransform: "uppercase", letterSpacing: "2px", flexShrink: 0 }}>Select all that apply</p>}
         {!q.multi && !q.isAgeInput && <div style={{ height: "20px", flexShrink: 0 }} />}
 
-        {/* Age input for last question */}
         {q.isAgeInput ? (
           <div style={{ marginTop: "16px" }}>
             <AgeScrollPicker value={parseInt(ageInput) || 22} onChange={(v) => setAgeInput(String(v))} theme={t} mode={mode} />
@@ -883,8 +774,7 @@ export default function PhiloApp() {
             className="btn-back"
             style={{
               background: "transparent", border: `1px solid ${t.borderLight}`, color: t.text,
-              width: "48px", height: "48px", borderRadius: "50%", fontSize: "18px",
-              cursor: "pointer",
+              width: "48px", height: "48px", borderRadius: "50%", fontSize: "18px", cursor: "pointer",
               opacity: 1, display: "flex", alignItems: "center", justifyContent: "center",
               transform: btnPressed === "back" ? "translateY(3px) scale(0.95)" : "translateY(0) scale(1)",
               boxShadow: btnPressed === "back"
@@ -898,13 +788,7 @@ export default function PhiloApp() {
             return (
               <button
                 onPointerDown={() => { if (canProceed) setBtnPressed("next"); }}
-                onPointerUp={() => {
-                  setBtnPressed(false);
-                  if (canProceed) {
-                    setBtnBounce(true);
-                    setTimeout(() => setBtnBounce(false), 250);
-                  }
-                }}
+                onPointerUp={() => { setBtnPressed(false); if (canProceed) { setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); } }}
                 onPointerLeave={() => setBtnPressed(false)}
                 onClick={onboardingNext}
                 className={`btn-continue ${btnBounce ? "btn-bounce" : ""}`}
@@ -914,16 +798,11 @@ export default function PhiloApp() {
                   cursor: !canProceed ? "default" : "pointer",
                   opacity: !canProceed ? 0.3 : 1,
                   fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.5px",
-                  transform: btnPressed === "next"
-                    ? "translateY(4px) scale(0.97)"
-                    : "translateY(0) scale(1)",
-                  boxShadow: !canProceed
-                    ? "none"
-                    : btnPressed === "next"
-                      ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
-                      : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}, 0 2px 4px ${mode === "dark" ? "rgba(245,245,240,0.04)" : "rgba(0,0,0,0.06)"}`,
+                  transform: btnPressed === "next" ? "translateY(4px) scale(0.97)" : "translateY(0) scale(1)",
+                  boxShadow: !canProceed ? "none" : btnPressed === "next"
+                    ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
+                    : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
                   transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease",
-                  position: "relative",
                 }}
               >{onboardingStep === onboardingQuestions.length - 1 ? "Get Started" : "Continue"}</button>
             );
@@ -938,7 +817,6 @@ export default function PhiloApp() {
     <div style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", maxWidth: "520px", margin: "0 auto" }}>
       <style>{globalCSS}</style>
 
-      {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 24px 12px" }}>
         <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>ΦΙΛΟ</span>
         <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{
@@ -948,9 +826,9 @@ export default function PhiloApp() {
         }}>{mode === "dark" ? "☀" : "☾"}</button>
       </div>
 
-      {/* Content area */}
       <div style={{ flex: 1, overflow: "auto", padding: "0 24px 100px" }}>
-        {/* ---- DAILY READING TAB ---- */}
+
+        {/* DAILY READING TAB */}
         {activeTab === "read" && (
           <div>
             <div style={{ margin: "16px 0 24px" }}>
@@ -958,7 +836,6 @@ export default function PhiloApp() {
               <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>March 19 — Day 7 streak ◆</p>
             </div>
             <div style={{ position: "relative", padding: "24px", border: `1px solid ${t.border}`, borderRadius: "8px", marginBottom: "8px", background: t.card, boxShadow: t.shadow }}>
-              {/* Small font button */}
               <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
                 position: "absolute", top: "10px", right: "10px",
                 background: "transparent", border: `1px solid ${t.borderLight}`,
@@ -974,20 +851,17 @@ export default function PhiloApp() {
                 color: t.textSecondary, margin: 0,
                 fontStyle: fontChoice === "cormorant" ? "italic" : "normal",
               }}>
-                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "36px" : "28px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>The example of my grandfather Verus gave me a good disposition, not prone to anger. By the recollection of my father's character, I learned to be both modest and manly.<span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "36px" : "28px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
+                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "36px" : "28px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>
+                The example of my grandfather Verus gave me a good disposition, not prone to anger. By the recollection of my father's character, I learned to be both modest and manly.
+                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "36px" : "28px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
               </p>
               <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "12px", color: t.textMuted, letterSpacing: "1px" }}>MARCUS AURELIUS</span>
                 <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 300 }}>Meditations, Book I §1-2</span>
               </div>
             </div>
-            {/* Font picker */}
             {showFontPicker && (
-              <div style={{
-                padding: "10px", marginBottom: "8px",
-                background: t.surface, border: `1px solid ${t.border}`, borderRadius: "10px",
-                display: "flex", gap: "6px",
-              }}>
+              <div style={{ padding: "10px", marginBottom: "8px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "10px", display: "flex", gap: "6px" }}>
                 {fontOptions.map((f) => {
                   const isActive = fontChoice === f.id;
                   return (
@@ -1028,29 +902,23 @@ export default function PhiloApp() {
           </div>
         )}
 
-        {/* ---- DAILY TASKS TAB ---- */}
+        {/* DAILY TASKS TAB */}
         {activeTab === "todo" && (
           <div>
             <Confetti active={celebrating} theme={t} />
             <div style={{ margin: "16px 0 20px" }}>
               <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>✅ Daily Tasks</h2>
-              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
-                {totalDone} of {totalTasks} tasks done this week
-              </p>
+              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{totalDone} of {totalTasks} tasks done this week</p>
             </div>
-
-            {/* Celebration banner */}
             <CelebrationBanner active={celebrating} theme={t} />
-
-            {/* Week day selector — cute pill row */}
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "24px", gap: "6px" }}>
               {weekDays.map((d) => {
                 const isSelected = d === selectedTaskDay;
                 const isToday = d === todayKey;
                 const dc = dayColors[mode][d];
                 const dayTasks = weekTasks[d];
-                const dayDone = dayTasks.filter((t) => t.text.trim() && t.done).length;
-                const dayTotal = dayTasks.filter((t) => t.text.trim()).length;
+                const dayDone = dayTasks.filter((tk) => tk.text.trim() && tk.done).length;
+                const dayTotal = dayTasks.filter((tk) => tk.text.trim()).length;
                 const allDone = dayTotal > 0 && dayDone === dayTotal;
                 return (
                   <button key={d} onClick={() => setSelectedTaskDay(d)} style={{
@@ -1060,10 +928,7 @@ export default function PhiloApp() {
                     border: isSelected ? `1.5px solid ${dc.border}` : `1.5px solid transparent`,
                     transition: "all 0.25s ease",
                   }}>
-                    <span style={{
-                      fontSize: "11px", fontWeight: 300, letterSpacing: "0.5px",
-                      color: isSelected ? t.text : t.textMuted,
-                    }}>{d}</span>
+                    <span style={{ fontSize: "11px", fontWeight: 300, letterSpacing: "0.5px", color: isSelected ? t.text : t.textMuted }}>{d}</span>
                     <div style={{
                       width: "8px", height: "8px", borderRadius: "50%",
                       background: allDone ? dc.dot : isToday && !isSelected ? t.textMuted : "transparent",
@@ -1074,41 +939,23 @@ export default function PhiloApp() {
                 );
               })}
             </div>
-
-            {/* Selected day card */}
             {(() => {
               const dc = dayColors[mode][selectedTaskDay];
               const tasks = weekTasks[selectedTaskDay];
-              const dayDone = tasks.filter((t) => t.text.trim() && t.done).length;
-              const dayTotal = tasks.filter((t) => t.text.trim()).length;
+              const dayDone = tasks.filter((tk) => tk.text.trim() && tk.done).length;
+              const dayTotal = tasks.filter((tk) => tk.text.trim()).length;
               return (
-                <div style={{
-                  background: dc.bg, border: `1px solid ${dc.border}`,
-                  borderRadius: "16px", padding: "20px", marginBottom: "16px",
-                  transition: "all 0.3s ease",
-                }}>
-                  {/* Day header */}
+                <div style={{ background: dc.bg, border: `1px solid ${dc.border}`, borderRadius: "16px", padding: "20px", marginBottom: "16px", transition: "all 0.3s ease" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px" }}>
                     <div>
-                      <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", fontWeight: 700 }}>
-                        {weekDaysFull[weekDays.indexOf(selectedTaskDay)]}
-                      </span>
-                      {selectedTaskDay === todayKey && (
-                        <span style={{ fontSize: "11px", color: dc.dot, marginLeft: "10px", fontWeight: 500, letterSpacing: "1px" }}>TODAY</span>
-                      )}
+                      <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", fontWeight: 700 }}>{weekDaysFull[weekDays.indexOf(selectedTaskDay)]}</span>
+                      {selectedTaskDay === todayKey && <span style={{ fontSize: "11px", color: dc.dot, marginLeft: "10px", fontWeight: 500, letterSpacing: "1px" }}>TODAY</span>}
                     </div>
-                    {dayTotal > 0 && (
-                      <span style={{ fontSize: "12px", color: t.textSecondary, fontWeight: 300 }}>
-                        {dayDone}/{dayTotal}
-                      </span>
-                    )}
+                    {dayTotal > 0 && <span style={{ fontSize: "12px", color: t.textSecondary, fontWeight: 300 }}>{dayDone}/{dayTotal}</span>}
                   </div>
-
-                  {/* Tasks */}
                   {tasks.map((task, idx) => (
                     <div key={task.id} style={{
-                      display: "flex", alignItems: "center", gap: "12px",
-                      padding: "10px 0",
+                      display: "flex", alignItems: "center", gap: "12px", padding: "10px 0",
                       borderTop: idx > 0 ? `1px solid ${mode === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)"}` : "none",
                     }}>
                       <button onClick={() => task.text.trim() && toggleTask(selectedTaskDay, task.id)} style={{
@@ -1133,14 +980,12 @@ export default function PhiloApp() {
                         }}
                       />
                       <button onClick={() => deleteTask(selectedTaskDay, task.id)} style={{
-                          background: "transparent", border: "none", color: t.textMuted,
-                          fontSize: "14px", cursor: "pointer", padding: "4px 6px", opacity: 0.25,
-                          transition: "opacity 0.2s ease",
-                        }}>×</button>
+                        background: "transparent", border: "none", color: t.textMuted,
+                        fontSize: "14px", cursor: "pointer", padding: "4px 6px", opacity: 0.25,
+                        transition: "opacity 0.2s ease",
+                      }}>×</button>
                     </div>
                   ))}
-
-                  {/* Add task */}
                   <button onClick={() => addTask(selectedTaskDay)} style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                     width: "100%", padding: "12px", marginTop: "8px",
@@ -1157,52 +1002,33 @@ export default function PhiloApp() {
           </div>
         )}
 
-        {/* ---- SCREEN TIME TAB ---- */}
+        {/* SCREEN TIME TAB */}
         {activeTab === "time" && (
           <div>
             <div style={{ margin: "16px 0 24px" }}>
               <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>📱 Screen Time</h2>
               <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Weekly overview — tap a day for details</p>
             </div>
-            {/* Weekly avg */}
             <div style={{ textAlign: "center", marginBottom: "28px" }}>
               <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "48px", fontWeight: 900 }}>
                 {(Object.values(screenTimeData).reduce((a, d) => a + d.total, 0) / 7).toFixed(1)}
               </span>
               <span style={{ fontSize: "14px", color: t.textMuted, fontWeight: 300, marginLeft: "6px" }}>hrs / day avg</span>
             </div>
-            {/* Bar chart */}
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", height: "140px", marginBottom: "8px", padding: "0 4px" }}>
               {Object.entries(screenTimeData).map(([day, data]) => {
                 const maxH = 6.5;
                 const height = (data.total / maxH) * 120;
                 const isSelected = day === selectedDay;
                 return (
-                  <button key={day} onClick={() => setSelectedDay(day)} style={{
-                    display: "flex", flexDirection: "column", alignItems: "center", gap: "8px",
-                    background: "transparent", border: "none", cursor: "pointer", padding: 0,
-                  }}>
-                    <span style={{ fontSize: "11px", color: isSelected ? t.text : t.textMuted, fontWeight: isSelected ? 500 : 300 }}>
-                      {data.total}h
-                    </span>
-                    <div style={{
-                      width: isSelected ? "36px" : "28px",
-                      height: `${height}px`,
-                      background: isSelected ? t.accentBg : t.border,
-                      borderRadius: "4px",
-                      transition: "all 0.3s ease",
-                    }} />
-                    <span style={{
-                      fontSize: "12px",
-                      color: isSelected ? t.text : t.textMuted,
-                      fontWeight: isSelected ? 500 : 300,
-                      letterSpacing: "0.5px",
-                    }}>{day}</span>
+                  <button key={day} onClick={() => setSelectedDay(day)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", background: "transparent", border: "none", cursor: "pointer", padding: 0 }}>
+                    <span style={{ fontSize: "11px", color: isSelected ? t.text : t.textMuted, fontWeight: isSelected ? 500 : 300 }}>{data.total}h</span>
+                    <div style={{ width: isSelected ? "36px" : "28px", height: `${height}px`, background: isSelected ? t.accentBg : t.border, borderRadius: "4px", transition: "all 0.3s ease" }} />
+                    <span style={{ fontSize: "12px", color: isSelected ? t.text : t.textMuted, fontWeight: isSelected ? 500 : 300, letterSpacing: "0.5px" }}>{day}</span>
                   </button>
                 );
               })}
             </div>
-            {/* Day detail */}
             <div style={{ marginTop: "24px", padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "8px" }}>
               <p style={{ fontSize: "12px", color: t.textMuted, letterSpacing: "2px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 500 }}>{selectedDay} BREAKDOWN</p>
               {screenTimeData[selectedDay].apps.map((app, i) => {
@@ -1227,7 +1053,7 @@ export default function PhiloApp() {
           </div>
         )}
 
-        {/* ---- LIFE MAP TAB ---- */}
+        {/* LIFE MAP TAB */}
         {activeTab === "life" && (() => {
           const totalYears = 100;
           const avgDeath = 80;
@@ -1236,7 +1062,6 @@ export default function PhiloApp() {
           const pctLived = Math.round((yearsLived / avgDeath) * 100);
           const pctLeft = 100 - Math.min(pctLived, 100);
 
-          // Milestone events with ages
           const milestones = [
             { age: 18, label: "Adulthood", color: mode === "dark" ? "#555" : "#AAA" },
             { age: 22, label: "Graduate college", color: mode === "dark" ? "#555" : "#AAA" },
@@ -1244,21 +1069,13 @@ export default function PhiloApp() {
             { age: 80, label: "Avg. age of death", color: mode === "dark" ? "#EF4444" : "#DC2626" },
           ];
 
-          const milestoneAges = milestones.map((m) => m.age);
           const cols = 10;
 
-          // Get color for a year dot
           const getDotStyle = (year) => {
-            if (year < yearsLived) {
-              return { bg: t.accent, opacity: 0.85 };
-            }
-            if (year === yearsLived) {
-              return { bg: t.accent, opacity: 1, ring: true };
-            }
+            if (year < yearsLived) return { bg: t.accent, opacity: 0.85 };
+            if (year === yearsLived) return { bg: t.accent, opacity: 1, ring: true };
             const ms = milestones.find((m) => m.age === year);
-            if (ms) {
-              return { bg: ms.color, opacity: 1, milestone: true };
-            }
+            if (ms) return { bg: ms.color, opacity: 1, milestone: true };
             return { bg: t.border, opacity: 1 };
           };
 
@@ -1266,12 +1083,8 @@ export default function PhiloApp() {
             <div>
               <div style={{ margin: "16px 0 24px" }}>
                 <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>⏳ Your Life in Years</h2>
-                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
-                  {avgDeath} avg. years. {yearsLived} spent. {yearsLeft} left.
-                </p>
+                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{avgDeath} avg. years. {yearsLived} spent. {yearsLeft} left.</p>
               </div>
-
-              {/* Stat cards row */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "24px" }}>
                 <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", textAlign: "center" }}>
                   <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "36px", fontWeight: 900, lineHeight: 1 }}>{yearsLived}</div>
@@ -1284,15 +1097,11 @@ export default function PhiloApp() {
                   <div style={{ fontSize: "12px", color: t.textSecondary, marginTop: "2px", fontWeight: 300 }}>{pctLeft}% of life</div>
                 </div>
               </div>
-
-              {/* Dot grid */}
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 600 }}>EACH DOT = ONE YEAR</p>
                 {Array.from({ length: Math.ceil(totalYears / cols) }, (_, row) => (
                   <div key={row} style={{ display: "flex", alignItems: "center", marginBottom: "6px" }}>
-                    <span style={{ width: "28px", fontSize: "9px", color: t.textMuted, fontWeight: 300, textAlign: "right", marginRight: "10px", fontFamily: "'DM Sans', sans-serif" }}>
-                      {row * cols}
-                    </span>
+                    <span style={{ width: "28px", fontSize: "9px", color: t.textMuted, fontWeight: 300, textAlign: "right", marginRight: "10px", fontFamily: "'DM Sans', sans-serif" }}>{row * cols}</span>
                     <div style={{ display: "flex", gap: "6px", flex: 1 }}>
                       {Array.from({ length: cols }, (_, col) => {
                         const year = row * cols + col;
@@ -1311,67 +1120,39 @@ export default function PhiloApp() {
                     </div>
                   </div>
                 ))}
-
-                {/* Legend */}
                 <div style={{ display: "flex", gap: "16px", marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, flexWrap: "wrap" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: t.accent, opacity: 0.85 }} />
-                    <span style={{ fontSize: "11px", color: t.textSecondary, fontWeight: 300 }}>Lived</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: t.accent, border: `1.5px solid ${t.text}` }} />
-                    <span style={{ fontSize: "11px", color: t.textSecondary, fontWeight: 300 }}>Now</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: mode === "dark" ? "#A78BFA" : "#7C3AED" }} />
-                    <span style={{ fontSize: "11px", color: t.textSecondary, fontWeight: 300 }}>Child / Marriage</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: mode === "dark" ? "#EF4444" : "#DC2626" }} />
-                    <span style={{ fontSize: "11px", color: t.textSecondary, fontWeight: 300 }}>Avg. death</span>
-                  </div>
+                  {[
+                    { color: t.accent, opacity: 0.85, label: "Lived" },
+                    { color: t.accent, border: `1.5px solid ${t.text}`, label: "Now" },
+                    { color: mode === "dark" ? "#A78BFA" : "#7C3AED", label: "Child / Marriage" },
+                    { color: mode === "dark" ? "#EF4444" : "#DC2626", label: "Avg. death" },
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                      <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: item.color, opacity: item.opacity || 1, border: item.border }} />
+                      <span style={{ fontSize: "11px", color: t.textSecondary, fontWeight: 300 }}>{item.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              {/* Milestones list */}
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 14px", textTransform: "uppercase", fontWeight: 600 }}>MILESTONES</p>
                 {milestones.map((m, i) => {
                   const isPast = m.age <= userAge;
                   const yearsUntil = m.age - userAge;
                   return (
-                    <div key={i} style={{
-                      display: "flex", justifyContent: "space-between", alignItems: "center",
-                      padding: "10px 0",
-                      borderTop: i > 0 ? `1px solid ${t.border}` : "none",
-                    }}>
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderTop: i > 0 ? `1px solid ${t.border}` : "none" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                        <div style={{
-                          width: "10px", height: "10px", borderRadius: "2px",
-                          background: isPast ? t.accent : m.color,
-                          opacity: isPast ? 0.85 : 1,
-                        }} />
-                        <span style={{
-                          fontSize: "13px",
-                          color: isPast ? t.textMuted : t.text,
-                          fontWeight: isPast ? 300 : 400,
-                          textDecoration: isPast ? "line-through" : "none",
-                        }}>{m.label}</span>
+                        <div style={{ width: "10px", height: "10px", borderRadius: "2px", background: isPast ? t.accent : m.color, opacity: isPast ? 0.85 : 1 }} />
+                        <span style={{ fontSize: "13px", color: isPast ? t.textMuted : t.text, fontWeight: isPast ? 300 : 400, textDecoration: isPast ? "line-through" : "none" }}>{m.label}</span>
                       </div>
                       <div style={{ textAlign: "right" }}>
                         <span style={{ fontSize: "13px", color: t.textSecondary, fontWeight: 300 }}>age {m.age}</span>
-                        {!isPast && (
-                          <span style={{ fontSize: "11px", color: t.textMuted, marginLeft: "8px", fontWeight: 300 }}>
-                            {yearsUntil}y away
-                          </span>
-                        )}
+                        {!isPast && <span style={{ fontSize: "11px", color: t.textMuted, marginLeft: "8px", fontWeight: 300 }}>{yearsUntil}y away</span>}
                       </div>
                     </div>
                   );
                 })}
               </div>
-
-              {/* Perspective card */}
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 10px", textTransform: "uppercase", fontWeight: 600 }}>PERSPECTIVE</p>
                 <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300 }}>
@@ -1387,30 +1168,13 @@ export default function PhiloApp() {
       <div style={{
         position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
         width: "100%", maxWidth: "520px", display: "flex", justifyContent: "space-around",
-        padding: "14px 16px 28px", background: t.bg,
-        borderTop: `1px solid ${t.border}`,
+        padding: "14px 16px 28px", background: t.bg, borderTop: `1px solid ${t.border}`,
       }}>
         {[
-          { key: "read", label: "Read", shape: (active, color) => (
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} />
-            </svg>
-          )},
-          { key: "todo", label: "Tasks", shape: (active, color) => (
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} />
-            </svg>
-          )},
-          { key: "time", label: "Screen", shape: (active, color) => (
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} />
-            </svg>
-          )},
-          { key: "life", label: "Life", shape: (active, color) => (
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} />
-            </svg>
-          )},
+          { key: "read", label: "Read", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} /></svg> },
+          { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} /></svg> },
+          { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} /></svg> },
+          { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} /></svg> },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
@@ -1418,8 +1182,7 @@ export default function PhiloApp() {
             <button key={tab.key} onClick={() => setActiveTab(tab.key)} style={{
               background: "transparent", border: "none", cursor: "pointer",
               display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
-              transition: "all 0.2s ease", padding: "6px 16px",
-              flex: 1,
+              transition: "all 0.2s ease", padding: "6px 16px", flex: 1,
             }}>
               {tab.shape(isActive, color)}
               <span style={{ fontSize: "12px", fontFamily: "'Nunito', sans-serif", fontWeight: isActive ? 700 : 400, letterSpacing: "0.5px", color }}>{tab.label}</span>
@@ -1439,57 +1202,37 @@ const globalCSS = `
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
   ::-webkit-scrollbar { display: none; }
-  .philo-scroll::-webkit-scrollbar { display: none; }
 
   @keyframes btnBounce {
     0% { transform: translateY(0) scale(1); }
     40% { transform: translateY(-5px) scale(1.02); }
     100% { transform: translateY(0) scale(1); }
   }
-
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes slideFallDown {
     0% { transform: translateX(-50%) translateY(0); opacity: 1; }
     100% { transform: translateX(-50%) translateY(100vh); opacity: 1; }
   }
-
   @keyframes confettiFall {
     0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
     20% { opacity: 1; }
     100% { transform: translateY(100vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
   }
-
   .btn-bounce {
     animation: btnBounce 0.25s cubic-bezier(0.22, 0.68, 0.35, 1) !important;
   }
-
   .btn-continue {
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
   }
-
-  .btn-continue:hover {
-    filter: brightness(1.05);
-  }
-
+  .btn-continue:hover { filter: brightness(1.05); }
   .btn-back {
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
   }
 `;
-
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import PhiloApp from './App.jsx'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <PhiloApp />
-  </React.StrictMode>,
-)
