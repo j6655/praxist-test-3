@@ -637,9 +637,9 @@ export default function PhiloApp() {
     return (
       <div style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", position: "relative", overflow: "hidden", maxWidth: "520px", margin: "0 auto" }}>
         <style>{globalCSS}</style>
-        <div style={{ display: "flex", flexDirection: "column", padding: "24px", minHeight: "100vh", position: "relative", background: t.bg }}>
+        <div style={{ display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", minHeight: "100vh", position: "relative", background: t.bg }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>ΦΙΛΟ</span>
+            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS</span>
             <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
               background: "transparent", border: `1px solid ${t.borderLight}`, color: t.textMuted,
               padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
@@ -705,7 +705,7 @@ export default function PhiloApp() {
     const progress = ((onboardingStep + (hasAnswer ? 1 : 0)) / onboardingQuestions.length) * 100;
 
     return (
-      <div style={{ height: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", padding: "24px", maxWidth: "520px", margin: "0 auto", overflow: "hidden", position: "relative" }}>
+      <div style={{ height: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", maxWidth: "520px", margin: "0 auto", overflow: "hidden", position: "relative" }}>
         <style>{globalCSS}</style>
         {introExiting && (
           <div style={{
@@ -722,7 +722,7 @@ export default function PhiloApp() {
           </div>
         )}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexShrink: 0 }}>
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>ΦΙΛΟ</span>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS</span>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span style={{ fontSize: "13px", color: t.textMuted, letterSpacing: "2px", fontWeight: 300 }}>{onboardingStep + 1} / {onboardingQuestions.length}</span>
             <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
@@ -817,8 +817,8 @@ export default function PhiloApp() {
     <div style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", maxWidth: "520px", margin: "0 auto" }}>
       <style>{globalCSS}</style>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 24px 12px" }}>
-        <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>ΦΙΛΟ</span>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 12px" }}>
+        <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS</span>
         <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{
           background: "transparent", border: `1px solid ${t.borderLight}`, color: t.text,
           width: "36px", height: "36px", borderRadius: "50%", fontSize: "16px", cursor: "pointer",
@@ -826,7 +826,7 @@ export default function PhiloApp() {
         }}>{mode === "dark" ? "☀" : "☾"}</button>
       </div>
 
-      <div style={{ flex: 1, overflow: "auto", padding: "0 24px 100px" }}>
+      <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 90px)" }}>
 
         {/* DAILY READING TAB */}
         {activeTab === "read" && (
@@ -1168,7 +1168,7 @@ export default function PhiloApp() {
       <div style={{
         position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
         width: "100%", maxWidth: "520px", display: "flex", justifyContent: "space-around",
-        padding: "14px 16px 28px", background: t.bg, borderTop: `1px solid ${t.border}`,
+        padding: "14px 16px calc(env(safe-area-inset-bottom, 16px) + 16px)", background: t.bg, borderTop: `1px solid ${t.border}`,
       }}>
         {[
           { key: "read", label: "Read", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} /></svg> },
@@ -1197,6 +1197,7 @@ export default function PhiloApp() {
 const globalCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
   * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
   input:focus, textarea:focus { outline: none; }
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
