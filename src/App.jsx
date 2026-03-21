@@ -907,7 +907,6 @@ export default function PhiloApp() {
     const newTasks = weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, done: !tk.done } : tk));
     setWeekTasks({ ...weekTasks, [day]: newTasks });
     const withText = newTasks.filter((tk) => tk.text.trim());
-    // Only celebrate when checking (not unchecking), all have text, and ALL are now done
     if (prevTask && !prevTask.done && withText.length > 1 && withText.every((tk) => tk.done)) {
       setCelebrating(true);
     } else {
@@ -1134,7 +1133,7 @@ export default function PhiloApp() {
         }}>{mode === "dark" ? "☀" : "☾"}</button>
       </div>
 
-      <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 120px)" }}>
+      <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 90px)" }}>
 
         {/* DAILY READING TAB */}
         {activeTab === "read" && (() => {
@@ -1497,7 +1496,7 @@ export default function PhiloApp() {
       {/* Fixed reading nav — only shown on read tab */}
       {activeTab === "read" && (
         <div style={{
-          position: "fixed", bottom: "calc(env(safe-area-inset-bottom, 16px) + 90px)", left: "50%", transform: "translateX(-50%)",
+          position: "fixed", bottom: "72px", left: "50%", transform: "translateX(-50%)",
           width: "100%", maxWidth: "520px",
           padding: "10px 16px 10px",
           background: t.bg,
@@ -1583,11 +1582,7 @@ export default function PhiloApp() {
               padding: "6px 16px", flex: 1,
             }}>
               {tab.shape(isActive, color)}
-              <span style={{
-                fontSize: "12px", fontFamily: "'Nunito', sans-serif",
-                fontWeight: isActive ? 700 : 400, letterSpacing: "0.5px", color,
-                transition: "color 0.3s ease, font-weight 0.3s ease",
-              }}>{tab.label}</span>
+              <span style={{ fontSize: "12px", fontFamily: "'Nunito', sans-serif", fontWeight: isActive ? 700 : 400, letterSpacing: "0.5px", color, transition: "color 0.3s ease" }}>{tab.label}</span>
             </button>
           );
         })}
