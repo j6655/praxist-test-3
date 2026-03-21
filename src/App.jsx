@@ -768,6 +768,7 @@ export default function PhiloApp() {
   const [activeTab, setActiveTab] = useState("read");
   const [fontChoice, setFontChoice] = useState("nunito");
   const [showFontPicker, setShowFontPicker] = useState(false);
+  const [fontSize, setFontSize] = useState(15);
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [onboardingAnswers, setOnboardingAnswers] = useState({});
   const [userAge, setUserAge] = useState(22);
@@ -946,7 +947,7 @@ export default function PhiloApp() {
         <style>{globalCSS}</style>
         <div style={{ display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", minHeight: "100vh", position: "relative", background: t.bg }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS</span>
+            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
             <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
               background: "transparent", border: `1px solid ${t.borderLight}`, color: t.textMuted,
               padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
@@ -1029,7 +1030,7 @@ export default function PhiloApp() {
           </div>
         )}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexShrink: 0 }}>
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS</span>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span style={{ fontSize: "13px", color: t.textMuted, letterSpacing: "2px", fontWeight: 300 }}>{onboardingStep + 1} / {onboardingQuestions.length}</span>
             <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
@@ -1125,7 +1126,7 @@ export default function PhiloApp() {
       <style>{globalCSS}</style>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 12px" }}>
-        <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS</span>
+        <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
         <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{
           background: "transparent", border: `1px solid ${t.borderLight}`, color: t.text,
           width: "36px", height: "36px", borderRadius: "50%", fontSize: "16px", cursor: "pointer",
@@ -1154,13 +1155,26 @@ export default function PhiloApp() {
                 <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: "0 0 4px" }}>📖 Daily Reading</h2>
                 <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{todayLabel} — {readDone.size} of {passages.length} read</p>
               </div>
-              <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
-                background: "transparent", border: `1px solid ${t.borderLight}`,
-                color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
-                fontSize: "11px", cursor: "pointer", fontFamily: rf, fontWeight: 600,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                marginTop: "4px",
-              }}>Aa</button>
+              <div style={{ display: "flex", gap: "6px", alignItems: "center", marginTop: "4px" }}>
+                <button onClick={() => setFontSize(s => Math.max(12, s - 1))} style={{
+                  background: "transparent", border: `1px solid ${t.borderLight}`,
+                  color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
+                  fontSize: "13px", cursor: "pointer", fontWeight: 600,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>A−</button>
+                <button onClick={() => setFontSize(s => Math.min(22, s + 1))} style={{
+                  background: "transparent", border: `1px solid ${t.borderLight}`,
+                  color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
+                  fontSize: "13px", cursor: "pointer", fontWeight: 600,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>A+</button>
+                <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
+                  background: "transparent", border: `1px solid ${t.borderLight}`,
+                  color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
+                  fontSize: "11px", cursor: "pointer", fontFamily: rf, fontWeight: 600,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>Aa</button>
+              </div>
             </div>
 
             {/* Progress bar */}
@@ -1209,21 +1223,21 @@ export default function PhiloApp() {
               </div>
               <p style={{
                 fontFamily: rf,
-                fontSize: fontChoice === "cormorant" ? "20px" : "15px",
+                fontSize: fontChoice === "cormorant" ? `${fontSize + 5}px` : `${fontSize}px`,
                 lineHeight: fontChoice === "cormorant" ? 2 : 1.85,
                 color: t.textSecondary, margin: 0,
                 fontStyle: fontChoice === "cormorant" ? "italic" : "normal",
               }}>
-                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "34px" : "26px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>
+                <span style={{ fontFamily: rf, fontSize: `${fontSize + 11}px`, color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>
                 {p.text}
-                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "34px" : "26px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
+                <span style={{ fontFamily: rf, fontSize: `${fontSize + 11}px`, color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
               </p>
             </div>
 
             {/* Reflect prompt */}
             <div style={{ padding: "16px 20px", background: t.surface, borderRadius: "10px", border: `1px solid ${t.border}`, marginBottom: "16px" }}>
               <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
-              <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
+              <p style={{ fontSize: `${fontSize - 1}px`, color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
             </div>
 
 
