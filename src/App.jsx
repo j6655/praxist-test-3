@@ -497,8 +497,267 @@ function ScrollPhilosopherList({ options, selected, onSelect, theme: t, mode }) 
 }
 
 // ============================================================
-// MAIN APP COMPONENT
+// 50 PASSAGES FROM MEDITATIONS — MARCUS AURELIUS
 // ============================================================
+const passages = [
+  {
+    ref: "Book I · §1",
+    text: "Of my grandfather Verus I have learned to be gentle and meek, and to refrain from all anger and passion.",
+    reflect: "Marcus opens not with philosophy but with gratitude for his teachers. Who has quietly shaped your character without you fully realizing it?",
+  },
+  {
+    ref: "Book I · §15",
+    text: "Betimes in the morning say to thyself: This day I shall have to do with an idle curious man, with an unthankful man, a railer, a crafty, false, or an envious man. All these ill qualities have happened unto them through ignorance of that which is truly good and truly bad.",
+    reflect: "Marcus prepared for difficult people before facing them. How would your day change if you expected friction, rather than being surprised by it?",
+  },
+  {
+    ref: "Book II · §1",
+    text: "Remember how long thou hast already put off these things, and how often a certain day and hour as it were, having been set unto thee by the gods, thou hast neglected it. It is high time for thee to understand the true nature both of the world, whereof thou art a part.",
+    reflect: "We delay the things that matter most. What are you putting off that deserves your attention today?",
+  },
+  {
+    ref: "Book II · §4",
+    text: "Why should any of these things that happen externally, so much distract thee? Give thyself leisure to learn some good thing, and cease roving and wandering to and fro.",
+    reflect: "External noise competes for your focus constantly. What good thing would you learn if you stopped letting distractions win?",
+  },
+  {
+    ref: "Book II · §8",
+    text: "Whatsoever thou dost affect, whatsoever thou dost project, so do, and so project all, as one who, for aught thou knowest, may at this very present depart out of this life.",
+    reflect: "Acting as if this moment were your last is not morbid — it is clarifying. What would you do differently right now?",
+  },
+  {
+    ref: "Book II · §12",
+    text: "If thou shouldst live three thousand, or as many as ten thousands of years, yet remember this, that man can part with no life properly, save with that little part of life, which he now lives: and that which he lives, is no other, than that which at every instant he parts with.",
+    reflect: "No matter how long you live, you only ever live in the present moment. Are you actually living in yours?",
+  },
+  {
+    ref: "Book II · §15",
+    text: "The time of a man's life is as a point; the substance of it ever flowing, the sense obscure; and the whole composition of the body tending to corruption. Our life is a warfare, and a mere pilgrimage. What is it then that will adhere and follow? Only one thing, philosophy.",
+    reflect: "Strip away everything temporary. What is the one thing you are building that will outlast the noise of daily life?",
+  },
+  {
+    ref: "Book III · §1",
+    text: "A man must not only consider how daily his life wasteth and decreaseth, but this also, that if he live long, he cannot be certain, whether his understanding shall continue so able and sufficient. Thou must hasten therefore.",
+    reflect: "Mental clarity and sharpness are not guaranteed. What are you postponing that requires your sharpest mind — and why are you waiting?",
+  },
+  {
+    ref: "Book III · §4",
+    text: "Spend not the remnant of thy days in thoughts and fancies concerning other men, when it is not in relation to some common good, when by it thou art hindered from some other better work.",
+    reflect: "How much of your mental energy goes toward judging, analyzing, or worrying about other people? What better work could fill that space?",
+  },
+  {
+    ref: "Book III · §5",
+    text: "Do nothing against thy will, nor contrary to the community, nor without due examination, nor with reluctancy. Be neither a great talker, nor a great undertaker.",
+    reflect: "Reluctance is a signal. When you act against your own values or drag your feet, what is that resistance telling you?",
+  },
+  {
+    ref: "Book III · §7",
+    text: "If thou shalt find anything in this mortal life better than righteousness, than truth, temperance, fortitude, and in general better than a mind contented both with those things which according to right and reason she doth — if I say, thou canst find out anything better than this, apply thyself unto it with thy whole heart.",
+    reflect: "Marcus challenges you to find something better than virtue. Can you? If not, what does that mean for how you spend your time?",
+  },
+  {
+    ref: "Book III · §8",
+    text: "Never esteem of anything as profitable, which shall ever constrain thee either to break thy faith, or to lose thy modesty; to hate any man, to suspect, to curse, to dissemble, to lust after anything, that requireth the secret of walls or veils.",
+    reflect: "Any gain that costs you your integrity is no gain at all. Have you made any such trades recently — knowingly or not?",
+  },
+  {
+    ref: "Book IV · §3",
+    text: "Men seek retreats for themselves — in the country, by the sea, in the hills — and thou thyself art wont to long for such retreats. But this is altogether a mark of the most ordinary sort of men, for it is in thy power, whenever thou wilt, to retire into thyself.",
+    reflect: "The peace you search for on vacations already lives inside you. How often do you actually go there?",
+  },
+  {
+    ref: "Book IV · §7",
+    text: "Do not look around thee to discover men's ruling principles, but look straight to this, to what nature leads thee, both the universal nature through the things that happen to thee, and thy own nature through the acts which must be done by thee.",
+    reflect: "We spend enormous energy reading others. What does your own nature — your own deepest values — actually call you to do?",
+  },
+  {
+    ref: "Book IV · §17",
+    text: "Think not of the things that are absent as if they were already here, but reckon up the chief of those that thou hast, and then call to mind how eagerly they would have been sought if they were not with thee.",
+    reflect: "Gratitude is not a feeling — it is a practice of attention. What do you have right now that a past version of you desperately wanted?",
+  },
+  {
+    ref: "Book IV · §24",
+    text: "Keep thyself simple, good, pure, serious, free from affectation, a friend of justice, a worshipper of the gods, kind, affectionate, strenuous in all proper acts. Strive to continue to be such as philosophy wished to make thee.",
+    reflect: "Philosophy is not something you study — it is something you become. Who is the person philosophy is trying to make you into?",
+  },
+  {
+    ref: "Book IV · §39",
+    text: "Nothing happens to any man that he is not formed by nature to bear.",
+    reflect: "You were built for exactly this. Not for an easier version of this — for this. What does that change about how you are facing your current difficulty?",
+  },
+  {
+    ref: "Book IV · §43",
+    text: "Time is a river made up of events which happen, and a violent stream; for as soon as a thing has been seen, it is carried away, and another comes in its place, and this will be carried away too.",
+    reflect: "Everything passes — the good and the painful alike. What current difficulty would look different if you truly believed it was already flowing past you?",
+  },
+  {
+    ref: "Book V · §8",
+    text: "As thou thyself art a component part of a social system, so let every act of thine be a component part of social life. Whatever act of thine then has no reference either immediately or remotely to a social end, this tears asunder thy life, and does not allow it to be one.",
+    reflect: "Marcus believed every act should serve something larger than yourself. What acts in your day connect to a larger purpose — and which ones don't?",
+  },
+  {
+    ref: "Book V · §16",
+    text: "Such as are thy habitual thoughts, such also will be the character of thy mind; for the soul is dyed by the thoughts. Dye it then with a continuous series of such thoughts as these: that where a man can live, there he can also live well.",
+    reflect: "Your mind is being dyed right now — by what you watch, read, and think about. What color is it turning?",
+  },
+  {
+    ref: "Book V · §20",
+    text: "That which is really beautiful has no need of anything; not more than law, not more than truth, not more than benevolence or modesty.",
+    reflect: "What in your life is genuinely beautiful — not because of how it looks, but because of what it is?",
+  },
+  {
+    ref: "Book V · §23",
+    text: "Accustom thyself to attend carefully to what is said by another, and as much as it is possible, be in the speaker's mind.",
+    reflect: "Real listening is an act of respect. The last time someone spoke to you — were you truly in their mind, or were you composing your reply?",
+  },
+  {
+    ref: "Book VI · §2",
+    text: "Be it all one unto thee, whether half frozen or well warm; whether only slumbering or after a full sleep; whether discommended or commended thou do thy duty: or whether dying or doing somewhat else; for that also 'to die' must among the rest be reckoned as one of the duties and actions of our lives.",
+    reflect: "Marcus treated criticism and praise with equal indifference. What would you do differently today if no one was watching or judging?",
+  },
+  {
+    ref: "Book VI · §5",
+    text: "The best kind of revenge is, not to become like unto them.",
+    reflect: "When someone wrongs you, the deepest victory is not retaliation — it is refusing to be changed by them. Who are you in danger of becoming because of how someone has treated you?",
+  },
+  {
+    ref: "Book VI · §6",
+    text: "Let this be thy only joy, and thy only comfort, from one sociable kind action without intermission to pass unto another, God being ever in thy mind.",
+    reflect: "Marcus found joy not in results, but in the unbroken chain of good actions. What is one kind act you could do today — simply for the act itself?",
+  },
+  {
+    ref: "Book VI · §13",
+    text: "He that honours a reasonable soul in general, as it is reasonable and naturally sociable, doth little regard anything else: and above all things is careful to preserve his own in the continual habit and exercise both of reason and sociableness.",
+    reflect: "Reason and care for others — Marcus treated these as the core of what it means to be human. Are you exercising both?",
+  },
+  {
+    ref: "Book VI · §17",
+    text: "Who can choose but wonder at them? They will not speak well of them that are at the same time with them, and live with them; yet they themselves are very ambitious that they that shall follow, whom they have never seen, should speak well of them.",
+    reflect: "We ignore the people around us while chasing the approval of strangers and posterity. Who in your life right now deserves more of your attention?",
+  },
+  {
+    ref: "Book VI · §30",
+    text: "Let not future things disturb thee, for thou wilt come to them, if it shall be necessary, having with thee the same reason which now thou usest for present things.",
+    reflect: "Anxiety borrows trouble from a future that hasn't arrived yet. What present resource — your reason, your character — will still be with you when that future comes?",
+  },
+  {
+    ref: "Book VII · §9",
+    text: "All things are from nature, and in nature, and to nature. The philosopher's thought runs: of what nature is this thing? what is its cause and its end?",
+    reflect: "Asking what something truly is — its nature, its cause, its end — cuts through a lot of confusion. Apply this question to something you are currently struggling with.",
+  },
+  {
+    ref: "Book VII · §14",
+    text: "Though thou shouldst live three thousand years, or thirty thousand, remember that no man loses any other life than that he now lives, nor lives any other than that he now loses.",
+    reflect: "You cannot lose a future that hasn't arrived. The only life at stake is the one happening right now. How are you treating it?",
+  },
+  {
+    ref: "Book VII · §29",
+    text: "Erase the imagination. Stop the pulling of the strings. Confine thyself to the present.",
+    reflect: "Three instructions. Which one do you need most right now — and what would it mean to actually follow it today?",
+  },
+  {
+    ref: "Book VII · §54",
+    text: "Everywhere and at all times it is in thy power to accept religiously thy present condition, to behave justly to those about thee, and to exert thy skill upon thy present thoughts, that nothing shall steal into them without being well examined.",
+    reflect: "Three powers always available to you: acceptance, justice toward others, and examined thought. Which are you neglecting?",
+  },
+  {
+    ref: "Book VII · §68",
+    text: "True greatness of soul consists in the contempt of small things, in performing what is right and in continuing to be of that mind which thou art now for ever.",
+    reflect: "Small irritations reveal character. What small thing has been pulling you away from the person you want to be?",
+  },
+  {
+    ref: "Book VIII · §7",
+    text: "Let not the future trouble thee. Thou wilt come to it, if thou must, with the same reason thou now hast. For the present, direct that reason to its proper work.",
+    reflect: "Your future self will have the same rational capacity you have now. The question is whether you are sharpening it today. What is your reason's proper work right now?",
+  },
+  {
+    ref: "Book VIII · §17",
+    text: "Remember that to change thy opinion and to follow him who corrects thy error is as consistent with freedom as it is to persist in thy error.",
+    reflect: "Changing your mind when shown you're wrong is strength, not weakness. When did you last genuinely update a belief?",
+  },
+  {
+    ref: "Book VIII · §47",
+    text: "If thou art pained by any external thing, it is not this thing that disturbs thee, but thy own judgment about it. And it is in thy power to wipe out that judgment now.",
+    reflect: "The pain is real. But the story you tell about the pain — that is yours to rewrite. What story are you telling about your current difficulty?",
+  },
+  {
+    ref: "Book VIII · §48",
+    text: "Remember that the ruling faculty is invincible, when self-collected it is satisfied with itself, if it does nothing which it does not choose to do, even if it resist from mere obstinacy. What then will it be when it forms a judgement about anything aided by reason?",
+    reflect: "Your mind, when grounded in reason and self-mastery, is genuinely invincible. When did you last feel that kind of inner steadiness?",
+  },
+  {
+    ref: "Book IX · §3",
+    text: "Do not indulge hopes which will certainly fail thee, or flee from evils which will inevitably come.",
+    reflect: "Hope and fear both pull you out of reality. What are you chasing that probably won't save you — and what are you avoiding that will come regardless?",
+  },
+  {
+    ref: "Book IX · §6",
+    text: "Receive without pride, relinquish without struggle.",
+    reflect: "Four words that contain an entire philosophy. Which half is harder for you — receiving without pride, or letting go without struggle?",
+  },
+  {
+    ref: "Book IX · §29",
+    text: "Do not look round thee to discover other men's ruling principles, but look straight to this, to what nature leads thee both the universal nature through the things that happen to thee, and thy own nature through the acts which must be done by thee.",
+    reflect: "You already know what you are supposed to do. What is stopping you from simply doing it?",
+  },
+  {
+    ref: "Book IX · §40",
+    text: "Either the gods have power or they have not. If they have not, why dost thou pray? But if they have, why dost thou not ask them to give thee the faculty of not fearing any of the things which thou fearest?",
+    reflect: "Marcus challenges the gap between belief and practice. Where in your life are you praying for outcomes but not for character?",
+  },
+  {
+    ref: "Book X · §6",
+    text: "Whether the universe is a concourse of atoms, or nature is a system, let this first be established: that I am a part of the whole which is governed by nature; next, that I stand in some intimate connection with other kindred parts.",
+    reflect: "We are not isolated — we are part of something. What would change in how you treat the people around you if you truly felt that kinship?",
+  },
+  {
+    ref: "Book X · §8",
+    text: "Thou hast power over thy mind, not outside events. Realise this, and thou wilt find strength.",
+    reflect: "This is perhaps Marcus's most direct statement. Where are you exhausting yourself trying to control something outside your mind?",
+  },
+  {
+    ref: "Book X · §16",
+    text: "Confine thyself to the present. Understand well both what happens to thee and what thou doest; for in this the divine will is revealed.",
+    reflect: "The present moment is not an obstacle between you and your real life. It is your real life. Are you in it?",
+  },
+  {
+    ref: "Book X · §30",
+    text: "On the occasion of every act ask thyself: How is this with respect to me? Shall I repent of it? A little time and I am dead, and all is gone.",
+    reflect: "Marcus used his own mortality as a filter for decision-making. Run your current decision through this filter. Does it survive?",
+  },
+  {
+    ref: "Book XI · §4",
+    text: "He who fears death either fears the loss of sensation or a different kind of sensation. But if thou shalt have no sensation, neither wilt thou feel any harm; and if thou shalt acquire another kind of sensation, thou wilt be a different kind of living being.",
+    reflect: "Marcus strips death of its terror through clear thinking. What fear in your life might dissolve if you examined it with the same directness?",
+  },
+  {
+    ref: "Book XI · §18",
+    text: "First, consider what kind of man the wrongdoer is. But also see that thou art not compelled to be angry — thou thyself art not compelled to share in that which he shares. Consider also that he acts from ignorance.",
+    reflect: "People who wrong us are almost always acting from some form of ignorance. Can you hold both truths at once — that you were wronged, and that the person didn't truly know what they were doing?",
+  },
+  {
+    ref: "Book XII · §1",
+    text: "All those things at which thou wishest to arrive by a circuitous road, thou canst have now, if thou dost not refuse them to thyself. And this means, if thou wilt take no notice of all the past, and trust the future to providence, and direct the present only conformably to piety and justice.",
+    reflect: "The life you are working toward — how much of it is already available to you right now, if you simply stopped refusing it?",
+  },
+  {
+    ref: "Book XII · §6",
+    text: "The best way of avenging thyself is not to become like the wrongdoer.",
+    reflect: "Every time you refuse to become what hurt you, you win. What is one way you are in danger of becoming what you despise?",
+  },
+  {
+    ref: "Book XII · §23",
+    text: "Everything harmonizes with me, which is harmonious to thee, O Universe. Nothing for me is too early nor too late, which is in due time for thee. Everything is fruit to me which thy seasons bring, O Nature: from thee are all things, in thee are all things, to thee all things return.",
+    reflect: "This is Marcus at his most surrendered — not defeated, but aligned. What would it feel like to stop fighting the timing of your own life?",
+  },
+  {
+    ref: "Book XII · §26",
+    text: "When thou art troubled about anything, thou hast forgotten this: that all things happen according to the universal nature, and that a man's wrongful act is nothing to thee, and further that everything which happens always happened so and will happen so, and now happens so everywhere.",
+    reflect: "Marcus returns constantly to this: things are as they are. Not as punishment, not as injustice directed at you. Just as they are. Can you find any peace in that?",
+  },
+];
+
+
 export default function PhiloApp() {
   const [mode, setMode] = useState("dark");
   const [onboardingDone, setOnboardingDone] = useState(false);
@@ -515,9 +774,35 @@ export default function PhiloApp() {
   const [ageInput, setAgeInput] = useState("22");
   const [btnPressed, setBtnPressed] = useState(false);
   const [btnBounce, setBtnBounce] = useState(false);
+  const [readingIndex, setReadingIndex] = useState(0);
+  const [readDone, setReadDone] = useState(new Set());
+  const [readingAnim, setReadingAnim] = useState(false);
+  const dragStartX = useRef(null);
+  const dragDeltaX = useRef(0);
+  const dotScrollRef = useRef(null);
+
+  const goToReading = (idx) => {
+    if (idx < 0 || idx >= passages.length) return;
+    setReadingAnim(true);
+    setTimeout(() => setReadingAnim(false), 350);
+    setReadingIndex(idx);
+  };
+
+  useEffect(() => {
+    if (!dotScrollRef.current) return;
+    const container = dotScrollRef.current;
+    const dotWidth = 8 + 6; // dot width + gap
+    const containerWidth = container.clientWidth;
+    const targetScroll = idx => dotWidth * idx - containerWidth / 2 + dotWidth / 2;
+    container.scrollTo({ left: targetScroll(readingIndex), behavior: "smooth" });
+  }, [readingIndex]);
 
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const weekDaysFull = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const now = new Date();
+  const localDayIndex = now.getDay();
+  const todayLabel = `${monthNames[now.getMonth()]} ${now.getDate()}`;
   const initWeekTasks = () => {
     const obj = {};
     weekDays.forEach((d) => {
@@ -530,7 +815,7 @@ export default function PhiloApp() {
     return obj;
   };
   const [weekTasks, setWeekTasks] = useState(initWeekTasks);
-  const [selectedTaskDay, setSelectedTaskDay] = useState(weekDays[new Date().getDay()]);
+  const [selectedTaskDay, setSelectedTaskDay] = useState(weekDays[localDayIndex]);
   const [selectedDay, setSelectedDay] = useState("Wed");
 
   const t = themes[mode];
@@ -619,7 +904,7 @@ export default function PhiloApp() {
     setWeekTasks({ ...weekTasks, [day]: tasks });
   };
 
-  const todayKey = weekDays[new Date().getDay()];
+  const todayKey = weekDays[localDayIndex];
   const totalTasks = Object.values(weekTasks).flat().filter((tk) => tk.text.trim()).length;
   const totalDone = Object.values(weekTasks).flat().filter((tk) => tk.text.trim() && tk.done).length;
 
@@ -829,39 +1114,41 @@ export default function PhiloApp() {
       <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 90px)" }}>
 
         {/* DAILY READING TAB */}
-        {activeTab === "read" && (
+        {activeTab === "read" && (() => {
+          const p = passages[readingIndex];
+          const dragHandlers = {
+            onPointerDown: (e) => { dragStartX.current = e.clientX; dragDeltaX.current = 0; e.currentTarget.setPointerCapture(e.pointerId); },
+            onPointerMove: (e) => { if (dragStartX.current === null) return; dragDeltaX.current = e.clientX - dragStartX.current; },
+            onPointerUp: () => {
+              if (dragDeltaX.current < -50 && readingIndex < passages.length - 1) goToReading(readingIndex + 1);
+              else if (dragDeltaX.current > 50 && readingIndex > 0) goToReading(readingIndex - 1);
+              dragStartX.current = null; dragDeltaX.current = 0;
+            },
+          };
+          return (
           <div>
-            <div style={{ margin: "16px 0 24px" }}>
-              <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>📖 Today's Reading</h2>
-              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>March 19 — Day 7 streak ◆</p>
-            </div>
-            <div style={{ position: "relative", padding: "24px", border: `1px solid ${t.border}`, borderRadius: "8px", marginBottom: "8px", background: t.card, boxShadow: t.shadow }}>
-              <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
-                position: "absolute", top: "10px", right: "10px",
-                background: "transparent", border: `1px solid ${t.borderLight}`,
-                color: t.textMuted, width: "28px", height: "28px", borderRadius: "6px",
-                fontSize: "10px", cursor: "pointer", fontFamily: rf, fontWeight: 600,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                opacity: 0.5, transition: "opacity 0.2s ease",
-              }}>Aa</button>
-              <p style={{
-                fontFamily: rf,
-                fontSize: fontChoice === "cormorant" ? "20px" : "16px",
-                lineHeight: fontChoice === "cormorant" ? 2 : 1.8,
-                color: t.textSecondary, margin: 0,
-                fontStyle: fontChoice === "cormorant" ? "italic" : "normal",
-              }}>
-                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "36px" : "28px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>
-                The example of my grandfather Verus gave me a good disposition, not prone to anger. By the recollection of my father's character, I learned to be both modest and manly.
-                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "36px" : "28px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
-              </p>
-              <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "12px", color: t.textMuted, letterSpacing: "1px" }}>MARCUS AURELIUS</span>
-                <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 300 }}>Meditations, Book I §1-2</span>
+            <div style={{ margin: "16px 0 20px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: "0 0 4px" }}>📖 Daily Reading</h2>
+                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{todayLabel} — {readDone.size} of {passages.length} read</p>
               </div>
+              <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
+                background: "transparent", border: `1px solid ${t.borderLight}`,
+                color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
+                fontSize: "11px", cursor: "pointer", fontFamily: rf, fontWeight: 600,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                marginTop: "4px",
+              }}>Aa</button>
             </div>
+
+            {/* Progress bar */}
+            <div style={{ width: "100%", height: "2px", background: t.border, borderRadius: "1px", marginBottom: "20px", overflow: "hidden" }}>
+              <div style={{ height: "100%", background: t.accent, width: `${((readingIndex + 1) / passages.length) * 100}%`, transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)", borderRadius: "1px" }} />
+            </div>
+
+            {/* Font picker */}
             {showFontPicker && (
-              <div style={{ padding: "10px", marginBottom: "8px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "10px", display: "flex", gap: "6px" }}>
+              <div style={{ padding: "10px", marginBottom: "12px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "10px", display: "flex", gap: "6px" }}>
                 {fontOptions.map((f) => {
                   const isActive = fontChoice === f.id;
                   return (
@@ -879,28 +1166,48 @@ export default function PhiloApp() {
                 })}
               </div>
             )}
-            <div style={{ padding: "16px 20px", background: t.surface, borderRadius: "8px", border: `1px solid ${t.border}`, marginBottom: "16px" }}>
-              <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
-              <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>Marcus begins not with grand philosophy, but with gratitude. What qualities have the people around you shaped in you?</p>
-            </div>
-            <button
-              className="btn-continue"
-              onPointerDown={() => setBtnPressed("read")}
-              onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
-              onPointerLeave={() => setBtnPressed(false)}
+
+            {/* Passage card — swipeable */}
+            <div
+              {...dragHandlers}
               style={{
-                width: "100%", padding: "16px", background: t.accentBg, border: "none", borderRadius: "32px",
-                color: t.accentText, fontSize: "14px", fontWeight: 600, cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.5px",
-                transform: btnPressed === "read" ? "translateY(4px) scale(0.97)" : "translateY(0) scale(1)",
-                boxShadow: btnPressed === "read"
-                  ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
-                  : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
-                transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease",
+                padding: "24px", border: `1px solid ${t.border}`, borderRadius: "12px",
+                marginBottom: "12px", background: t.card, boxShadow: t.shadow,
+                cursor: "grab", userSelect: "none", touchAction: "pan-y",
+                animation: readingAnim ? "fadeUp 0.3s ease forwards" : "none",
               }}
-            >Mark as Read</button>
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                <span style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", fontWeight: 500 }}>
+                  {p.ref.toUpperCase()}
+                </span>
+                <span style={{ fontSize: "11px", color: readDone.has(readingIndex) ? t.accent : t.textMuted, fontWeight: readDone.has(readingIndex) ? 600 : 300 }}>
+                  {readDone.has(readingIndex) ? "✓ READ" : `${readingIndex + 1} / ${passages.length}`}
+                </span>
+              </div>
+              <p style={{
+                fontFamily: rf,
+                fontSize: fontChoice === "cormorant" ? "20px" : "15px",
+                lineHeight: fontChoice === "cormorant" ? 2 : 1.85,
+                color: t.textSecondary, margin: 0,
+                fontStyle: fontChoice === "cormorant" ? "italic" : "normal",
+              }}>
+                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "34px" : "26px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>
+                {p.text}
+                <span style={{ fontFamily: rf, fontSize: fontChoice === "cormorant" ? "34px" : "26px", color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
+              </p>
+            </div>
+
+            {/* Reflect prompt */}
+            <div style={{ padding: "16px 20px", background: t.surface, borderRadius: "10px", border: `1px solid ${t.border}`, marginBottom: "16px" }}>
+              <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
+              <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
+            </div>
+
+
           </div>
-        )}
+          );
+        })()}
 
         {/* DAILY TASKS TAB */}
         {activeTab === "todo" && (
@@ -1007,7 +1314,7 @@ export default function PhiloApp() {
           <div>
             <div style={{ margin: "16px 0 24px" }}>
               <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>📱 Screen Time</h2>
-              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Weekly overview — tap a day for details</p>
+              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Sample data — real screen time requires a native app</p>
             </div>
             <div style={{ textAlign: "center", marginBottom: "28px" }}>
               <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "48px", fontWeight: 900 }}>
@@ -1163,6 +1470,71 @@ export default function PhiloApp() {
           );
         })()}
       </div>
+
+      {/* Fixed reading nav — only shown on read tab */}
+      {activeTab === "read" && (
+        <div style={{
+          position: "fixed", bottom: "72px", left: "50%", transform: "translateX(-50%)",
+          width: "100%", maxWidth: "520px",
+          padding: "10px 16px 10px",
+          background: t.bg,
+          borderTop: `1px solid ${t.border}`,
+          zIndex: 10,
+        }}>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              onClick={() => goToReading(readingIndex - 1)}
+              disabled={readingIndex === 0}
+              style={{
+                width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
+                background: "transparent", border: `1px solid ${t.borderLight}`,
+                color: readingIndex === 0 ? t.textMuted : t.text,
+                fontSize: "18px", cursor: readingIndex === 0 ? "default" : "pointer",
+                opacity: readingIndex === 0 ? 0.25 : 1,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                transition: "all 0.2s ease",
+              }}
+            >←</button>
+            <button
+              className="btn-continue"
+              onPointerDown={() => setBtnPressed("read")}
+              onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
+              onPointerLeave={() => setBtnPressed(false)}
+              onClick={() => {
+                setReadDone(prev => new Set([...prev, readingIndex]));
+                if (readingIndex < passages.length - 1) goToReading(readingIndex + 1);
+              }}
+              style={{
+                flex: 1, padding: "14px",
+                background: readDone.has(readingIndex) ? "transparent" : t.accentBg,
+                border: readDone.has(readingIndex) ? `1px solid ${t.borderLight}` : "none",
+                borderRadius: "32px",
+                color: readDone.has(readingIndex) ? t.textMuted : t.accentText,
+                fontSize: "14px", fontWeight: 600, cursor: "pointer",
+                fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.5px",
+                transform: btnPressed === "read" ? "translateY(3px) scale(0.97)" : "translateY(0) scale(1)",
+                boxShadow: readDone.has(readingIndex) ? "none" : btnPressed === "read"
+                  ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
+                  : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
+                transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease, background 0.2s ease",
+              }}
+            >{readDone.has(readingIndex) ? "✓ Completed" : readingIndex === passages.length - 1 ? "Finish" : "Mark as Read →"}</button>
+            <button
+              onClick={() => goToReading(readingIndex + 1)}
+              disabled={readingIndex === passages.length - 1}
+              style={{
+                width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
+                background: "transparent", border: `1px solid ${t.borderLight}`,
+                color: readingIndex === passages.length - 1 ? t.textMuted : t.text,
+                fontSize: "18px", cursor: readingIndex === passages.length - 1 ? "default" : "pointer",
+                opacity: readingIndex === passages.length - 1 ? 0.25 : 1,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                transition: "all 0.2s ease",
+              }}
+            >→</button>
+          </div>
+        </div>
+      )}
 
       {/* Bottom tab bar */}
       <div style={{
