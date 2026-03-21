@@ -160,8 +160,8 @@ const screenTimeData = {
 // ============================================================
 const fontOptions = [
   { id: "cormorant", name: "Elegant", family: "'Cormorant Garamond', serif", preview: "Aa" },
+  { id: "crimson", name: "Literary", family: "'Crimson Pro', serif", preview: "Aa" },
   { id: "quicksand", name: "Clean", family: "'Quicksand', sans-serif", preview: "Aa" },
-  { id: "nunito", name: "Rounded", family: "'Nunito', sans-serif", preview: "Aa" },
 ];
 
 // ============================================================
@@ -1123,6 +1123,14 @@ export default function PhiloApp() {
   }, [readingIndex]);
 
   useEffect(() => {
+    document.body.style.background = mode === "dark" ? "#0A0A0A" : "#F5F0E8";
+    document.body.style.transition = "background 0.15s ease";
+    document.body.classList.add("theme-transition");
+    const t = setTimeout(() => document.body.classList.remove("theme-transition"), 400);
+    return () => clearTimeout(t);
+  }, [mode]);
+
+  useEffect(() => {
     try { localStorage.setItem("praxis_read_done", JSON.stringify([...readDone])); } catch {}
   }, [readDone]);
 
@@ -1701,7 +1709,7 @@ export default function PhiloApp() {
 
   // HOME SCREEN
   return (
-    <div style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", maxWidth: "520px", margin: "0 auto" }}>
+    <div className="theme-transition" style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", maxWidth: "520px", margin: "0 auto", transition: "background 0.15s ease, color 0.15s ease" }}>
       <style>{globalCSS}</style>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 12px" }}>
@@ -1759,7 +1767,7 @@ export default function PhiloApp() {
                     <path d="M4 4l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
-                <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
+                <button onClick={() => setShowFontPicker(prev => !prev)} style={{
                   background: "transparent", border: `1px solid ${t.borderLight}`,
                   color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
                   fontSize: "11px", cursor: "pointer", fontFamily: rf, fontWeight: 600,
@@ -1779,7 +1787,7 @@ export default function PhiloApp() {
                 {fontOptions.map((f) => {
                   const isActive = fontChoice === f.id;
                   return (
-                    <button key={f.id} onClick={() => { setFontChoice(f.id); setShowFontPicker(false); }} style={{
+                    <button key={f.id} onClick={() => setFontChoice(f.id)} style={{
                       flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "4px",
                       padding: "8px 2px", borderRadius: "8px", cursor: "pointer",
                       background: isActive ? (mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)") : "transparent",
@@ -1814,8 +1822,8 @@ export default function PhiloApp() {
               </div>
               <p style={{
                 fontFamily: rf,
-                fontSize: fontChoice === "cormorant" ? `${fontSize + 5}px` : `${fontSize}px`,
-                lineHeight: fontChoice === "cormorant" ? 2 : 1.85,
+                fontSize: fontChoice === "cormorant" ? `${fontSize + 5}px` : fontChoice === "crimson" ? `${fontSize + 3}px` : `${fontSize}px`,
+                lineHeight: fontChoice === "cormorant" ? 2 : fontChoice === "crimson" ? 1.9 : 1.85,
                 color: t.textSecondary, margin: 0,
                 fontStyle: fontChoice === "cormorant" ? "italic" : "normal",
               }}>
@@ -2198,17 +2206,6 @@ export default function PhiloApp() {
                     ) : (
                       <span>{profileName ? profileName[0].toUpperCase() : "?"}</span>
                     )}
-                    {/* Camera overlay */}
-                    <div style={{
-                      position: "absolute", bottom: 0, left: 0, right: 0,
-                      background: "rgba(0,0,0,0.4)", height: "22px",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                    }}>
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <circle cx="12" cy="13" r="4" stroke="#fff" strokeWidth="2"/>
-                      </svg>
-                    </div>
                   </button>
 
                   {/* Revert to initials */}
@@ -2302,12 +2299,16 @@ export default function PhiloApp() {
                 {/* Dark/light toggle */}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "14px", borderBottom: `1px solid ${t.border}`, marginBottom: "14px" }}>
                   <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Appearance</span>
-                  <button onClick={() => { const next = mode === "dark" ? "light" : "dark"; setMode(next); try { localStorage.setItem("praxis_mode", next); } catch {}; }} style={{
-                    display: "flex", alignItems: "center", gap: "8px",
-                    background: "transparent", border: `1px solid ${t.borderLight}`,
-                    borderRadius: "20px", padding: "6px 14px", cursor: "pointer", color: t.text,
-                    fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
-                  }}>{mode === "dark" ? "☀ Light" : "☾ Dark"}</button>
+                  <div style={{ display: "flex", borderRadius: "10px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
+                    {[["light", "Light"], ["dark", "Dark"]].map(([val, label]) => (
+                      <button key={val} onClick={() => { setMode(val); try { localStorage.setItem("praxis_mode", val); } catch {}; }} style={{
+                        padding: "6px 16px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: "none",
+                        background: mode === val ? t.accentBg : "transparent",
+                        color: mode === val ? t.accentText : t.textMuted,
+                        fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.3px",
+                      }}>{label}</button>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Font preference */}
@@ -2437,7 +2438,7 @@ export default function PhiloApp() {
           { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
           { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
           { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
-          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="7" r="4" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /><path d="M2 21v-1a9 9 0 0 1 18 0v1" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="7" r="4" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /><path d="M2 21h18M2 21v-1a9 9 0 0 1 18 0v1" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
@@ -2458,9 +2459,12 @@ export default function PhiloApp() {
 }
 
 const globalCSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; }
+  .theme-transition, .theme-transition * {
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
+  }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0A0A0A; }
   input, textarea, button, select {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
