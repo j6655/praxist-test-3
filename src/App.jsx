@@ -1134,7 +1134,7 @@ export default function PhiloApp() {
         }}>{mode === "dark" ? "☀" : "☾"}</button>
       </div>
 
-      <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 90px)" }}>
+      <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 160px)" }}>
 
         {/* DAILY READING TAB */}
         {activeTab === "read" && (() => {
@@ -1306,7 +1306,9 @@ export default function PhiloApp() {
                           fontSize: "14px", fontWeight: 300, fontFamily: "'DM Sans', sans-serif",
                           color: task.done ? t.textMuted : t.text,
                           textDecoration: task.done ? "line-through" : "none",
-                          padding: "4px 0", transition: "color 0.2s ease",
+                          padding: "8px 0", transition: "color 0.2s ease",
+                          WebkitAppearance: "none", position: "relative", zIndex: 1,
+                          minHeight: "36px",
                         }}
                       />
                       <button onClick={() => deleteTask(selectedTaskDay, task.id)} style={{
@@ -1497,7 +1499,7 @@ export default function PhiloApp() {
       {/* Fixed reading nav — only shown on read tab */}
       {activeTab === "read" && (
         <div style={{
-          position: "fixed", bottom: "72px", left: "50%", transform: "translateX(-50%)",
+          position: "fixed", bottom: "calc(env(safe-area-inset-bottom, 16px) + 90px)", left: "50%", transform: "translateX(-50%)",
           width: "100%", maxWidth: "520px",
           padding: "10px 16px 10px",
           background: t.bg,
@@ -1566,7 +1568,7 @@ export default function PhiloApp() {
       <div style={{
         position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
         width: "100%", maxWidth: "520px", display: "flex", justifyContent: "space-around",
-        padding: "14px 16px calc(env(safe-area-inset-bottom, 16px) + 16px)", background: t.bg, borderTop: `1px solid ${t.border}`,
+        padding: "14px 16px calc(env(safe-area-inset-bottom, 16px) + 16px)", background: t.bg, borderTop: `1px solid ${t.border}`, zIndex: 20,
       }}>
         {[
           { key: "read", label: "Read", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
