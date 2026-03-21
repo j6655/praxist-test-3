@@ -1081,18 +1081,19 @@ export default function PhiloApp() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
-      // Resize to max 200px to keep storage small
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        const size = Math.min(img.width, img.height, 200);
-        canvas.width = size;
-        canvas.height = size;
+        const outputSize = 300;
+        canvas.width = outputSize;
+        canvas.height = outputSize;
         const ctx = canvas.getContext("2d");
-        const sx = (img.width - size) / 2;
-        const sy = (img.height - size) / 2;
-        ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
-        const compressed = canvas.toDataURL("image/jpeg", 0.7);
+        // Center crop — take the smaller dimension as the square
+        const minDim = Math.min(img.width, img.height);
+        const sx = (img.width - minDim) / 2;
+        const sy = (img.height - minDim) / 2;
+        ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, outputSize, outputSize);
+        const compressed = canvas.toDataURL("image/jpeg", 0.8);
         setProfilePhoto(compressed);
         try { localStorage.setItem("praxis_photo", compressed); } catch {}
       };
@@ -1411,7 +1412,7 @@ export default function PhiloApp() {
 
     return (
       <div style={{
-        minHeight: "100vh", maxWidth: "520px", margin: "0 auto",
+        height: "100vh", maxHeight: "100vh", maxWidth: "520px", margin: "0 auto",
         background: currentBg, color: t.text,
         fontFamily: "'DM Sans', sans-serif",
         position: "relative", overflow: "hidden",
@@ -1585,13 +1586,11 @@ export default function PhiloApp() {
           <div style={{
             position: "fixed", top: 0, left: "50%",
             width: "100%", maxWidth: "520px", height: "100vh",
-            background: mode === "dark"
-              ? "radial-gradient(ellipse at 40% 20%, #1a1508 0%, #0A0A0A 70%)"
-              : "radial-gradient(ellipse at 40% 20%, #f5f0e0 0%, #F8F7F4 70%)",
+            background: "radial-gradient(ellipse at 40% 20%, #1a1508 0%, #0A0A0A 70%)",
             zIndex: 50,
             display: "flex", flexDirection: "column", justifyContent: "center",
             padding: "32px",
-            animation: "slideFallDown 0.5s cubic-bezier(0.4, 0, 1, 1) forwards",
+            animation: "slideFallDown 0.65s cubic-bezier(0.65, 0, 0.35, 1) forwards",
           }}>
             <div style={{
               display: "inline-block", marginBottom: "32px",
@@ -1601,9 +1600,9 @@ export default function PhiloApp() {
               <span style={{ fontSize: "10px", letterSpacing: "4px", fontWeight: 600, color: "#c8b44a" }}>HOW MUCH TIME IS LEFT?</span>
             </div>
             <p style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "26px", lineHeight: 1.55, fontStyle: "italic",
-              color: "#F5F5F0", margin: "0 0 24px", fontWeight: 500,
+              fontFamily: "'Nunito', sans-serif",
+              fontSize: "24px", lineHeight: 1.5, fontStyle: "normal",
+              color: "#F5F5F0", margin: "0 0 24px", fontWeight: 700,
             }}>A dot for every year of your life. The ones behind you are filled. Count what remains. Make them count.</p>
             <p style={{ fontSize: "13px", letterSpacing: "3px", fontWeight: 600, color: "#c8b44a", margin: 0, opacity: 0.85 }}>
               YOUR LIFE IN YEARS
@@ -2195,7 +2194,7 @@ export default function PhiloApp() {
                     }}
                   >
                     {profilePhoto ? (
-                      <img src={profilePhoto} alt="profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <img src={profilePhoto} alt="profile" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                     ) : (
                       <span>{profileName ? profileName[0].toUpperCase() : "?"}</span>
                     )}
@@ -2232,6 +2231,9 @@ export default function PhiloApp() {
                       try { localStorage.setItem("praxis_name", e.target.value); } catch {}
                     }}
                     placeholder="Your name"
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="off"
                     style={{
                       background: "transparent", border: "none", outline: "none",
                       fontFamily: "'Nunito', sans-serif", fontSize: "22px", fontWeight: 800,
@@ -2326,18 +2328,23 @@ export default function PhiloApp() {
                 </div>
 
                 {/* Journal mode */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Journal Mode</span>
-                  <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
-                    {["A","B","C","D"].map(m => (
-                      <button key={m} onClick={() => { setJournalMode(m); try { localStorage.setItem("praxis_journal_mode", m); } catch {}; }} style={{
-                        padding: "5px 10px", fontSize: "11px", fontWeight: 600, cursor: "pointer", border: "none",
-                        background: journalMode === m ? t.accentBg : "transparent",
-                        color: journalMode === m ? t.accentText : t.textMuted,
-                        transition: "all 0.2s ease", fontFamily: "'DM Sans', sans-serif",
-                      }}>{m}</button>
-                    ))}
+                <div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                    <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Journal Mode</span>
+                    <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
+                      {["A","B","C","D"].map(m => (
+                        <button key={m} onClick={() => { setJournalMode(m); try { localStorage.setItem("praxis_journal_mode", m); } catch {}; }} style={{
+                          padding: "5px 10px", fontSize: "11px", fontWeight: 600, cursor: "pointer", border: "none",
+                          background: journalMode === m ? t.accentBg : "transparent",
+                          color: journalMode === m ? t.accentText : t.textMuted,
+                          transition: "all 0.2s ease", fontFamily: "'DM Sans', sans-serif",
+                        }}>{m}</button>
+                      ))}
+                    </div>
                   </div>
+                  <p style={{ fontSize: "11px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
+                    {{ A: "Resets at midnight each day", B: "Saved permanently per day", C: "Resets every Sunday", D: "Never resets, clear manually" }[journalMode]}
+                  </p>
                 </div>
               </div>
 
@@ -2430,7 +2437,7 @@ export default function PhiloApp() {
           { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
           { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
           { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
-          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="8" r="4" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke={color} strokeWidth="1.8" strokeLinecap="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="7" r="4" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /><path d="M2 21v-1a9 9 0 0 1 18 0v1" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
@@ -2488,7 +2495,8 @@ const globalCSS = `
   }
   @keyframes slideFallDown {
     0% { transform: translateX(-50%) translateY(0); opacity: 1; }
-    100% { transform: translateX(-50%) translateY(100vh); opacity: 1; }
+    30% { opacity: 1; }
+    100% { transform: translateX(-50%) translateY(105vh); opacity: 0; }
   }
   @keyframes confettiFall {
     0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
