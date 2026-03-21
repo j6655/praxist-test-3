@@ -20,19 +20,19 @@ const themes = {
     shadow: "none",
   },
   light: {
-    bg: "#F8F7F4",
-    surface: "#FFFFFF",
-    border: "#E8E6E1",
-    borderLight: "#D9D7D2",
-    text: "#1A1A1A",
-    textSecondary: "#666",
-    textMuted: "#AAA",
-    accent: "#1A1A1A",
-    accentBg: "#1A1A1A",
-    accentText: "#F8F7F4",
-    card: "#FFFFFF",
-    inputBg: "#F0EFEC",
-    shadow: "0 1px 3px rgba(0,0,0,0.06)",
+    bg: "#F5F0E8",
+    surface: "#EDE8DF",
+    border: "#D9D2C5",
+    borderLight: "#CCC5B5",
+    text: "#2C2416",
+    textSecondary: "#6B5E4A",
+    textMuted: "#A8987E",
+    accent: "#2C2416",
+    accentBg: "#2C2416",
+    accentText: "#F5F0E8",
+    card: "#EDE8DF",
+    inputBg: "#E6E0D5",
+    shadow: "0 1px 3px rgba(0,0,0,0.08)",
   },
 };
 
@@ -92,7 +92,7 @@ const onboardingQuestions = [
       { label: "Evening" },
       { label: "Late Night" },
     ],
-    multi: false,
+    multi: true,
   },
   {
     id: 4,
@@ -105,7 +105,7 @@ const onboardingQuestions = [
       { label: "Learn philosophy" },
       { label: "Self-discipline" },
     ],
-    multi: false,
+    multi: true,
   },
   {
     id: 5,
@@ -123,6 +123,7 @@ const onboardingQuestions = [
       { label: "Karl Marx", desc: "Analyzed capitalism and class struggle. Shaped modern politics and economics." },
       { label: "John Locke", desc: "Championed natural rights and liberty. Influenced modern democracy and the U.S. Constitution." },
       { label: "Jean-Paul Sartre", desc: "Existentialist. Argued for radical freedom and personal responsibility." },
+      { label: "Jean-Jacques Rousseau", desc: "Philosopher of freedom and equality. His Social Contract shaped modern democracy and the French Revolution." },
       { label: "Lao Tzu", desc: "Founder of Taoism. Taught simplicity, patience, and living in harmony with nature." },
       { label: "Epictetus", desc: "Born a slave, became a Stoic master. Focused on what you can and cannot control." },
       { label: "Seneca", desc: "Stoic philosopher and advisor to Nero. Wrote on anger, time, and the shortness of life." },
@@ -172,8 +173,9 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
   const MIN_AGE = 1;
   const MAX_AGE = 99;
   const containerRef = useRef(null);
-  const scrollingRef = useRef(false);
+  const isDragging = useRef(false);
   const lastYRef = useRef(0);
+  const lastTimeRef = useRef(0);
   const velocityRef = useRef(0);
   const offsetRef = useRef((value - MIN_AGE) * ITEM_HEIGHT);
   const animRef = useRef(null);
@@ -181,131 +183,144 @@ function AgeScrollPicker({ value, onChange, theme: t, mode }) {
 
   const totalItems = MAX_AGE - MIN_AGE + 1;
   const maxOffset = (totalItems - 1) * ITEM_HEIGHT;
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const snapTarget = (off) => clamp(Math.round(off / ITEM_HEIGHT) * ITEM_HEIGHT, 0, maxOffset);
+  const getAge = () => MIN_AGE + Math.round(clamp(offsetRef.current, 0, maxOffset) / ITEM_HEIGHT);
 
-  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const stopAnim = () => { if (animRef.current) { cancelAnimationFrame(animRef.current); animRef.current = null; } };
 
-  const snap = (offset) => {
-    const idx = Math.round(offset / ITEM_HEIGHT);
-    return clamp(idx * ITEM_HEIGHT, 0, maxOffset);
-  };
-
-  const getSelectedAge = () => MIN_AGE + Math.round(clamp(offsetRef.current, 0, maxOffset) / ITEM_HEIGHT);
-
-  const animate = () => {
-    let vel = velocityRef.current;
-    const friction = 0.92;
-    const threshold = 0.5;
-
+  const springTo = (target) => {
+    stopAnim();
     const step = () => {
-      vel *= friction;
-      offsetRef.current = clamp(offsetRef.current + vel, 0, maxOffset);
-
-      if (Math.abs(vel) < threshold) {
-        const target = snap(offsetRef.current);
-        const diff = target - offsetRef.current;
-        if (Math.abs(diff) > 0.5) {
-          offsetRef.current += diff * 0.25;
-          forceRender((n) => n + 1);
-          animRef.current = requestAnimationFrame(step);
-        } else {
-          offsetRef.current = target;
-          forceRender((n) => n + 1);
-          onChange(getSelectedAge());
-        }
+      const diff = target - offsetRef.current;
+      if (Math.abs(diff) < 0.3) {
+        offsetRef.current = target;
+        forceRender(n => n + 1);
+        onChange(getAge());
         return;
       }
+      offsetRef.current += diff * 0.18;
+      forceRender(n => n + 1);
+      animRef.current = requestAnimationFrame(step);
+    };
+    animRef.current = requestAnimationFrame(step);
+  };
 
-      forceRender((n) => n + 1);
+  const momentum = () => {
+    stopAnim();
+    const DECEL = 0.94; // higher = glides longer
+    const step = () => {
+      velocityRef.current *= DECEL;
+      offsetRef.current = clamp(offsetRef.current + velocityRef.current, 0, maxOffset);
+      forceRender(n => n + 1);
+      if (Math.abs(velocityRef.current) < 0.4) {
+        springTo(snapTarget(offsetRef.current));
+        return;
+      }
       animRef.current = requestAnimationFrame(step);
     };
     animRef.current = requestAnimationFrame(step);
   };
 
   const handlePointerDown = (e) => {
-    if (animRef.current) cancelAnimationFrame(animRef.current);
-    scrollingRef.current = true;
+    stopAnim();
+    isDragging.current = true;
     lastYRef.current = e.clientY;
+    lastTimeRef.current = performance.now();
     velocityRef.current = 0;
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e) => {
-    if (!scrollingRef.current) return;
+    if (!isDragging.current) return;
+    const now = performance.now();
+    const dt = Math.max(1, now - lastTimeRef.current);
     const dy = lastYRef.current - e.clientY;
-    velocityRef.current = dy;
+    // Time-based velocity so fast and slow phones feel the same
+    velocityRef.current = dy / dt * 16;
     lastYRef.current = e.clientY;
-    offsetRef.current = clamp(offsetRef.current + dy, -ITEM_HEIGHT, maxOffset + ITEM_HEIGHT);
-    forceRender((n) => n + 1);
+    lastTimeRef.current = now;
+    offsetRef.current = clamp(offsetRef.current + dy, -ITEM_HEIGHT * 2, maxOffset + ITEM_HEIGHT * 2);
+    forceRender(n => n + 1);
   };
 
   const handlePointerUp = () => {
-    if (!scrollingRef.current) return;
-    scrollingRef.current = false;
-    animate();
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    if (Math.abs(velocityRef.current) > 1) {
+      momentum();
+    } else {
+      springTo(snapTarget(offsetRef.current));
+    }
   };
 
   const handleWheel = (e) => {
     e.preventDefault();
-    if (animRef.current) cancelAnimationFrame(animRef.current);
-    offsetRef.current = clamp(offsetRef.current + e.deltaY * 0.8, 0, maxOffset);
-    forceRender((n) => n + 1);
-
+    stopAnim();
+    offsetRef.current = clamp(offsetRef.current + e.deltaY * 0.6, 0, maxOffset);
+    forceRender(n => n + 1);
     clearTimeout(handleWheel._t);
-    handleWheel._t = setTimeout(() => {
-      velocityRef.current = 0;
-      animate();
-    }, 100);
+    handleWheel._t = setTimeout(() => springTo(snapTarget(offsetRef.current)), 80);
   };
 
   useEffect(() => {
     offsetRef.current = (value - MIN_AGE) * ITEM_HEIGHT;
-    forceRender((n) => n + 1);
+    forceRender(n => n + 1);
   }, []);
 
   const currentOffset = offsetRef.current;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px 0" }}>
-      <div style={{ position: "relative", height: ITEM_HEIGHT * VISIBLE, width: "160px", overflow: "hidden", userSelect: "none", touchAction: "none" }}
+      <div
         ref={containerRef}
+        style={{ position: "relative", height: ITEM_HEIGHT * VISIBLE, width: "160px", overflow: "hidden", userSelect: "none", touchAction: "none", cursor: "grab" }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
       >
+        {/* Selection highlight */}
         <div style={{
           position: "absolute", top: ITEM_HEIGHT * 2, left: 0, right: 0, height: ITEM_HEIGHT,
           background: mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
           borderTop: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
           borderBottom: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
-          borderRadius: "8px",
-          pointerEvents: "none", zIndex: 1,
+          borderRadius: "8px", pointerEvents: "none", zIndex: 1,
         }} />
+        {/* Top fade */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: ITEM_HEIGHT * 2,
-          background: `linear-gradient(to bottom, ${t.bg}, ${t.bg}00)`,
+          background: `linear-gradient(to bottom, ${t.bg} 20%, ${t.bg}00)`,
           pointerEvents: "none", zIndex: 2,
         }} />
+        {/* Bottom fade */}
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0, height: ITEM_HEIGHT * 2,
-          background: `linear-gradient(to top, ${t.bg}, ${t.bg}00)`,
+          background: `linear-gradient(to top, ${t.bg} 20%, ${t.bg}00)`,
           pointerEvents: "none", zIndex: 2,
         }} />
-        <div style={{ transform: `translateY(${ITEM_HEIGHT * 2 - currentOffset}px)` }}>
+        {/* Items */}
+        <div style={{ transform: `translateY(${ITEM_HEIGHT * 2 - currentOffset}px)`, willChange: "transform" }}>
           {Array.from({ length: totalItems }, (_, i) => {
             const age = MIN_AGE + i;
-            const distFromCenter = Math.abs(i - currentOffset / ITEM_HEIGHT);
-            const opacity = distFromCenter < 0.5 ? 1 : Math.max(0.15, 1 - distFromCenter * 0.3);
-            const scale = distFromCenter < 0.5 ? 1 : Math.max(0.85, 1 - distFromCenter * 0.05);
+            const dist = Math.abs(i - currentOffset / ITEM_HEIGHT);
+            const isCenter = dist < 0.6;
+            const opacity = isCenter ? 1 : Math.max(0.12, 1 - dist * 0.28);
+            const scale = isCenter ? 1 : Math.max(0.82, 1 - dist * 0.06);
             return (
               <div key={age} style={{
-                height: ITEM_HEIGHT, display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "'Nunito', sans-serif", fontSize: distFromCenter < 0.5 ? "28px" : "20px",
-                fontWeight: distFromCenter < 0.5 ? 800 : 400,
-                color: t.text, opacity,
+                height: ITEM_HEIGHT,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontFamily: "'Nunito', sans-serif",
+                fontSize: isCenter ? "30px" : "19px",
+                fontWeight: isCenter ? 800 : 300,
+                color: t.text,
+                opacity,
                 transform: `scale(${scale})`,
-                transition: scrollingRef.current ? "none" : "font-size 0.15s ease, opacity 0.15s ease",
+                transition: isDragging.current ? "none" : "opacity 0.12s ease, transform 0.12s ease",
+                willChange: "transform, opacity",
               }}>
                 {age}
               </div>
@@ -755,11 +770,276 @@ const passages = [
     text: "When thou art troubled about anything, thou hast forgotten this: that all things happen according to the universal nature, and that a man's wrongful act is nothing to thee, and further that everything which happens always happened so and will happen so, and now happens so everywhere.",
     reflect: "Marcus returns constantly to this: things are as they are. Not as punishment, not as injustice directed at you. Just as they are. Can you find any peace in that?",
   },
+
+  // ── JEAN-JACQUES ROUSSEAU — The Social Contract ──────────────────────────
+  {
+    ref: "The Social Contract · Book I, Ch. 1",
+    text: "Man was born free, and everywhere he is in chains. Many a one believes himself the master of others, and yet he is a greater slave than they. How has this change come about? I do not know. What can make it legitimate? I believe I can settle this question.",
+    reflect: "Rousseau opens with one of philosophy's most powerful lines. In what ways do you carry chains you have accepted as normal — social, mental, or otherwise?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 1",
+    text: "The social order is a sacred right that serves as a foundation for all others. This right, however, does not come from nature. It is therefore based on conventions.",
+    reflect: "The rules we live by are not natural facts — they are agreements. Which conventions in your life have you accepted without questioning whether they still serve you?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 2",
+    text: "The earliest of all societies, and the only natural one, is the family; yet children remain attached to their father only so long as they need him for their own survival. As soon as this need ceases, the natural bond is dissolved.",
+    reflect: "Rousseau argues that even the family is ultimately held together by choice, not nature. Which of your relationships are held together by genuine choice — and which by habit or obligation?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 2",
+    text: "This common liberty is a consequence of man's nature. His first law is to attend to his own survival, his first concerns are those he owes to himself; and as soon as he reaches the age of rationality, being sole judge of how to survive, he becomes his own master.",
+    reflect: "Rousseau places self-determination at the core of human nature. At what point in your life did you truly become your own master — or are you still working toward that?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 3",
+    text: "The strongest man is never strong enough to be always master, unless he transforms his power into right, and obedience into duty.",
+    reflect: "Raw power alone cannot sustain authority — it must be made legitimate. Where in your own life do you exercise influence, and is it grounded in genuine right or merely in force of habit?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 3",
+    text: "Let us agree, then, that might does not make right, and that we are bound to obey none but lawful authorities.",
+    reflect: "This is a deceptively simple statement with enormous consequences. Which authorities in your life have you accepted as lawful — and have you ever examined why?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 4",
+    text: "Since no man has any natural authority over his fellow men, and since might is not the source of right, conventions remain as the basis of all lawful authority among men.",
+    reflect: "If authority is purely conventional, then it can be renegotiated. What conventions govern your work, relationships, or community — and which ones deserve to be rethought?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 6",
+    text: "To find a form of association that may defend and protect with the whole force of the community the person and property of every associate, and by means of which each, joining together with all, may nevertheless obey only himself, and remain as free as before — such is the fundamental problem of which the social contract provides the solution.",
+    reflect: "Rousseau's central question: how can we live together without surrendering ourselves? Do you feel that the communities you belong to protect your freedom, or diminish it?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 6",
+    text: "Each giving himself to all, gives himself to no one; and since there is no associate over whom we do not acquire the same rights which we concede to him over ourselves, we gain the equivalent of all that we lose, and more power to preserve what we have.",
+    reflect: "True community is an equal exchange, not a sacrifice. Think of a group you belong to — is the exchange genuinely equal, or does one side give more than it receives?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 7",
+    text: "Whoever refuses to obey the general will shall be constrained to do so by the whole body; which means nothing else than that he shall be forced to be free.",
+    reflect: "One of Rousseau's most debated lines — freedom through constraint. Is there a discipline or structure in your life that initially felt like a restriction but ultimately made you more free?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 8",
+    text: "The transition from the state of nature to the civil state produces a very remarkable change in man, by substituting in his behavior justice for instinct, and by imbuing his actions with a moral quality they previously lacked.",
+    reflect: "Rousseau sees civilization as a moral upgrade, not just a practical one. In what ways has living among others made you more just, more careful, more human than you would have been alone?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 8",
+    text: "Only when the voice of duty prevails over physical impulse, and law prevails over appetite, does man, who until then was preoccupied only with himself, understand that he must act according to other principles, and must consult his reason before listening to his inclinations.",
+    reflect: "The gap between impulse and reason is where character is built. Where in your life do you still let appetite win over judgment — and what would change if duty won instead?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 8",
+    text: "What man loses because of the social contract is his natural liberty and an unlimited right to anything that tempts him; what he gains is civil liberty and property in all that he possesses.",
+    reflect: "Every commitment trades unlimited possibility for something more real and stable. What have you given up to gain something more meaningful — and was the trade worth it?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 8",
+    text: "The impulse of mere appetite is slavery, while obedience to a self-prescribed law is freedom.",
+    reflect: "Being ruled by your cravings is a form of captivity. What self-prescribed law — a discipline, a value, a commitment — gives you the most genuine sense of freedom?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 9",
+    text: "Instead of destroying natural equality, the fundamental pact, on the contrary, substitutes a moral and lawful equality for the physical inequality that nature imposed upon men, so that, although unequal in strength or intellect, they all become equal by convention and legal right.",
+    reflect: "Law can create a kind of equality that nature never provides. Where do you benefit from this constructed equality — and where do you notice it breaking down around you?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 1",
+    text: "Sovereignty, being nothing but the exercise of the general will, can never be alienated, and the sovereign power, which is in fact a collective being, can be represented only by itself; power indeed can be transmitted, but not will.",
+    reflect: "You cannot hand your authentic will over to someone else to exercise on your behalf. In what areas of your life have you delegated your will — your choices, your voice — when you should have kept them?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 1",
+    text: "If the people simply promises to obey, it dissolves itself by that act and loses its character as a people; the moment there is a master, there is no longer a sovereign.",
+    reflect: "Blind obedience is self-erasure. Think of an institution, relationship, or ideology you follow — are you a participant with a voice, or have you quietly handed yourself over?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 3",
+    text: "The general will is always right and always tends to the public good; but it does not follow that the deliberations of the people always have the same rectitude. Men always desire their own good, but do not always discern it.",
+    reflect: "Wanting good outcomes and knowing how to achieve them are two different things. Where in your life are you confident of your desires but uncertain of your judgment?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 3",
+    text: "The people are never corrupted, though often deceived, and it is only then that they seem to will what is evil.",
+    reflect: "Rousseau is surprisingly generous about human nature — he blames deception, not depravity. Think of a time you made a decision you later regretted. Were you deceived, or were you deceiving yourself?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 3",
+    text: "There is often a great deal of difference between the will of all and the general will; the latter regards only the common interest, while the former has regard to private interests, and is merely a sum of particular wills.",
+    reflect: "What everyone wants individually is not the same as what is good for everyone collectively. Where do you see this tension playing out in your own community or country right now?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 4",
+    text: "The sovereign power, wholly absolute, wholly sacred, and wholly inviolable, does not and cannot transcend the limits of general agreements; and every man can fully control what is left to him of his property and liberty by these agreements.",
+    reflect: "Even the highest authority has limits defined by the agreements that created it. Where do you feel the institutions in your life have exceeded the mandate you gave them?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 4",
+    text: "Why is the general will always right, and why do all invariably desire the prosperity of each, unless it is because there is no one who appropriates to himself this word each without also thinking of himself when voting on behalf of all?",
+    reflect: "Rousseau argues self-interest and common interest align when we think clearly. When you vote, choose, or decide on behalf of a group — are you thinking of everyone, or quietly privileging yourself?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 5",
+    text: "The social contract has as its end the preservation of the contracting parties. He who desires the end also desires the means, and some risks, even some losses, are inseparable from these means.",
+    reflect: "Every worthy goal carries unavoidable costs. What risk or loss are you currently reluctant to accept, even though it is genuinely necessary for something you say you want?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 5",
+    text: "Again, the frequency of capital punishments is always a sign of weakness or indolence in the government. There is no man so worthless that he cannot be made good for something.",
+    reflect: "Rousseau believed in the redeemability of people rather than their disposal. Who in your life have you written off — and is that judgment truly final, or is it a failure of imagination?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 6",
+    text: "What is right and conformable to order is such by the nature of things, and independently of human conventions. All justice comes from God, He alone is the source of it; but if we understood how to receive it direct from so lofty a source, we would need neither government nor laws.",
+    reflect: "Rousseau acknowledges a justice beyond law — and our failure to access it directly. Where do you sense that something is wrong even though it is technically legal?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 6",
+    text: "Conventions and laws are necessary to couple rights with duties and apply justice to its object. In the state of nature, where everything exists in common, I owe nothing to those to whom I have promised nothing.",
+    reflect: "Obligation is created by promise and convention, not by nature. What promises have you made — explicit or implicit — that you are not fully honoring?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 7",
+    text: "In order to discover the rules of society that are best suited to nations, there would be needed a superior intelligence that beheld all the passions of men without feeling any of them; who had no affinity with our nature, yet knew it thoroughly.",
+    reflect: "Rousseau describes an ideal lawgiver who is beyond human weakness. Which of your passions most distorts your judgment when you try to make rules or decisions for others?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 7",
+    text: "He who dares to undertake the founding of a people's institutions must feel himself capable of changing human nature, of transforming each individual, who by himself is a complete and separate whole, into part of a greater whole.",
+    reflect: "Real change — in a community, a company, a family — requires transforming how people see themselves. Have you ever been part of something that genuinely changed who you were?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 11",
+    text: "Every political system has an object, or should have one. This object, which distinguishes it from others, is the common good. And what is this common good? It is composed of two elements, liberty and equality.",
+    reflect: "Liberty and equality are both necessary but can pull against each other. In your own life, where do you find yourself trading one for the other — and is the balance right?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 12",
+    text: "Laws are always useful to those who possess and injurious to those who have nothing; whence it follows that the social state is advantageous to men only so far as they all have something, and none of them has too much.",
+    reflect: "Rules tend to protect what already exists. Who benefits from the rules in your workplace, your community, your country — and who is quietly disadvantaged by them?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 1",
+    text: "Every free action has two causes that concur to produce it: one moral, namely the will that determines the act; the other physical, namely the power that executes it. When I walk toward an object, the will to do so and my legs to carry me there are both necessary. A paralytic who wills to run, and a nimble man who does not will to, both stay where they are.",
+    reflect: "Will without power is impotent. Power without will is directionless. Where in your life do you have the will but lack the capacity — and where do you have the capacity but lack the will to use it?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 2",
+    text: "It is not good for one who makes the laws to execute them, nor for the body of the people to turn its attention from general considerations to particular objects.",
+    reflect: "There is wisdom in separating the role of creator from executor. In your own work or life, where do you need to step back from executing and return to thinking about the bigger picture?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 4",
+    text: "A government so perfect is not suited to men. If there were a people of gods, it would govern itself democratically. A government so perfect is not suited to men.",
+    reflect: "Rousseau is honest about the gap between ideal systems and flawed humans. What ideal are you holding yourself or others to that is genuinely too perfect for real human life?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 6",
+    text: "In general, a democratic government is suited to small States, an aristocratic one to States of medium size, and a monarchical one to large States. But there are a thousand exceptions to this rule.",
+    reflect: "Context determines what system works. What structure — for your team, family, or project — fits the size and nature of what you are actually working with, not some ideal?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 9",
+    text: "The moment a people gives itself representatives, it is no longer free; it no longer exists.",
+    reflect: "Rousseau believed freedom requires direct participation, not delegation. In what areas of your life have you outsourced your agency to someone else to manage — and what would it mean to take it back?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 10",
+    text: "The government usurps the sovereignty when the prince, instead of executing the laws, makes them; when it governs the people instead of serving them; when it turns its power against the people.",
+    reflect: "This inversion — servant becoming master — happens in institutions, relationships, and within ourselves. Where has something that was meant to serve you ended up controlling you?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 11",
+    text: "The body politic, as well as the human body, begins to die as soon as it is born, and carries within itself the causes of its destruction.",
+    reflect: "Every institution carries the seeds of its own decline. What in your life — a company, a relationship, a habit — is showing the early signs of decay, and what would it take to renew it?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 12",
+    text: "The sovereign has no other force than the legislative power; it acts only by the laws; and as the laws are only the authentic acts of the general will, the sovereign could not act but when the people is assembled.",
+    reflect: "Real authority requires genuine participation, not just formal structures. Where do you have a nominal voice but not a real one — and what would genuine participation look like?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 13",
+    text: "There is but one law which, from its nature, needs unanimous consent: the social compact; for civil association is the most voluntary of all acts; every man being born free and master of himself, no one is able, on any pretext whatsoever, to make any man subject without his consent.",
+    reflect: "Consent is the foundation of legitimate authority. Look at the largest commitments in your life — did you give genuine, informed consent, or did you simply drift into them?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 15",
+    text: "The deputies of the people are not and cannot be its representatives; they are its commissioners only, and can do nothing definitively. Every law the people has not ratified in person is void; it is not a law.",
+    reflect: "Rousseau insists that no one can truly speak for you. Where do you let others speak for you — in your name, on your behalf — without actually checking whether they represent what you truly believe?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 15",
+    text: "The English people thinks itself free; it is gravely mistaken; it is free only during the election of members of parliament; as soon as they are elected, it is a slave, it is nothing.",
+    reflect: "Participation once every few years is not genuine freedom. In what areas of your life do you confuse the ritual of choice with the reality of ongoing self-determination?",
+  },
+  {
+    ref: "The Social Contract · Book IV, Ch. 1",
+    text: "As long as a number of men in combination are considered as a single body, they have but one will, which relates to the common preservation and to the general welfare. In this case all the resources of the State are vigorous and simple, its maxims clear and luminous; there are no embroiled or conflicting interests.",
+    reflect: "Unity of purpose produces clarity and power. Think of the last time a group you were part of had genuine shared purpose. What made it work — and what caused it to fracture?",
+  },
+  {
+    ref: "The Social Contract · Book IV, Ch. 1",
+    text: "A State thus governed needs very few laws; and as it becomes necessary to issue new ones, the necessity is universally seen. The first man to propose them merely says what all have already felt.",
+    reflect: "The best rules articulate what the community already knows to be right. What rule or principle in your life have you been living by without ever naming it explicitly?",
+  },
+  {
+    ref: "The Social Contract · Book IV, Ch. 2",
+    text: "There is but one general will. When a contrary opinion is carried, this proves nothing except that I was deceived, and that what I thought to be the general will was not so.",
+    reflect: "Rousseau reframes losing a vote: you were not overruled, you were corrected. How do you usually respond to being outvoted or overridden — as an injustice, or as new information?",
+  },
+  {
+    ref: "The Social Contract · Book IV, Ch. 7",
+    text: "The institution of the dictatorship is in no wise dangerous where employed in those grave and critical junctures when the country is in peril; the danger lies in the abuse of this institution by allowing it to extend beyond necessity.",
+    reflect: "Emergency powers exist for emergencies — not as permanent tools. Where in your life have you granted someone emergency authority that has quietly become ordinary authority?",
+  },
+  {
+    ref: "The Social Contract · Book IV, Ch. 8",
+    text: "No State has ever been founded without a religious basis. Christianity, as a religion, is wholly favourable to tyranny. It makes men too little attached to things of this world; it creates a holy, inviolable, unquestioned authority which is always exploited by tyrants.",
+    reflect: "Rousseau raises the uncomfortable question of how belief systems can be used to pacify rather than liberate. What beliefs — religious, political, or cultural — have you accepted in ways that diminish rather than expand your agency?",
+  },
+  {
+    ref: "The Social Contract · Book IV, Ch. 8",
+    text: "There is a purely civil profession of faith, the articles of which it belongs to the sovereign to fix, not exactly as religious dogmas, but as social sentiments, without which it is impossible to be either a good citizen or a faithful subject.",
+    reflect: "Rousseau believed shared civic values are as important as laws. What are the core values your community actually shares — not what they say they share, but what they demonstrate through action?",
+  },
+  {
+    ref: "The Social Contract · Preface",
+    text: "I want to inquire whether, taking men as they are and laws as they can be made to be, it is possible to establish some just and reliable rule of administration in civil affairs. I shall always strive to reconcile what right permits with what interest prescribes, so that justice and utility may not be at variance.",
+    reflect: "Rousseau begins with a practical question, not an ideal one — working with humans as they are, not as we wish they were. Where in your life are you designing for the ideal human instead of the actual one?",
+  },
+  {
+    ref: "The Social Contract · Preface",
+    text: "Born a citizen of a free State, and a member of that sovereign body, however feeble an influence my voice may have in public affairs, the right to vote on them is sufficient to impose on me the duty of informing myself about them.",
+    reflect: "Having the right to speak comes with the duty to be informed before speaking. Where are you exercising influence or casting judgment without having done the work of truly understanding the issue?",
+  },
+  {
+    ref: "The Social Contract · Book I, Ch. 4",
+    text: "To renounce liberty is to renounce being a man, to surrender the rights of humanity and even its duties. For him who renounces everything there is no possible compensation. Such a renunciation is incompatible with man's nature; to remove all liberty from his will is to remove all morality from his acts.",
+    reflect: "Rousseau says giving up freedom is giving up humanity itself. In what quiet ways — through comfort, fear, or conformity — have you been slowly renouncing your liberty?",
+  },
+  {
+    ref: "The Social Contract · Book II, Ch. 7",
+    text: "Gods would be needed to give men laws. The same reasoning that Plato used when seeking his civil or royal man in his Republic is used by Rousseau in terms of legislation.",
+    reflect: "The gap between what is needed and what is humanly possible is where most institutions fail. What in your life demands more wisdom than you or anyone around you actually has — and how do you act wisely anyway?",
+  },
+  {
+    ref: "The Social Contract · Book III, Ch. 15",
+    text: "Sovereignty cannot be represented, for the same reason that it cannot be alienated; it consists essentially in the general will, and the will cannot be represented.",
+    reflect: "Your deepest will — what you truly want for your life — cannot be handed to someone else to carry. Who or what are you allowing to represent your will, when only you can truly exercise it?",
+  },
 ];
 
 
+
 export default function PhiloApp() {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState(() => {
+    try { return localStorage.getItem("praxis_mode") || "dark"; } catch { return "dark"; }
+  });
   const [onboardingDone, setOnboardingDone] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [introStep, setIntroStep] = useState(0);
@@ -771,6 +1051,55 @@ export default function PhiloApp() {
   const [fontSize, setFontSize] = useState(15);
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [onboardingAnswers, setOnboardingAnswers] = useState({});
+  const [profileName, setProfileName] = useState(() => {
+    try { return localStorage.getItem("praxis_name") || ""; } catch { return ""; }
+  });
+  const [profilePhoto, setProfilePhoto] = useState(() => {
+    try { return localStorage.getItem("praxis_photo") || ""; } catch { return ""; }
+  });
+  const photoInputRef = useRef(null);
+
+  // Generate unique gradient from name
+  const getAvatarGradient = (name) => {
+    const gradients = [
+      ["#c9a96e", "#8B5E3C"], // amber
+      ["#6db86d", "#2E7D32"], // green
+      ["#7b7bd4", "#3F3F9F"], // purple
+      ["#d46b6b", "#9F2F2F"], // red
+      ["#5b93d1", "#1A5C9F"], // blue
+      ["#b06dd4", "#6A1F9F"], // violet
+      ["#c8b44a", "#8F7A1A"], // gold
+      ["#6dd4b0", "#1F9F6A"], // teal
+    ];
+    if (!name) return gradients[0];
+    const idx = name.charCodeAt(0) % gradients.length;
+    return gradients[idx];
+  };
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      // Resize to max 200px to keep storage small
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const size = Math.min(img.width, img.height, 200);
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        const sx = (img.width - size) / 2;
+        const sy = (img.height - size) / 2;
+        ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
+        const compressed = canvas.toDataURL("image/jpeg", 0.7);
+        setProfilePhoto(compressed);
+        try { localStorage.setItem("praxis_photo", compressed); } catch {}
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
   const [userAge, setUserAge] = useState(22);
   const [ageInput, setAgeInput] = useState("22");
   const [btnPressed, setBtnPressed] = useState(false);
@@ -781,6 +1110,12 @@ export default function PhiloApp() {
   const [readDone, setReadDone] = useState(() => {
     try { const s = localStorage.getItem("praxis_read_done"); return s ? new Set(JSON.parse(s)) : new Set(); } catch { return new Set(); }
   });
+  const [streak, setStreak] = useState(() => {
+    try { const s = localStorage.getItem("praxis_streak"); return s ? parseInt(s) : 0; } catch { return 0; }
+  });
+  const [lastReadDate, setLastReadDate] = useState(() => {
+    try { return localStorage.getItem("praxis_last_read_date") || ""; } catch { return ""; }
+  });
 
   useEffect(() => {
     try { localStorage.setItem("praxis_reading_index", String(readingIndex)); } catch {}
@@ -789,6 +1124,27 @@ export default function PhiloApp() {
   useEffect(() => {
     try { localStorage.setItem("praxis_read_done", JSON.stringify([...readDone])); } catch {}
   }, [readDone]);
+
+  useEffect(() => {
+    try { localStorage.setItem("praxis_streak", String(streak)); } catch {}
+  }, [streak]);
+
+  useEffect(() => {
+    try { localStorage.setItem("praxis_last_read_date", lastReadDate); } catch {}
+  }, [lastReadDate]);
+
+  // Call this whenever a passage is marked as read
+  const updateStreak = () => {
+    const today = new Date().toDateString();
+    if (lastReadDate === today) return; // already read today, no change
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (lastReadDate === yesterday) {
+      setStreak(s => s + 1); // consecutive day
+    } else {
+      setStreak(1); // streak broken or first time
+    }
+    setLastReadDate(today);
+  };
   const [readingAnim, setReadingAnim] = useState(false);
   const dragStartX = useRef(null);
   const dragDeltaX = useRef(0);
@@ -903,6 +1259,55 @@ export default function PhiloApp() {
 
   const [celebrating, setCelebrating] = useState(false);
 
+  // Journal — per day, Option A resets at midnight, Option B keeps all entries
+  const [journalMode, setJournalMode] = useState(() => {
+    try { return localStorage.getItem("praxis_journal_mode") || "A"; } catch { return "A"; }
+  });
+
+  const getJournalKey = (day) => `praxis_journal_${day}`;
+
+  const loadJournalForDay = (day) => {
+    try {
+      const saved = localStorage.getItem(getJournalKey(day));
+      if (!saved) return "";
+      const { text, date } = JSON.parse(saved);
+      const today = new Date();
+      if (journalMode === "A" && date !== today.toDateString()) return "";
+      if (journalMode === "C") {
+        // Reset every Sunday — clear if saved date was before this week's Sunday
+        const savedDate = new Date(date);
+        const dayOfWeek = today.getDay();
+        const lastSunday = new Date(today);
+        lastSunday.setDate(today.getDate() - dayOfWeek);
+        lastSunday.setHours(0, 0, 0, 0);
+        if (savedDate < lastSunday) return "";
+      }
+      // Mode B and D — never auto-reset
+      return text;
+    } catch { return ""; }
+  };
+
+  const [journalEntries, setJournalEntries] = useState(() => {
+    const entries = {};
+    ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(d => {
+      entries[d] = loadJournalForDay(d);
+    });
+    return entries;
+  });
+
+  const saveJournal = (day, text) => {
+    setJournalEntries(prev => ({ ...prev, [day]: text }));
+    try {
+      localStorage.setItem(getJournalKey(day), JSON.stringify({
+        text,
+        date: new Date().toDateString(),
+      }));
+    } catch {}
+  };
+
+  const currentJournal = journalEntries[selectedTaskDay] || "";
+  const journalWordCount = currentJournal.trim() ? currentJournal.trim().split(/\s+/).length : 0;
+
   const toggleTask = (day, taskId) => {
     const prevTask = weekTasks[day].find((tk) => tk.id === taskId);
     const newTasks = weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, done: !tk.done } : tk));
@@ -933,48 +1338,191 @@ export default function PhiloApp() {
 
   // INTRO SLIDES
   if (screen === "onboarding" && !onboardingDone && showIntro) {
-    const slides = [
-      { icon: "📖", title: "📖 Daily Readings", desc: "One passage a day from the greatest thinkers. Short enough to read in a minute." },
-      { icon: "✅", title: "✅ Daily Tasks", desc: "Set goals for each day of the week. Check them off. Build momentum." },
-      { icon: "📱", title: "📱 Screen Time", desc: "See where your hours actually go. Less scrolling, more living." },
-      { icon: "⏳", title: "⏳ Your Life in Years", desc: "A dot for every year. See how much is left. Make it count." },
+    const philoSlides = [
+      {
+        label: "DAILY READING",
+        quote: "The impediments to action advance action. What stands in the way becomes the way.",
+        author: "Marcus Aurelius",
+        bg: "radial-gradient(ellipse at 30% 60%, #1a1208 0%, #0A0A0A 70%)",
+        accent: "#c9a96e",
+      },
+      {
+        label: "DAILY TASKS",
+        quote: "First say to yourself what you would be, and then do what you have to do.",
+        author: "Epictetus",
+        bg: "radial-gradient(ellipse at 70% 40%, #0d1a0d 0%, #0A0A0A 70%)",
+        accent: "#6db86d",
+      },
+      {
+        label: "SCREEN TIME",
+        quote: "It is not that we have a short time to live, but that we waste much of it.",
+        author: "Seneca",
+        bg: "radial-gradient(ellipse at 50% 70%, #0d0d1a 0%, #0A0A0A 70%)",
+        accent: "#7b7bd4",
+      },
+      {
+        label: "YOUR LIFE IN YEARS",
+        quote: "Man was born free, and everywhere he is in chains.",
+        author: "Jean-Jacques Rousseau",
+        bg: "radial-gradient(ellipse at 60% 30%, #1a0d0d 0%, #0A0A0A 70%)",
+        accent: "#d46b6b",
+      },
     ];
-    const slide = slides[introStep];
-    const isLast = introStep === slides.length - 1;
+
+    const featureSlides = [
+      {
+        label: "READ WHAT EMPERORS READ",
+        quote: "One passage a day from the greatest thinkers in history. Short enough to read in a minute. Deep enough to change how you think.",
+        author: "Daily Readings",
+        bg: "radial-gradient(ellipse at 20% 50%, #0f1520 0%, #0A0A0A 70%)",
+        accent: "#5b93d1",
+      },
+      {
+        label: "DISCIPLINE OVER MOTIVATION",
+        quote: "Set your intentions for each day of the week. Check them off. Build the kind of momentum that compounds.",
+        author: "Daily Tasks",
+        bg: "radial-gradient(ellipse at 80% 30%, #0f1a0f 0%, #0A0A0A 70%)",
+        accent: "#5bbf5b",
+      },
+      {
+        label: "YOUR TIME IS RUNNING OUT",
+        quote: "See exactly where your hours go each day. The numbers don't lie. Less scrolling, more living.",
+        author: "Screen Time",
+        bg: "radial-gradient(ellipse at 60% 70%, #1a0f1a 0%, #0A0A0A 70%)",
+        accent: "#b06dd4",
+      },
+      {
+        label: "HOW MUCH TIME IS LEFT?",
+        quote: "A dot for every year of your life. The ones behind you are filled. Count what remains. Make them count.",
+        author: "Your Life in Years",
+        bg: "radial-gradient(ellipse at 40% 20%, #1a1508 0%, #0A0A0A 70%)",
+        accent: "#c8b44a",
+      },
+    ];
+
+    const totalSlides = philoSlides.length + featureSlides.length;
+    const isPhiloSlide = introStep < philoSlides.length;
+    const featureIndex = introStep - philoSlides.length;
+    const isLast = introStep === totalSlides - 1;
+    const isTransition = introStep === philoSlides.length;
+    const slide = isPhiloSlide ? philoSlides[introStep] : featureSlides[featureIndex];
+    const currentBg = slide.bg;
+    const currentAccent = slide.accent;
 
     return (
-      <div style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", position: "relative", overflow: "hidden", maxWidth: "520px", margin: "0 auto" }}>
+      <div style={{
+        minHeight: "100vh", maxWidth: "520px", margin: "0 auto",
+        background: currentBg, color: t.text,
+        fontFamily: "'DM Sans', sans-serif",
+        position: "relative", overflow: "hidden",
+        transition: "background 0.6s ease",
+      }}>
         <style>{globalCSS}</style>
-        <div style={{ display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", minHeight: "100vh", position: "relative", background: t.bg }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-            <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
-            <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
-              background: "transparent", border: `1px solid ${t.borderLight}`, color: t.textMuted,
-              padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif", fontWeight: 400, letterSpacing: "0.5px",
-            }}>Skip</button>
-          </div>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "0 16px" }}>
-            <div key={introStep} style={{ animation: "fadeUp 0.35s ease forwards" }}>
-              <span style={{ fontSize: "64px", display: "block", marginBottom: "28px", opacity: 0.6 }}>{slide.icon}</span>
-              <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "30px", fontWeight: 800, margin: "0 0 12px", lineHeight: 1.2 }}>{slide.title}</h1>
-              <p style={{ fontSize: "15px", color: t.textSecondary, margin: 0, fontWeight: 300, lineHeight: 1.6, maxWidth: "300px" }}>{slide.desc}</p>
+
+        <div style={{
+          position: "absolute", inset: 0, opacity: 0.03,
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+          pointerEvents: "none",
+        }} />
+
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          padding: "calc(env(safe-area-inset-top, 44px) + 16px) 28px 0",
+          position: "relative", zIndex: 2,
+        }}>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", letterSpacing: "3px", fontWeight: 800, opacity: 0.9, color: "#F5F5F0" }}>
+            PRAXIS<span style={{ fontSize: "10px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span>
+          </span>
+          <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
+            background: "transparent",
+            border: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`,
+            color: t.textMuted, padding: "6px 14px", borderRadius: "16px",
+            fontSize: "12px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+          }}>Skip</button>
+        </div>
+
+        {isPhiloSlide ? (
+          <div style={{
+            display: "flex", flexDirection: "column", justifyContent: "center",
+            height: "calc(100vh - 80px)", marginTop: "80px", padding: "0 32px 160px", position: "relative", zIndex: 2,
+          }}>
+            <div key={introStep} style={{ animation: "cinematicFadeIn 0.7s ease forwards" }}>
+              <div style={{
+                display: "inline-block", marginBottom: "32px",
+                padding: "6px 14px", borderRadius: "20px",
+                border: `1px solid ${slide.accent}44`,
+                background: `${slide.accent}18`,
+              }}>
+                <span style={{ fontSize: "10px", letterSpacing: "4px", fontWeight: 600, color: slide.accent }}>{slide.label}</span>
+              </div>
+              <p style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: "28px", lineHeight: 1.5, fontStyle: "italic",
+                color: "#F5F5F0", margin: "0 0 24px", fontWeight: 500,
+              }}>
+                <span style={{ fontSize: "48px", color: slide.accent, lineHeight: 0, position: "relative", top: "10px", marginRight: "4px", opacity: 0.7 }}>"</span>
+                {slide.quote}
+                <span style={{ fontSize: "48px", color: slide.accent, lineHeight: 0, position: "relative", top: "10px", marginLeft: "4px", opacity: 0.7 }}>"</span>
+              </p>
+              <p style={{ fontSize: "13px", letterSpacing: "3px", fontWeight: 400, color: slide.accent, margin: 0, opacity: 0.85 }}>
+                — {slide.author.toUpperCase()}
+              </p>
             </div>
           </div>
-          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "28px" }}>
-            {slides.map((_, i) => (
+        ) : (
+          <div style={{
+            display: "flex", flexDirection: "column", justifyContent: "center",
+            height: "calc(100vh - 80px)", marginTop: "80px", padding: "0 32px 160px", position: "relative", zIndex: 2,
+          }}>
+            <div key={introStep} style={{ animation: isTransition ? "slideInFromRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards" : "cinematicFadeIn 0.6s ease forwards" }}>
+              <div style={{
+                display: "inline-block", marginBottom: "32px",
+                padding: "6px 14px", borderRadius: "20px",
+                border: `1px solid ${slide.accent}44`,
+                background: `${slide.accent}18`,
+              }}>
+                <span style={{ fontSize: "10px", letterSpacing: "4px", fontWeight: 600, color: slide.accent }}>{slide.label}</span>
+              </div>
+              <p style={{
+                fontFamily: "'Nunito', sans-serif",
+                fontSize: "24px", lineHeight: 1.5, fontStyle: "normal",
+                color: "#F5F5F0", margin: "0 0 24px", fontWeight: 700,
+              }}>
+                {slide.quote}
+              </p>
+              <p style={{ fontSize: "13px", letterSpacing: "3px", fontWeight: 600, color: slide.accent, margin: 0, opacity: 0.85 }}>
+                {slide.author.toUpperCase()}
+              </p>
+            </div>
+          </div>
+        )}
+
+        <div style={{
+          position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
+          width: "100%", maxWidth: "520px",
+          padding: "20px 28px calc(env(safe-area-inset-bottom, 16px) + 20px)",
+          zIndex: 2,
+        }}>
+          <div style={{ display: "flex", gap: "6px", marginBottom: "20px", alignItems: "center" }}>
+            {Array.from({ length: totalSlides }, (_, i) => (
               <div key={i} style={{
-                width: i === introStep ? "24px" : "8px", height: "8px", borderRadius: "4px",
-                background: i === introStep ? t.accent : t.borderLight,
-                transition: "all 0.3s ease",
+                height: "3px", borderRadius: "2px",
+                width: i === introStep ? "28px" : "12px",
+                background: i === introStep
+                  ? slide.accent
+                  : (mode === "dark" ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.15)"),
+                transition: "all 0.4s ease",
+                marginRight: "0",
               }} />
             ))}
           </div>
-          <div style={{ display: "flex", gap: "12px", paddingBottom: "16px" }}>
+
+          <div style={{ display: "flex", gap: "12px" }}>
             {introStep > 0 && (
               <button onClick={() => setIntroStep(introStep - 1)} style={{
                 width: "52px", height: "52px", borderRadius: "50%",
-                background: "transparent", border: `1px solid ${t.borderLight}`,
+                background: "transparent",
+                border: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.15)"}`,
                 color: t.text, fontSize: "18px", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>←</button>
@@ -982,59 +1530,91 @@ export default function PhiloApp() {
             <button
               className="btn-continue"
               onPointerDown={() => setBtnPressed("intro")}
-              onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
+              onPointerUp={() => setBtnPressed(false)}
               onPointerLeave={() => setBtnPressed(false)}
               onClick={() => {
                 if (isLast) { setIntroExiting(true); setShowIntro(false); setTimeout(() => setIntroExiting(false), 500); }
                 else { setIntroStep(introStep + 1); }
               }}
               style={{
-                flex: 1, padding: "16px", background: t.accentBg, border: "none", borderRadius: "32px",
-                color: t.accentText, fontSize: "15px", fontWeight: 700, cursor: "pointer",
+                flex: 1, padding: "16px",
+                background: slide.accent,
+                border: "none", borderRadius: "32px",
+                color: "#fff",
+                fontSize: "15px", fontWeight: 700, cursor: "pointer",
                 fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px",
-                transform: btnPressed === "intro" ? "translateY(4px) scale(0.97)" : "translateY(0) scale(1)",
-                boxShadow: btnPressed === "intro"
-                  ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
-                  : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
-                transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease",
+                transform: btnPressed === "intro" ? "translateY(3px) scale(0.97)" : "translateY(0) scale(1)",
+                boxShadow: btnPressed === "intro" ? "none"
+                  : `0 4px 0px ${slide.accent}88, 0 8px 24px ${slide.accent}33`,
+                transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, background 0.4s ease",
               }}
-            >{isLast ? "Get Started" : "Next"}</button>
+            >{isLast ? "Begin" : "Next"}</button>
           </div>
         </div>
       </div>
     );
   }
 
-  // ONBOARDING SCREEN
+    // ONBOARDING SCREEN
   if (screen === "onboarding" && !onboardingDone) {
     const q = onboardingQuestions[onboardingStep];
     const selected = onboardingAnswers[q.id] || [];
     const hasAnswer = q.isAgeInput ? (ageInput && parseInt(ageInput) >= 1) : selected.length > 0;
     const progress = (onboardingStep / onboardingQuestions.length) * 100;
 
+    const stepColors = [
+      { bg: "radial-gradient(ellipse at 20% 60%, #1a1208 0%, #0A0A0A 75%)", accent: "#c9a96e" }, // warm amber
+      { bg: "radial-gradient(ellipse at 80% 30%, #0d1a0d 0%, #0A0A0A 75%)", accent: "#6db86d" }, // green
+      { bg: "radial-gradient(ellipse at 50% 70%, #0d0d1a 0%, #0A0A0A 75%)", accent: "#7b7bd4" }, // purple
+      { bg: "radial-gradient(ellipse at 30% 40%, #1a0d0d 0%, #0A0A0A 75%)", accent: "#d46b6b" }, // red
+      { bg: "radial-gradient(ellipse at 70% 60%, #0f1520 0%, #0A0A0A 75%)", accent: "#5b93d1" }, // blue
+      { bg: "radial-gradient(ellipse at 40% 20%, #1a0f1a 0%, #0A0A0A 75%)", accent: "#b06dd4" }, // violet
+      { bg: "radial-gradient(ellipse at 60% 50%, #1a1508 0%, #0A0A0A 75%)", accent: "#c8b44a" }, // gold
+    ];
+    const sc = stepColors[onboardingStep] || stepColors[0];
+
     return (
-      <div style={{ height: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", maxWidth: "520px", margin: "0 auto", overflow: "hidden", position: "relative" }}>
+      <div style={{ height: "100vh", background: sc.bg, color: "#F5F5F0", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", maxWidth: "520px", margin: "0 auto", overflow: "hidden", position: "relative", transition: "background 0.5s ease" }}>
         <style>{globalCSS}</style>
+        <div style={{
+          position: "absolute", inset: 0, opacity: 0.03,
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+          pointerEvents: "none", zIndex: 0,
+        }} />
         {introExiting && (
           <div style={{
             position: "fixed", top: 0, left: "50%",
             width: "100%", maxWidth: "520px", height: "100vh",
-            background: t.bg, zIndex: 50,
-            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-            padding: "24px", textAlign: "center",
+            background: mode === "dark"
+              ? "radial-gradient(ellipse at 40% 20%, #1a1508 0%, #0A0A0A 70%)"
+              : "radial-gradient(ellipse at 40% 20%, #f5f0e0 0%, #F8F7F4 70%)",
+            zIndex: 50,
+            display: "flex", flexDirection: "column", justifyContent: "center",
+            padding: "32px",
             animation: "slideFallDown 0.5s cubic-bezier(0.4, 0, 1, 1) forwards",
           }}>
-            <span style={{ fontSize: "64px", display: "block", marginBottom: "28px", opacity: 0.6 }}>⏳</span>
-            <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "30px", fontWeight: 800, margin: "0 0 12px", lineHeight: 1.2, color: t.text }}>⏳ Your Life in Years</h1>
-            <p style={{ fontSize: "15px", color: t.textSecondary, margin: 0, fontWeight: 300, lineHeight: 1.6, maxWidth: "300px" }}>A dot for every year. See how much is left. Make it count.</p>
+            <div style={{
+              display: "inline-block", marginBottom: "32px",
+              padding: "6px 14px", borderRadius: "20px",
+              border: "1px solid #c8b44a44", background: "#c8b44a18",
+            }}>
+              <span style={{ fontSize: "10px", letterSpacing: "4px", fontWeight: 600, color: "#c8b44a" }}>HOW MUCH TIME IS LEFT?</span>
+            </div>
+            <p style={{
+              fontFamily: "'DM Serif Display', serif",
+              fontSize: "26px", lineHeight: 1.55, fontStyle: "italic",
+              color: "#F5F5F0", margin: "0 0 24px", fontWeight: 500,
+            }}>A dot for every year of your life. The ones behind you are filled. Count what remains. Make them count.</p>
+            <p style={{ fontSize: "13px", letterSpacing: "3px", fontWeight: 600, color: "#c8b44a", margin: 0, opacity: 0.85 }}>
+              YOUR LIFE IN YEARS
+            </p>
           </div>
         )}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexShrink: 0 }}>
           <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <span style={{ fontSize: "13px", color: t.textMuted, letterSpacing: "2px", fontWeight: 300 }}>{onboardingStep + 1} / {onboardingQuestions.length}</span>
-            <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
-              background: "transparent", border: `1px solid ${t.borderLight}`, color: t.textMuted,
+                        <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
+              background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.5)",
               padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
               fontFamily: "'DM Sans', sans-serif", fontWeight: 400, letterSpacing: "0.5px",
               transition: "all 0.2s ease",
@@ -1042,11 +1622,11 @@ export default function PhiloApp() {
           </div>
         </div>
         <div style={{ width: "100%", height: "1px", background: t.border, marginBottom: q.isScrollList ? "12px" : "48px", overflow: "hidden", flexShrink: 0 }}>
-          <div style={{ height: "100%", background: t.accent, width: `${progress}%`, transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+          <div style={{ height: "100%", background: sc.accent, width: `${progress}%`, transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
         </div>
         <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: q.isScrollList ? "24px" : "32px", fontWeight: 800, lineHeight: 1.2, margin: "0 0 4px", flexShrink: 0 }}>{q.question}</h1>
-        <p style={{ fontSize: "14px", color: t.textSecondary, margin: "0 0 4px", fontWeight: 300, flexShrink: 0 }}>{q.subtitle}</p>
-        {q.multi && <p style={{ fontSize: "11px", color: t.textMuted, margin: "0 0 10px", textTransform: "uppercase", letterSpacing: "2px", flexShrink: 0 }}>Select all that apply</p>}
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", margin: "0 0 4px", fontWeight: 300, flexShrink: 0 }}>{q.subtitle}</p>
+        {q.multi && <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", margin: "0 0 10px", textTransform: "uppercase", letterSpacing: "2px", flexShrink: 0 }}>Select all that apply</p>}
         {!q.multi && !q.isAgeInput && <div style={{ height: "20px", flexShrink: 0 }} />}
 
         {q.isAgeInput ? (
@@ -1061,10 +1641,10 @@ export default function PhiloApp() {
               const isSel = selected.includes(opt.label);
               return (
                 <button key={opt.label} onClick={() => handleOnboardingSelect(opt.label)} style={{
-                  background: isSel ? t.accentBg : "transparent",
-                  border: `1px solid ${isSel ? t.accent : t.borderLight}`,
+                  background: isSel ? sc.accent + "33" : "rgba(255,255,255,0.05)",
+                  border: `1px solid ${isSel ? sc.accent : "rgba(255,255,255,0.15)"}`,
                   borderRadius: "6px", padding: "16px", cursor: "pointer",
-                  color: isSel ? t.accentText : t.textSecondary,
+                  color: isSel ? "#fff" : "rgba(255,255,255,0.6)",
                   fontSize: "14px", fontFamily: "'DM Sans', sans-serif", fontWeight: isSel ? 500 : 400,
                   textAlign: "left", transition: "all 0.2s ease", letterSpacing: "0.3px",
                 }}>{opt.label}</button>
@@ -1078,7 +1658,7 @@ export default function PhiloApp() {
             onPointerDown={() => setBtnPressed("back")}
             onPointerUp={() => setBtnPressed(false)}
             onPointerLeave={() => setBtnPressed(false)}
-            onClick={() => { if (onboardingStep > 0) setOnboardingStep(onboardingStep - 1); else { setIntroStep(3); setShowIntro(true); } }}
+            onClick={() => { if (onboardingStep > 0) setOnboardingStep(onboardingStep - 1); else { setIntroStep(7); setShowIntro(true); } }}
             className="btn-back"
             style={{
               background: "transparent", border: `1px solid ${t.borderLight}`, color: t.text,
@@ -1101,15 +1681,15 @@ export default function PhiloApp() {
                 onClick={onboardingNext}
                 className={`btn-continue ${btnBounce ? "btn-bounce" : ""}`}
                 style={{
-                  background: t.accentBg, border: "none", color: t.accentText,
+                  background: sc.accent, border: "none", color: "#fff",
                   padding: "14px 40px", borderRadius: "32px", fontSize: "14px", fontWeight: 600,
                   cursor: !canProceed ? "default" : "pointer",
                   opacity: !canProceed ? 0.3 : 1,
                   fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.5px",
                   transform: btnPressed === "next" ? "translateY(4px) scale(0.97)" : "translateY(0) scale(1)",
                   boxShadow: !canProceed ? "none" : btnPressed === "next"
-                    ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
-                    : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
+                    ? `0 1px 0px ${sc.accent}88`
+                    : `0 5px 0px ${sc.accent}88, 0 8px 20px ${sc.accent}33`,
                   transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease",
                 }}
               >{onboardingStep === onboardingQuestions.length - 1 ? "Get Started" : "Continue"}</button>
@@ -1127,11 +1707,6 @@ export default function PhiloApp() {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 12px" }}>
         <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
-        <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{
-          background: "transparent", border: `1px solid ${t.borderLight}`, color: t.text,
-          width: "36px", height: "36px", borderRadius: "50%", fontSize: "16px", cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>{mode === "dark" ? "☀" : "☾"}</button>
       </div>
 
       <div style={{ flex: 1, overflow: "auto", padding: `0 24px calc(env(safe-area-inset-bottom, 0px) + ${activeTab === "read" ? "140px" : "90px"})` }}>
@@ -1153,7 +1728,10 @@ export default function PhiloApp() {
             <div style={{ margin: "16px 0 20px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
                 <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: "0 0 4px" }}>📖 Daily Reading</h2>
-                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{todayLabel} — {readDone.size} of {passages.length} read</p>
+                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
+                  {todayLabel} — {readDone.size} of {passages.length} read
+                  {streak > 0 && <span style={{ marginLeft: "8px", color: "#f97316", fontWeight: 600 }}>🔥 {streak} day{streak !== 1 ? "s" : ""}</span>}
+                </p>
               </div>
               <div style={{ display: "flex", gap: "6px", alignItems: "center", marginTop: "4px" }}>
                 <button onClick={() => setFontSize(s => Math.max(12, s - 1))} style={{
@@ -1168,6 +1746,20 @@ export default function PhiloApp() {
                   fontSize: "13px", cursor: "pointer", fontWeight: 600,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>A+</button>
+                <button onClick={() => goToReading(Math.floor(Math.random() * passages.length))} style={{
+                  background: "transparent", border: `1px solid ${t.borderLight}`,
+                  color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
+                  fontSize: "14px", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 3h5v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M4 20L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M21 16v5h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M15 15l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M4 4l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
                 <button onClick={() => setShowFontPicker(!showFontPicker)} style={{
                   background: "transparent", border: `1px solid ${t.borderLight}`,
                   color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
@@ -1343,6 +1935,69 @@ export default function PhiloApp() {
                 </div>
               );
             })()}
+
+            {/* Daily Journal */}
+            <div style={{ marginTop: "8px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+                <div>
+                  <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 700 }}>📝 Journal</span>
+                  <span style={{ fontSize: "11px", color: t.textMuted, marginLeft: "8px", fontWeight: 300 }}>
+                    {weekDaysFull[weekDays.indexOf(selectedTaskDay)]}
+                  </span>
+                </div>
+                <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
+                  {["A", "B", "C", "D"].map(m => (
+                    <button key={m} onClick={() => {
+                      setJournalMode(m);
+                      try { localStorage.setItem("praxis_journal_mode", m); } catch {}
+                    }} style={{
+                      padding: "4px 10px", fontSize: "10px", fontWeight: 600,
+                      letterSpacing: "1px", cursor: "pointer", border: "none",
+                      background: journalMode === m ? t.accentBg : "transparent",
+                      color: journalMode === m ? t.accentText : t.textMuted,
+                      transition: "all 0.2s ease",
+                      fontFamily: "'DM Sans', sans-serif",
+                    }}>{m}</button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mode hint */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "6px 0 10px" }}>
+                <p style={{ fontSize: "11px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
+                  {{ A: "Resets at midnight", B: "Saved permanently", C: "Resets every Sunday", D: "Clears manually only" }[journalMode]}
+                </p>
+                <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 300 }}>{journalWordCount} {journalWordCount === 1 ? "word" : "words"}</span>
+              </div>
+
+              <textarea
+                value={currentJournal}
+                onChange={(e) => saveJournal(selectedTaskDay, e.target.value)}
+                placeholder={`What's on your mind this ${weekDaysFull[weekDays.indexOf(selectedTaskDay)]}?`}
+                style={{
+                  width: "100%", minHeight: "140px",
+                  background: t.surface, border: `1px solid ${t.border}`,
+                  borderRadius: "12px", padding: "16px",
+                  fontSize: "14px", fontWeight: 300, fontFamily: "'DM Sans', sans-serif",
+                  color: t.text, lineHeight: 1.7, resize: "vertical",
+                  outline: "none", boxSizing: "border-box",
+                  transition: "border 0.2s ease",
+                  WebkitAppearance: "none",
+                }}
+                onFocus={(e) => e.target.style.borderColor = t.borderLight}
+                onBlur={(e) => e.target.style.borderColor = t.border}
+              />
+              {currentJournal.trim().length > 0 && (
+                <button
+                  onClick={() => saveJournal(selectedTaskDay, "")}
+                  style={{
+                    marginTop: "8px", background: "transparent", border: "none",
+                    color: t.textMuted, fontSize: "12px", cursor: "pointer",
+                    fontFamily: "'DM Sans', sans-serif", padding: 0, fontWeight: 300,
+                  }}
+                >Clear entry</button>
+              )}
+            </div>
           </div>
         )}
 
@@ -1506,9 +2161,197 @@ export default function PhiloApp() {
             </div>
           );
         })()}
-      </div>
+        {/* PROFILE TAB */}
+        {activeTab === "profile" && (() => {
+          const philosopherSelections = onboardingAnswers[5] || [];
+          const goals = onboardingAnswers[4] || [];
+          const feelings = onboardingAnswers[1] || [];
+          const improveAreas = onboardingAnswers[0] || [];
+          const reflectTimes = onboardingAnswers[3] || [];
+          const totalRead = readDone.size;
+          const totalTasks = Object.values(weekTasks).flat().filter(tk => tk.text.trim()).length;
+          const totalDoneAll = Object.values(weekTasks).flat().filter(tk => tk.text.trim() && tk.done).length;
 
-      {/* Reading nav — fixed, sits flush on top of tab bar */}
+          return (
+            <div>
+              {/* Profile header */}
+              <div style={{ margin: "16px 0 24px", display: "flex", alignItems: "center", gap: "16px" }}>
+                <input ref={photoInputRef} type="file" accept="image/*" onChange={handlePhotoChange} style={{ display: "none" }} />
+
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
+                  {/* Avatar */}
+                  <button
+                    onClick={() => photoInputRef.current?.click()}
+                    style={{
+                      width: "68px", height: "68px", borderRadius: "50%",
+                      background: profilePhoto
+                        ? "transparent"
+                        : `linear-gradient(135deg, ${getAvatarGradient(profileName)[0]}, ${getAvatarGradient(profileName)[1]})`,
+                      border: "none",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: "26px", fontWeight: 800, flexShrink: 0, cursor: "pointer",
+                      overflow: "hidden", padding: 0, position: "relative",
+                      color: "#fff", fontFamily: "'Nunito', sans-serif",
+                    }}
+                  >
+                    {profilePhoto ? (
+                      <img src={profilePhoto} alt="profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ) : (
+                      <span>{profileName ? profileName[0].toUpperCase() : "?"}</span>
+                    )}
+                    {/* Camera overlay */}
+                    <div style={{
+                      position: "absolute", bottom: 0, left: 0, right: 0,
+                      background: "rgba(0,0,0,0.4)", height: "22px",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }}>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="13" r="4" stroke="#fff" strokeWidth="2"/>
+                      </svg>
+                    </div>
+                  </button>
+
+                  {/* Revert to initials */}
+                  {profilePhoto && (
+                    <button onClick={() => {
+                      setProfilePhoto("");
+                      try { localStorage.removeItem("praxis_photo"); } catch {}
+                    }} style={{
+                      background: "transparent", border: "none", cursor: "pointer",
+                      fontSize: "10px", color: t.textMuted, fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 300, padding: 0, letterSpacing: "0.3px",
+                    }}>Remove</button>
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <input
+                    value={profileName}
+                    onChange={(e) => {
+                      setProfileName(e.target.value);
+                      try { localStorage.setItem("praxis_name", e.target.value); } catch {}
+                    }}
+                    placeholder="Your name"
+                    style={{
+                      background: "transparent", border: "none", outline: "none",
+                      fontFamily: "'Nunito', sans-serif", fontSize: "22px", fontWeight: 800,
+                      color: t.text, width: "100%", padding: 0,
+                    }}
+                  />
+                  <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Age {userAge}</p>
+                </div>
+              </div>
+
+              {/* Stats row */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px", marginBottom: "20px" }}>
+                {[
+                  { label: "Streak", value: streak > 0 ? `${streak}🔥` : "0", sub: "days" },
+                  { label: "Read", value: totalRead, sub: `of ${passages.length}` },
+                  { label: "Tasks", value: totalDoneAll, sub: `of ${totalTasks}` },
+                ].map((s, i) => (
+                  <div key={i} style={{ padding: "14px 10px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", textAlign: "center" }}>
+                    <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", fontWeight: 900, lineHeight: 1 }}>{s.value}</div>
+                    <div style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "1.5px", marginTop: "4px", textTransform: "uppercase" }}>{s.label}</div>
+                    <div style={{ fontSize: "10px", color: t.textMuted, fontWeight: 300 }}>{s.sub}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Philosophy DNA */}
+              {philosopherSelections.length > 0 && (
+                <div style={{ padding: "16px 20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "12px" }}>
+                  <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 12px", textTransform: "uppercase", fontWeight: 600 }}>YOUR PHILOSOPHERS</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                    {philosopherSelections.map((p, i) => (
+                      <span key={i} style={{ fontSize: "12px", padding: "4px 10px", borderRadius: "20px", background: mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: t.textSecondary, fontWeight: 400 }}>{p}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Goals & focus */}
+              {goals.length > 0 && (
+                <div style={{ padding: "16px 20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "12px" }}>
+                  <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 12px", textTransform: "uppercase", fontWeight: 600 }}>YOUR GOALS</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                    {goals.map((g, i) => (
+                      <span key={i} style={{ fontSize: "12px", padding: "4px 10px", borderRadius: "20px", background: mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: t.textSecondary }}>{g}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* What you're improving */}
+              {improveAreas.length > 0 && (
+                <div style={{ padding: "16px 20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "12px" }}>
+                  <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 12px", textTransform: "uppercase", fontWeight: 600 }}>WORKING ON</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                    {improveAreas.map((a, i) => (
+                      <span key={i} style={{ fontSize: "12px", padding: "4px 10px", borderRadius: "20px", background: mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)", color: t.textSecondary }}>{a}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Settings */}
+              <div style={{ padding: "16px 20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "12px" }}>
+                <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 600 }}>SETTINGS</p>
+
+                {/* Dark/light toggle */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "14px", borderBottom: `1px solid ${t.border}`, marginBottom: "14px" }}>
+                  <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Appearance</span>
+                  <button onClick={() => { const next = mode === "dark" ? "light" : "dark"; setMode(next); try { localStorage.setItem("praxis_mode", next); } catch {}; }} style={{
+                    display: "flex", alignItems: "center", gap: "8px",
+                    background: "transparent", border: `1px solid ${t.borderLight}`,
+                    borderRadius: "20px", padding: "6px 14px", cursor: "pointer", color: t.text,
+                    fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
+                  }}>{mode === "dark" ? "☀ Light" : "☾ Dark"}</button>
+                </div>
+
+                {/* Font preference */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "14px", borderBottom: `1px solid ${t.border}`, marginBottom: "14px" }}>
+                  <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Reading Font</span>
+                  <div style={{ display: "flex", gap: "6px" }}>
+                    {fontOptions.map(f => (
+                      <button key={f.id} onClick={() => setFontChoice(f.id)} style={{
+                        padding: "4px 10px", borderRadius: "8px", cursor: "pointer",
+                        background: fontChoice === f.id ? t.accentBg : "transparent",
+                        border: `1px solid ${fontChoice === f.id ? t.accent : t.borderLight}`,
+                        color: fontChoice === f.id ? t.accentText : t.textMuted,
+                        fontSize: "11px", fontFamily: f.family, fontWeight: 600,
+                        transition: "all 0.2s ease",
+                      }}>{f.name}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Journal mode */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Journal Mode</span>
+                  <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
+                    {["A","B","C","D"].map(m => (
+                      <button key={m} onClick={() => { setJournalMode(m); try { localStorage.setItem("praxis_journal_mode", m); } catch {}; }} style={{
+                        padding: "5px 10px", fontSize: "11px", fontWeight: 600, cursor: "pointer", border: "none",
+                        background: journalMode === m ? t.accentBg : "transparent",
+                        color: journalMode === m ? t.accentText : t.textMuted,
+                        transition: "all 0.2s ease", fontFamily: "'DM Sans', sans-serif",
+                      }}>{m}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Reset onboarding */}
+              <button onClick={() => { setOnboardingDone(false); setScreen("onboarding"); setShowIntro(true); setIntroStep(0); setOnboardingStep(0); }} style={{
+                width: "100%", padding: "14px", background: "transparent",
+                border: `1px solid ${t.borderLight}`, borderRadius: "12px", cursor: "pointer",
+                color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 300, marginBottom: "8px",
+              }}>Redo onboarding</button>
+            </div>
+          );
+        })()}
+      </div>
       {activeTab === "read" && (
         <div style={{
           position: "fixed",
@@ -1521,14 +2364,13 @@ export default function PhiloApp() {
         }}>
           <div style={{ display: "flex", gap: "10px" }}>
             <button
-              onClick={() => goToReading(readingIndex - 1)}
-              disabled={readingIndex === 0}
+              onClick={() => goToReading(readingIndex === 0 ? passages.length - 1 : readingIndex - 1)}
               style={{
                 width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
                 background: "transparent", border: `1px solid ${t.borderLight}`,
-                color: readingIndex === 0 ? t.textMuted : t.text,
-                fontSize: "18px", cursor: readingIndex === 0 ? "default" : "pointer",
-                opacity: readingIndex === 0 ? 0.25 : 1,
+                color: t.text,
+                fontSize: "18px", cursor: "pointer",
+                opacity: 1,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
@@ -1543,6 +2385,7 @@ export default function PhiloApp() {
                   setReadDone(prev => { const n = new Set(prev); n.delete(readingIndex); return n; });
                 } else {
                   setReadDone(prev => new Set([...prev, readingIndex]));
+                  updateStreak();
                 }
               }}
               style={{
@@ -1561,14 +2404,13 @@ export default function PhiloApp() {
               }}
             >{readDone.has(readingIndex) ? "Mark as Unread" : "Mark as Read"}</button>
             <button
-              onClick={() => goToReading(readingIndex + 1)}
-              disabled={readingIndex === passages.length - 1}
+              onClick={() => goToReading(readingIndex === passages.length - 1 ? 0 : readingIndex + 1)}
               style={{
                 width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
                 background: "transparent", border: `1px solid ${t.borderLight}`,
-                color: readingIndex === passages.length - 1 ? t.textMuted : t.text,
-                fontSize: "18px", cursor: readingIndex === passages.length - 1 ? "default" : "pointer",
-                opacity: readingIndex === passages.length - 1 ? 0.25 : 1,
+                color: t.text,
+                fontSize: "18px", cursor: "pointer",
+                opacity: 1,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
@@ -1588,6 +2430,7 @@ export default function PhiloApp() {
           { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
           { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
           { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="8" r="4" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke={color} strokeWidth="1.8" strokeLinecap="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
@@ -1608,9 +2451,18 @@ export default function PhiloApp() {
 }
 
 const globalCSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; }
+  input, textarea, button, select {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+    font-size: 16px;
+  }
   input:focus, textarea:focus { outline: none; }
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
@@ -1625,6 +2477,14 @@ const globalCSS = `
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cinematicFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideInFromRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
   }
   @keyframes slideFallDown {
     0% { transform: translateX(-50%) translateY(0); opacity: 1; }
