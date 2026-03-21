@@ -1133,7 +1133,7 @@ export default function PhiloApp() {
         }}>{mode === "dark" ? "☀" : "☾"}</button>
       </div>
 
-      <div style={{ flex: 1, overflow: "auto", padding: "0 24px calc(env(safe-area-inset-bottom, 16px) + 90px)" }}>
+      <div style={{ flex: 1, overflow: "auto", padding: `0 24px calc(env(safe-area-inset-bottom, 0px) + ${activeTab === "read" ? "140px" : "90px"})` }}>
 
         {/* DAILY READING TAB */}
         {activeTab === "read" && (() => {
@@ -1225,6 +1225,7 @@ export default function PhiloApp() {
               <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
               <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
             </div>
+
 
 
           </div>
@@ -1493,15 +1494,16 @@ export default function PhiloApp() {
         })()}
       </div>
 
-      {/* Fixed reading nav — only shown on read tab */}
+      {/* Reading nav — fixed, sits flush on top of tab bar */}
       {activeTab === "read" && (
         <div style={{
-          position: "fixed", bottom: "72px", left: "50%", transform: "translateX(-50%)",
+          position: "fixed",
+          bottom: "calc(env(safe-area-inset-bottom, 16px) + 90px)",
+          left: "50%", transform: "translateX(-50%)",
           width: "100%", maxWidth: "520px",
-          padding: "10px 16px 10px",
+          padding: "10px 16px",
           background: t.bg,
-          borderTop: `1px solid ${t.border}`,
-          zIndex: 10,
+          zIndex: 9,
         }}>
           <div style={{ display: "flex", gap: "10px" }}>
             <button
@@ -1540,7 +1542,7 @@ export default function PhiloApp() {
                 transform: btnPressed === "read" ? "translateY(3px) scale(0.97)" : "translateY(0) scale(1)",
                 boxShadow: readDone.has(readingIndex) ? "none" : btnPressed === "read"
                   ? `0 1px 0px ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`
-                  : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
+                  : `0 3px 0px ${mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.15)"}, 0 4px 8px ${mode === "dark" ? "rgba(245,245,240,0.04)" : "rgba(0,0,0,0.06)"}`,
                 transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease, background 0.2s ease",
               }}
             >{readDone.has(readingIndex) ? "Mark as Unread" : "Mark as Read"}</button>
