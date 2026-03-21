@@ -66,7 +66,7 @@ const onboardingQuestions = [
       { label: "Anxious" },
       { label: "Calm" },
     ],
-    multi: false,
+    multi: true,
   },
   {
     id: 2,
@@ -774,8 +774,20 @@ export default function PhiloApp() {
   const [ageInput, setAgeInput] = useState("22");
   const [btnPressed, setBtnPressed] = useState(false);
   const [btnBounce, setBtnBounce] = useState(false);
-  const [readingIndex, setReadingIndex] = useState(0);
-  const [readDone, setReadDone] = useState(new Set());
+  const [readingIndex, setReadingIndex] = useState(() => {
+    try { const s = localStorage.getItem("praxis_reading_index"); return s ? parseInt(s) : 0; } catch { return 0; }
+  });
+  const [readDone, setReadDone] = useState(() => {
+    try { const s = localStorage.getItem("praxis_read_done"); return s ? new Set(JSON.parse(s)) : new Set(); } catch { return new Set(); }
+  });
+
+  useEffect(() => {
+    try { localStorage.setItem("praxis_reading_index", String(readingIndex)); } catch {}
+  }, [readingIndex]);
+
+  useEffect(() => {
+    try { localStorage.setItem("praxis_read_done", JSON.stringify([...readDone])); } catch {}
+  }, [readDone]);
   const [readingAnim, setReadingAnim] = useState(false);
   const dragStartX = useRef(null);
   const dragDeltaX = useRef(0);
@@ -804,6 +816,10 @@ export default function PhiloApp() {
   const localDayIndex = now.getDay();
   const todayLabel = `${monthNames[now.getMonth()]} ${now.getDate()}`;
   const initWeekTasks = () => {
+    try {
+      const saved = localStorage.getItem("praxis_tasks");
+      if (saved) return JSON.parse(saved);
+    } catch {}
     const obj = {};
     weekDays.forEach((d) => {
       obj[d] = [
@@ -815,6 +831,10 @@ export default function PhiloApp() {
     return obj;
   };
   const [weekTasks, setWeekTasks] = useState(initWeekTasks);
+
+  useEffect(() => {
+    try { localStorage.setItem("praxis_tasks", JSON.stringify(weekTasks)); } catch {}
+  }, [weekTasks]);
   const [selectedTaskDay, setSelectedTaskDay] = useState(weekDays[localDayIndex]);
   const [selectedDay, setSelectedDay] = useState("Wed");
 
@@ -883,12 +903,15 @@ export default function PhiloApp() {
   const [celebrating, setCelebrating] = useState(false);
 
   const toggleTask = (day, taskId) => {
+    const prevTask = weekTasks[day].find((tk) => tk.id === taskId);
     const newTasks = weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, done: !tk.done } : tk));
     setWeekTasks({ ...weekTasks, [day]: newTasks });
     const withText = newTasks.filter((tk) => tk.text.trim());
-    if (withText.length > 0 && withText.every((tk) => tk.done)) {
+    // Only celebrate when checking (not unchecking), all have text, and ALL are now done
+    if (prevTask && !prevTask.done && withText.length > 1 && withText.every((tk) => tk.done)) {
       setCelebrating(true);
-      setTimeout(() => setCelebrating(false), 2500);
+    } else {
+      setCelebrating(false);
     }
   };
 
@@ -987,7 +1010,7 @@ export default function PhiloApp() {
     const q = onboardingQuestions[onboardingStep];
     const selected = onboardingAnswers[q.id] || [];
     const hasAnswer = q.isAgeInput ? (ageInput && parseInt(ageInput) >= 1) : selected.length > 0;
-    const progress = ((onboardingStep + (hasAnswer ? 1 : 0)) / onboardingQuestions.length) * 100;
+    const progress = (onboardingStep / onboardingQuestions.length) * 100;
 
     return (
       <div style={{ height: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 24px", maxWidth: "520px", margin: "0 auto", overflow: "hidden", position: "relative" }}>
@@ -1181,7 +1204,7 @@ export default function PhiloApp() {
                 <span style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", fontWeight: 500 }}>
                   {p.ref.toUpperCase()}
                 </span>
-                <span style={{ fontSize: "11px", color: readDone.has(readingIndex) ? t.accent : t.textMuted, fontWeight: readDone.has(readingIndex) ? 600 : 300 }}>
+                <span style={{ fontSize: "11px", color: readDone.has(readingIndex) ? "#4ade80" : t.textMuted, fontWeight: readDone.has(readingIndex) ? 600 : 300 }}>
                   {readDone.has(readingIndex) ? "✓ READ" : `${readingIndex + 1} / ${passages.length}`}
                 </span>
               </div>
@@ -1228,7 +1251,7 @@ export default function PhiloApp() {
                 const dayTotal = dayTasks.filter((tk) => tk.text.trim()).length;
                 const allDone = dayTotal > 0 && dayDone === dayTotal;
                 return (
-                  <button key={d} onClick={() => setSelectedTaskDay(d)} style={{
+                  <button key={d} onClick={() => { setSelectedTaskDay(d); setCelebrating(false); }} style={{
                     flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
                     padding: "10px 0 8px", borderRadius: "14px", cursor: "pointer",
                     background: isSelected ? dc.bg : "transparent",
@@ -1314,7 +1337,7 @@ export default function PhiloApp() {
           <div>
             <div style={{ margin: "16px 0 24px" }}>
               <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>📱 Screen Time</h2>
-              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Sample data — real screen time requires a native app</p>
+              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Weekly overview — tap a day for details</p>
             </div>
             <div style={{ textAlign: "center", marginBottom: "28px" }}>
               <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "48px", fontWeight: 900 }}>
@@ -1501,8 +1524,11 @@ export default function PhiloApp() {
               onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
               onPointerLeave={() => setBtnPressed(false)}
               onClick={() => {
-                setReadDone(prev => new Set([...prev, readingIndex]));
-                if (readingIndex < passages.length - 1) goToReading(readingIndex + 1);
+                if (readDone.has(readingIndex)) {
+                  setReadDone(prev => { const n = new Set(prev); n.delete(readingIndex); return n; });
+                } else {
+                  setReadDone(prev => new Set([...prev, readingIndex]));
+                }
               }}
               style={{
                 flex: 1, padding: "14px",
@@ -1518,7 +1544,7 @@ export default function PhiloApp() {
                   : `0 5px 0px ${mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.2)"}, 0 8px 20px ${mode === "dark" ? "rgba(245,245,240,0.08)" : "rgba(0,0,0,0.1)"}`,
                 transition: "transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease, background 0.2s ease",
               }}
-            >{readDone.has(readingIndex) ? "✓ Completed" : readingIndex === passages.length - 1 ? "Finish" : "Mark as Read →"}</button>
+            >{readDone.has(readingIndex) ? "Mark as Unread" : "Mark as Read"}</button>
             <button
               onClick={() => goToReading(readingIndex + 1)}
               disabled={readingIndex === passages.length - 1}
@@ -1543,21 +1569,25 @@ export default function PhiloApp() {
         padding: "14px 16px calc(env(safe-area-inset-bottom, 16px) + 16px)", background: t.bg, borderTop: `1px solid ${t.border}`,
       }}>
         {[
-          { key: "read", label: "Read", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} /></svg> },
-          { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} /></svg> },
-          { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} /></svg> },
-          { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} /></svg> },
+          { key: "read", label: "Read", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
           return (
-            <button key={tab.key} onClick={() => setActiveTab(tab.key)} style={{
+            <button key={tab.key} onClick={() => { setActiveTab(tab.key); setCelebrating(false); }} style={{
               background: "transparent", border: "none", cursor: "pointer",
               display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
-              transition: "all 0.2s ease", padding: "6px 16px", flex: 1,
+              padding: "6px 16px", flex: 1,
             }}>
               {tab.shape(isActive, color)}
-              <span style={{ fontSize: "12px", fontFamily: "'Nunito', sans-serif", fontWeight: isActive ? 700 : 400, letterSpacing: "0.5px", color }}>{tab.label}</span>
+              <span style={{
+                fontSize: "12px", fontFamily: "'Nunito', sans-serif",
+                fontWeight: isActive ? 700 : 400, letterSpacing: "0.5px", color,
+                transition: "color 0.3s ease, font-weight 0.3s ease",
+              }}>{tab.label}</span>
             </button>
           );
         })}
