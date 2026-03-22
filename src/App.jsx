@@ -1052,7 +1052,9 @@ export default function PhiloApp() {
     try { return localStorage.getItem("praxis_onboarding_done") === "true" ? "home" : "onboarding"; } catch { return "onboarding"; }
   });
   const [activeTab, setActiveTab] = useState("read");
-  const [fontChoice, setFontChoice] = useState("nunito");
+  const [fontChoice, setFontChoice] = useState(() => {
+    try { return localStorage.getItem("praxis_font") || "crimson"; } catch { return "crimson"; }
+  });
   const [showFontPicker, setShowFontPicker] = useState(false);
   const [fontSize, setFontSize] = useState(15);
   const [onboardingStep, setOnboardingStep] = useState(0);
@@ -1170,13 +1172,27 @@ export default function PhiloApp() {
   const [readingAnim, setReadingAnim] = useState(false);
   const dragStartX = useRef(null);
   const dragDeltaX = useRef(0);
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const [swipeExiting, setSwipeExiting] = useState(null); // "left" | "right" | null
+  const [swipeEntering, setSwipeEntering] = useState(null); // "left" | "right" | null
   const dotScrollRef = useRef(null);
 
-  const goToReading = (idx) => {
+  const goToReading = (idx, direction = null) => {
     if (idx < 0 || idx >= passages.length) return;
-    setReadingAnim(true);
-    setTimeout(() => setReadingAnim(false), 350);
-    setReadingIndex(idx);
+    if (direction) {
+      setSwipeExiting(direction);
+      setTimeout(() => {
+        setSwipeExiting(null);
+        setSwipeOffset(0);
+        setReadingIndex(idx);
+        setSwipeEntering(direction);
+        setTimeout(() => setSwipeEntering(null), 350);
+      }, 220);
+    } else {
+      setReadingAnim(true);
+      setTimeout(() => setReadingAnim(false), 350);
+      setReadingIndex(idx);
+    }
   };
 
   useEffect(() => {
@@ -1765,17 +1781,27 @@ export default function PhiloApp() {
         <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
       </div>
 
-      <div style={{ flex: 1, overflow: "auto", padding: `0 24px calc(env(safe-area-inset-bottom, 0px) + ${activeTab === "read" ? "140px" : "90px"})` }}>
+      <div style={{ flex: 1, overflow: activeTab === "profile" ? "hidden" : "auto", padding: `0 24px calc(env(safe-area-inset-bottom, 0px) + ${activeTab === "read" ? "140px" : "90px"})` }}>
 
         {/* DAILY READING TAB */}
         {activeTab === "read" && (() => {
           const p = passages[readingIndex];
           const dragHandlers = {
             onPointerDown: (e) => { dragStartX.current = e.clientX; dragDeltaX.current = 0; e.currentTarget.setPointerCapture(e.pointerId); },
-            onPointerMove: (e) => { if (dragStartX.current === null) return; dragDeltaX.current = e.clientX - dragStartX.current; },
+            onPointerMove: (e) => {
+              if (dragStartX.current === null) return;
+              dragDeltaX.current = e.clientX - dragStartX.current;
+              setSwipeOffset(dragDeltaX.current);
+            },
             onPointerUp: () => {
-              if (dragDeltaX.current < -50 && readingIndex < passages.length - 1) goToReading(readingIndex + 1);
-              else if (dragDeltaX.current > 50 && readingIndex > 0) goToReading(readingIndex - 1);
+              if (dragDeltaX.current < -50 && readingIndex < passages.length - 1) {
+                goToReading(readingIndex + 1, "left");
+              } else if (dragDeltaX.current > 50 && readingIndex > 0) {
+                goToReading(readingIndex - 1, "right");
+              } else {
+                // snap back
+                setSwipeOffset(0);
+              }
               dragStartX.current = null; dragDeltaX.current = 0;
             },
           };
@@ -1839,7 +1865,7 @@ export default function PhiloApp() {
                 {fontOptions.map((f) => {
                   const isActive = fontChoice === f.id;
                   return (
-                    <button key={f.id} onClick={() => setFontChoice(f.id)} style={{
+                    <button key={f.id} onClick={() => { setFontChoice(f.id); try { localStorage.setItem('praxis_font', f.id); } catch {} }} style={{
                       flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "4px",
                       padding: "8px 2px", borderRadius: "8px", cursor: "pointer",
                       background: isActive ? (mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)") : "transparent",
@@ -1861,7 +1887,20 @@ export default function PhiloApp() {
                 padding: "24px", border: `1px solid ${t.border}`, borderRadius: "12px",
                 marginBottom: "12px", background: t.card, boxShadow: t.shadow,
                 cursor: "grab", userSelect: "none", touchAction: "pan-y",
-                animation: readingAnim ? "fadeUp 0.3s ease forwards" : "none",
+                transform: swipeExiting === "left" ? "translateX(-110%) rotate(-2deg)"
+                  : swipeExiting === "right" ? "translateX(110%) rotate(2deg)"
+                  : swipeEntering === "left" ? "translateX(0)"
+                  : swipeEntering === "right" ? "translateX(0)"
+                  : `translateX(${swipeOffset}px) rotate(${swipeOffset * 0.02}deg)`,
+                opacity: swipeExiting ? 0 : swipeEntering ? 1 : Math.max(0.6, 1 - Math.abs(swipeOffset) / 400),
+                transition: swipeExiting || swipeEntering
+                  ? "transform 0.22s cubic-bezier(0.4,0,0.2,1), opacity 0.22s ease"
+                  : swipeOffset === 0
+                  ? "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease"
+                  : "none",
+                animation: swipeEntering === "left" ? "slideInFromRight 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards"
+                  : swipeEntering === "right" ? "slideInFromLeft 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards"
+                  : readingAnim ? "fadeUp 0.3s ease forwards" : "none",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
@@ -1889,7 +1928,21 @@ export default function PhiloApp() {
             </div>
 
             {/* Reflect prompt */}
-            <div style={{ padding: "16px 20px", background: t.surface, borderRadius: "10px", border: `1px solid ${t.border}`, marginBottom: "16px" }}>
+            <div style={{
+              padding: "16px 20px", background: t.surface, borderRadius: "10px", border: `1px solid ${t.border}`, marginBottom: "16px",
+              transform: swipeExiting === "left" ? "translateX(-110%)"
+                : swipeExiting === "right" ? "translateX(110%)"
+                : `translateX(${swipeOffset * 0.6}px)`,
+              opacity: swipeExiting ? 0 : Math.max(0.5, 1 - Math.abs(swipeOffset) / 500),
+              transition: swipeExiting
+                ? "transform 0.28s cubic-bezier(0.4,0,0.2,1) 0.04s, opacity 0.28s ease 0.04s"
+                : swipeOffset === 0
+                ? "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease"
+                : "none",
+              animation: swipeEntering === "left" ? "slideInFromRight 0.35s cubic-bezier(0.25,0.46,0.45,0.94) 0.06s both"
+                : swipeEntering === "right" ? "slideInFromLeft 0.35s cubic-bezier(0.25,0.46,0.45,0.94) 0.06s both"
+                : "none",
+            }}>
               <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
               <p style={{ fontSize: `${fontSize - 1}px`, color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
             </div>
@@ -2480,7 +2533,7 @@ export default function PhiloApp() {
                   <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Reading Font</span>
                   <div style={{ display: "flex", gap: "6px" }}>
                     {fontOptions.map(f => (
-                      <button key={f.id} onClick={() => setFontChoice(f.id)} style={{
+                      <button key={f.id} onClick={() => { setFontChoice(f.id); try { localStorage.setItem('praxis_font', f.id); } catch {} }} style={{
                         padding: "4px 10px", borderRadius: "8px", cursor: "pointer",
                         background: fontChoice === f.id ? t.accentBg : "transparent",
                         border: `1px solid ${fontChoice === f.id ? t.accent : t.borderLight}`,
@@ -2536,7 +2589,7 @@ export default function PhiloApp() {
         }}>
           <div style={{ display: "flex", gap: "10px" }}>
             <button
-              onClick={() => goToReading(readingIndex === 0 ? passages.length - 1 : readingIndex - 1)}
+              onClick={() => goToReading(readingIndex === 0 ? passages.length - 1 : readingIndex - 1, "right")}
               style={{
                 width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
                 background: "transparent", border: `1px solid ${t.borderLight}`,
@@ -2576,7 +2629,7 @@ export default function PhiloApp() {
               }}
             >{readDone.has(readingIndex) ? "Mark as Unread" : "Mark as Read"}</button>
             <button
-              onClick={() => goToReading(readingIndex === passages.length - 1 ? 0 : readingIndex + 1)}
+              onClick={() => goToReading(readingIndex === passages.length - 1 ? 0 : readingIndex + 1, "left")}
               style={{
                 width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
                 background: "transparent", border: `1px solid ${t.borderLight}`,
@@ -2775,6 +2828,10 @@ const globalCSS = `
   }
   @keyframes slideInFromRight {
     from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInFromLeft {
+    from { opacity: 0; transform: translateX(-60px); }
     to { opacity: 1; transform: translateX(0); }
   }
   @keyframes slideFallDown {
