@@ -1040,17 +1040,25 @@ export default function PhiloApp() {
   const [mode, setMode] = useState(() => {
     try { return localStorage.getItem("praxis_mode") || "dark"; } catch { return "dark"; }
   });
-  const [onboardingDone, setOnboardingDone] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [onboardingDone, setOnboardingDone] = useState(() => {
+    try { return localStorage.getItem("praxis_onboarding_done") === "true"; } catch { return false; }
+  });
+  const [showIntro, setShowIntro] = useState(() => {
+    try { return localStorage.getItem("praxis_intro_seen") !== "true"; } catch { return true; }
+  });
   const [introStep, setIntroStep] = useState(0);
   const [introExiting, setIntroExiting] = useState(false);
-  const [screen, setScreen] = useState("onboarding");
+  const [screen, setScreen] = useState(() => {
+    try { return localStorage.getItem("praxis_onboarding_done") === "true" ? "home" : "onboarding"; } catch { return "onboarding"; }
+  });
   const [activeTab, setActiveTab] = useState("read");
   const [fontChoice, setFontChoice] = useState("nunito");
   const [showFontPicker, setShowFontPicker] = useState(false);
   const [fontSize, setFontSize] = useState(15);
   const [onboardingStep, setOnboardingStep] = useState(0);
-  const [onboardingAnswers, setOnboardingAnswers] = useState({});
+  const [onboardingAnswers, setOnboardingAnswers] = useState(() => {
+    try { const s = localStorage.getItem("praxis_onboarding_answers"); return s ? JSON.parse(s) : {}; } catch { return {}; }
+  });
   const [profileName, setProfileName] = useState(() => {
     try { return localStorage.getItem("praxis_name") || ""; } catch { return ""; }
   });
@@ -1134,6 +1142,7 @@ export default function PhiloApp() {
     try { localStorage.setItem("praxis_read_done", JSON.stringify([...readDone])); } catch {}
   }, [readDone]);
 
+
   useEffect(() => {
     try { localStorage.setItem("praxis_streak", String(streak)); } catch {}
   }, [streak]);
@@ -1141,6 +1150,10 @@ export default function PhiloApp() {
   useEffect(() => {
     try { localStorage.setItem("praxis_last_read_date", lastReadDate); } catch {}
   }, [lastReadDate]);
+
+  useEffect(() => {
+    try { localStorage.setItem("praxis_onboarding_answers", JSON.stringify(onboardingAnswers)); } catch {}
+  }, [onboardingAnswers]);
 
   // Call this whenever a passage is marked as read
   const updateStreak = () => {
@@ -1201,6 +1214,41 @@ export default function PhiloApp() {
   useEffect(() => {
     try { localStorage.setItem("praxis_tasks", JSON.stringify(weekTasks)); } catch {}
   }, [weekTasks]);
+
+  // Recurring tasks: { id, text, days: ["Mon","Tue",...] or "daily", lastReset: "datestring" }
+  const [recurringTasks, setRecurringTasks] = useState(() => {
+    try { const s = localStorage.getItem("praxis_recurring"); return s ? JSON.parse(s) : []; } catch { return []; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem("praxis_recurring", JSON.stringify(recurringTasks)); } catch {}
+  }, [recurringTasks]);
+
+  // State for the repeat picker popup
+  const [repeatPicker, setRepeatPicker] = useState(null);
+  const [repeatPickerRecurId, setRepeatPickerRecurId] = useState(null);
+  const [pickerText, setPickerText] = useState("");
+  const [pickerDays, setPickerDays] = useState("daily");
+
+  // Auto-reset recurring task checkboxes daily
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const todayDay = weekDays[new Date().getDay()];
+    setRecurringTasks(prev => prev.map(rt => {
+      if (rt.lastReset === today) return rt;
+      return { ...rt, done: false, lastReset: today };
+    }));
+  }, []);
+
+  const addRecurringTask = (text, days) => {
+    const rt = { id: `recur-${Date.now()}`, text, days, done: false, lastReset: new Date().toDateString() };
+    setRecurringTasks(prev => [...prev, rt]);
+  };
+  const updateRecurringTask = (id, changes) => setRecurringTasks(prev => prev.map(rt => rt.id === id ? { ...rt, ...changes } : rt));
+  const deleteRecurringTask = (id) => setRecurringTasks(prev => prev.filter(rt => rt.id !== id));
+  const toggleRecurringTask = (id) => setRecurringTasks(prev => prev.map(rt => rt.id === id ? { ...rt, done: !rt.done } : rt));
+
+  const getRecurringForDay = (day) => recurringTasks.filter(rt => rt.days === "daily" || (Array.isArray(rt.days) && rt.days.includes(day)));
+
   const [selectedTaskDay, setSelectedTaskDay] = useState(weekDays[localDayIndex]);
   const [selectedDay, setSelectedDay] = useState("Wed");
 
@@ -1250,6 +1298,7 @@ export default function PhiloApp() {
       setUserAge(age);
       setOnboardingDone(true);
       setScreen("home");
+      try { localStorage.setItem("praxis_onboarding_done", "true"); } catch {}
       return;
     }
     const sel = onboardingAnswers[q.id] || [];
@@ -1442,7 +1491,7 @@ export default function PhiloApp() {
           <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", letterSpacing: "3px", fontWeight: 800, opacity: 0.9, color: "#F5F5F0" }}>
             PRAXIS<span style={{ fontSize: "10px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span>
           </span>
-          <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
+          <button onClick={() => { setOnboardingDone(true); setScreen("home"); setShowIntro(false); try { localStorage.setItem("praxis_intro_seen", "true"); } catch {} }} style={{
             background: "transparent",
             border: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`,
             color: t.textMuted, padding: "6px 14px", borderRadius: "16px",
@@ -1542,7 +1591,7 @@ export default function PhiloApp() {
               onPointerUp={() => setBtnPressed(false)}
               onPointerLeave={() => setBtnPressed(false)}
               onClick={() => {
-                if (isLast) { setIntroExiting(true); setShowIntro(false); setTimeout(() => setIntroExiting(false), 500); }
+                if (isLast) { setIntroExiting(true); setShowIntro(false); try { localStorage.setItem("praxis_intro_seen", "true"); } catch {} setTimeout(() => setIntroExiting(false), 500); }
                 else { setIntroStep(introStep + 1); }
               }}
               style={{
@@ -1620,7 +1669,7 @@ export default function PhiloApp() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexShrink: 0 }}>
           <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                        <button onClick={() => { setOnboardingDone(true); setScreen("home"); }} style={{
+                        <button onClick={() => { setOnboardingDone(true); setScreen("home"); try { localStorage.setItem("praxis_onboarding_done", "true"); } catch {} }} style={{
               background: "transparent", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.5)",
               padding: "6px 14px", borderRadius: "16px", fontSize: "12px", cursor: "pointer",
               fontFamily: "'DM Sans', sans-serif", fontWeight: 400, letterSpacing: "0.5px",
@@ -1734,13 +1783,17 @@ export default function PhiloApp() {
           <div>
             <div style={{ margin: "16px 0 20px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
-                <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: "0 0 4px" }}>📖 Daily Reading</h2>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#c9a96e", flexShrink: 0 }} />
+                  <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: 0 }}>Daily Reading</h2>
+                </div>
                 <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
                   {todayLabel} — {readDone.size} of {passages.length} read
                   {streak > 0 && <span style={{ marginLeft: "8px", color: "#f97316", fontWeight: 600 }}>🔥 {streak} day{streak !== 1 ? "s" : ""}</span>}
                 </p>
               </div>
               <div style={{ display: "flex", gap: "6px", alignItems: "center", marginTop: "4px" }}>
+
                 <button onClick={() => setFontSize(s => Math.max(12, s - 1))} style={{
                   background: "transparent", border: `1px solid ${t.borderLight}`,
                   color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
@@ -1759,12 +1812,11 @@ export default function PhiloApp() {
                   fontSize: "14px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 3h5v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M4 20L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M21 16v5h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M15 15l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M4 4l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="17" height="13" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 5 C8 5 10 5 16 13 C22 21 24 21 30 21" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+                    <path d="M2 21 C8 21 10 21 16 13 C22 5 24 5 30 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+                    <polyline points="26,17 30,21 26,25" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    <polyline points="26,1 30,5 26,9" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                 </button>
                 <button onClick={() => setShowFontPicker(prev => !prev)} style={{
@@ -1824,12 +1876,15 @@ export default function PhiloApp() {
                 fontFamily: rf,
                 fontSize: fontChoice === "cormorant" ? `${fontSize + 5}px` : fontChoice === "crimson" ? `${fontSize + 3}px` : `${fontSize}px`,
                 lineHeight: fontChoice === "cormorant" ? 2 : fontChoice === "crimson" ? 1.9 : 1.85,
-                color: t.textSecondary, margin: 0,
+                color: t.textSecondary, margin: "0 0 16px",
                 fontStyle: fontChoice === "cormorant" ? "italic" : "normal",
               }}>
                 <span style={{ fontFamily: rf, fontSize: `${fontSize + 11}px`, color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginRight: "2px" }}>"</span>
                 {p.text}
                 <span style={{ fontFamily: rf, fontSize: `${fontSize + 11}px`, color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
+              </p>
+              <p style={{ textAlign: "right", margin: 0, fontSize: "11px", color: t.textMuted, fontWeight: 400, letterSpacing: "1px", fontFamily: "'DM Sans', sans-serif" }}>
+                — {p.ref.includes("Social Contract") ? "Jean-Jacques Rousseau" : "Marcus Aurelius"}
               </p>
             </div>
 
@@ -1838,8 +1893,6 @@ export default function PhiloApp() {
               <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
               <p style={{ fontSize: `${fontSize - 1}px`, color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
             </div>
-
-
 
           </div>
           );
@@ -1850,7 +1903,10 @@ export default function PhiloApp() {
           <div>
             <Confetti active={celebrating} theme={t} />
             <div style={{ margin: "16px 0 20px" }}>
-              <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>✅ Daily Tasks</h2>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#6db86d", flexShrink: 0 }} />
+                <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: 0 }}>Daily Tasks</h2>
+              </div>
               <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{totalDone} of {totalTasks} tasks done this week</p>
             </div>
             <CelebrationBanner active={celebrating} theme={t} />
@@ -1939,6 +1995,70 @@ export default function PhiloApp() {
                   }}>
                     <span style={{ fontSize: "16px" }}>+</span> Add task
                   </button>
+
+                  {/* Recurring tasks for this day */}
+                  {(() => {
+                    const recurForDay = getRecurringForDay(selectedTaskDay);
+                    if (recurForDay.length === 0 && !true) return null;
+                    return (
+                      <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}` }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
+                          <span style={{ fontSize: "10px", letterSpacing: "2px", color: t.textMuted, fontWeight: 500 }}>RECURRING</span>
+                          <button onClick={() => {
+                            setRepeatPickerRecurId("new");
+                            setPickerText("");
+                            setPickerDays("daily");
+                            setRepeatPicker(null);
+                          }} style={{
+                            background: "transparent", border: `1px solid ${t.borderLight}`,
+                            borderRadius: "8px", padding: "3px 10px",
+                            color: t.textMuted, fontSize: "11px", cursor: "pointer",
+                            fontFamily: "'DM Sans', sans-serif",
+                          }}>+ Add</button>
+                        </div>
+                        {recurForDay.map((rt, idx) => (
+                          <div key={rt.id} style={{
+                            display: "flex", alignItems: "center", gap: "12px", padding: "10px 0",
+                            borderTop: idx > 0 ? `1px solid ${mode === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)"}` : "none",
+                          }}>
+                            <button onClick={() => toggleRecurringTask(rt.id)} style={{
+                              width: "22px", height: "22px", minWidth: "22px", borderRadius: "7px",
+                              border: `1.5px solid ${rt.done ? dc.dot : t.borderLight}`,
+                              background: rt.done ? dc.dot : "transparent",
+                              cursor: "pointer",
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              color: mode === "dark" ? "#0A0A0A" : "#FFF", fontSize: "11px",
+                              transition: "all 0.2s ease",
+                            }}>{rt.done && "✓"}</button>
+                            <span style={{
+                              flex: 1, fontSize: "14px", fontWeight: 300,
+                              color: rt.done ? t.textMuted : t.text,
+                              textDecoration: rt.done ? "line-through" : "none",
+                              fontFamily: "'DM Sans', sans-serif",
+                            }}>{rt.text || "Untitled"}</span>
+                            {/* repeat badge */}
+                            <button onClick={() => { setRepeatPickerRecurId(rt.id); setPickerText(rt.text); setPickerDays(rt.days); }} style={{
+                              background: mode === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)",
+                              border: `1px solid ${t.borderLight}`, borderRadius: "6px",
+                              padding: "2px 7px", cursor: "pointer",
+                              fontSize: "9px", letterSpacing: "0.5px", color: t.textMuted,
+                              fontFamily: "'DM Sans', sans-serif", fontWeight: 500,
+                              whiteSpace: "nowrap",
+                            }}>
+                              {rt.days === "daily" ? "DAILY" : Array.isArray(rt.days) ? rt.days.join(" ") : ""}
+                            </button>
+                            <button onClick={() => deleteRecurringTask(rt.id)} style={{
+                              background: "transparent", border: "none", color: t.textMuted,
+                              fontSize: "14px", cursor: "pointer", padding: "4px 6px", opacity: 0.25,
+                            }}>×</button>
+                          </div>
+                        ))}
+                        {recurForDay.length === 0 && (
+                          <p style={{ fontSize: "12px", color: t.textMuted, fontWeight: 300, margin: "4px 0 0", fontStyle: "italic" }}>No recurring tasks for this day yet.</p>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               );
             })()}
@@ -2012,7 +2132,10 @@ export default function PhiloApp() {
         {activeTab === "time" && (
           <div>
             <div style={{ margin: "16px 0 24px" }}>
-              <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>📱 Screen Time</h2>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#7b7bd4", flexShrink: 0 }} />
+              <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: 0 }}>Screen Time</h2>
+            </div>
               <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Weekly overview — tap a day for details</p>
             </div>
             <div style={{ textAlign: "center", marginBottom: "28px" }}>
@@ -2063,10 +2186,17 @@ export default function PhiloApp() {
         {activeTab === "life" && (() => {
           const totalYears = 100;
           const avgDeath = 80;
+
+          // Exact age using birthdate approximation from userAge
+          const now2 = new Date();
+          const dayOfYear = Math.floor((now2 - new Date(now2.getFullYear(), 0, 0)) / 86400000);
+          const exactAge = userAge + (dayOfYear / 365);
           const yearsLived = userAge;
-          const yearsLeft = Math.max(avgDeath - userAge, 0);
-          const pctLived = Math.round((yearsLived / avgDeath) * 100);
-          const pctLeft = 100 - Math.min(pctLived, 100);
+          const yearsLeft = Math.max(avgDeath - exactAge, 0);
+          const weeksLeft = Math.floor(yearsLeft * 52);
+          const daysLeft = Math.floor(yearsLeft * 365);
+          const pctLived = Math.min((exactAge / avgDeath) * 100, 100);
+          const pctLeft = Math.max(100 - pctLived, 0);
 
           const milestones = [
             { age: 18, label: "Adulthood", color: mode === "dark" ? "#555" : "#AAA" },
@@ -2079,7 +2209,7 @@ export default function PhiloApp() {
 
           const getDotStyle = (year) => {
             if (year < yearsLived) return { bg: t.accent, opacity: 0.85 };
-            if (year === yearsLived) return { bg: t.accent, opacity: 1, ring: true };
+            if (year === yearsLived) return { bg: t.accent, opacity: 1, ring: true, pulse: true };
             const ms = milestones.find((m) => m.age === year);
             if (ms) return { bg: ms.color, opacity: 1, milestone: true };
             return { bg: t.border, opacity: 1 };
@@ -2087,24 +2217,48 @@ export default function PhiloApp() {
 
           return (
             <div>
-              <div style={{ margin: "16px 0 24px" }}>
-                <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: "0 0 4px" }}>⏳ Your Life in Years</h2>
-                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>{avgDeath} avg. years. {yearsLived} spent. {yearsLeft} left.</p>
+              <div style={{ margin: "16px 0 20px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#d46b6b", flexShrink: 0 }} />
+                  <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", fontWeight: 800, margin: 0 }}>Your Life in Years</h2>
+                </div>
+                <p style={{ fontSize: "13px", color: t.textMuted, margin: "4px 0 0", fontWeight: 300 }}>
+                  Age {exactAge.toFixed(1)} — {weeksLeft.toLocaleString()} weeks remaining
+                </p>
               </div>
+
+              {/* Progress bar */}
+              <div style={{ marginBottom: "24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+                  <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 400 }}>{pctLived.toFixed(1)}% used</span>
+                  <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 400 }}>{pctLeft.toFixed(1)}% remaining</span>
+                </div>
+                <div style={{ width: "100%", height: "6px", background: t.border, borderRadius: "3px", overflow: "hidden" }}>
+                  <div style={{
+                    height: "100%", borderRadius: "3px",
+                    width: `${pctLived}%`,
+                    background: `linear-gradient(to right, ${t.accent}, #d46b6b)`,
+                    transition: "width 0.6s ease",
+                  }} />
+                </div>
+              </div>
+
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "24px" }}>
                 <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", textAlign: "center" }}>
                   <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "36px", fontWeight: 900, lineHeight: 1 }}>{yearsLived}</div>
                   <div style={{ fontSize: "11px", color: t.textMuted, letterSpacing: "2px", marginTop: "6px", textTransform: "uppercase", fontWeight: 400 }}>Years Lived</div>
-                  <div style={{ fontSize: "12px", color: t.textSecondary, marginTop: "2px", fontWeight: 300 }}>Age {userAge}</div>
+                  <div style={{ fontSize: "12px", color: t.textSecondary, marginTop: "2px", fontWeight: 300 }}>Age {exactAge.toFixed(1)}</div>
                 </div>
                 <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "36px", fontWeight: 900, lineHeight: 1 }}>{yearsLeft}</div>
+                  <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "36px", fontWeight: 900, lineHeight: 1 }}>{Math.floor(yearsLeft)}</div>
                   <div style={{ fontSize: "11px", color: t.textMuted, letterSpacing: "2px", marginTop: "6px", textTransform: "uppercase", fontWeight: 400 }}>Years Left</div>
-                  <div style={{ fontSize: "12px", color: t.textSecondary, marginTop: "2px", fontWeight: 300 }}>{pctLeft}% of life</div>
+                  <div style={{ fontSize: "12px", color: t.textSecondary, marginTop: "2px", fontWeight: 300 }}>{weeksLeft.toLocaleString()} weeks</div>
                 </div>
               </div>
+
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 600 }}>EACH DOT = ONE YEAR</p>
+                <style>{`@keyframes lifePulse { 0%,100%{box-shadow:0 0 0 0 ${mode==="dark"?"rgba(245,245,240,0.4)":"rgba(0,0,0,0.3)"}} 50%{box-shadow:0 0 0 5px ${mode==="dark"?"rgba(245,245,240,0)":"rgba(0,0,0,0)"}} }`}</style>
                 {Array.from({ length: Math.ceil(totalYears / cols) }, (_, row) => (
                   <div key={row} style={{ display: "flex", alignItems: "center", marginBottom: "6px" }}>
                     <span style={{ width: "28px", fontSize: "9px", color: t.textMuted, fontWeight: 300, textAlign: "right", marginRight: "10px", fontFamily: "'DM Sans', sans-serif" }}>{row * cols}</span>
@@ -2119,7 +2273,7 @@ export default function PhiloApp() {
                             background: ds.bg, opacity: ds.opacity,
                             transition: "all 0.3s ease",
                             border: ds.ring ? `2px solid ${t.text}` : "none",
-                            boxShadow: ds.ring ? `0 0 0 3px ${mode === "dark" ? "rgba(245,245,240,0.2)" : "rgba(0,0,0,0.1)"}` : "none",
+                            animation: ds.pulse ? "lifePulse 2s ease-in-out infinite" : "none",
                           }} />
                         );
                       })}
@@ -2129,7 +2283,7 @@ export default function PhiloApp() {
                 <div style={{ display: "flex", gap: "16px", marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, flexWrap: "wrap" }}>
                   {[
                     { color: t.accent, opacity: 0.85, label: "Lived" },
-                    { color: t.accent, border: `1.5px solid ${t.text}`, label: "Now" },
+                    { color: t.accent, border: `1.5px solid ${t.text}`, label: "You are here" },
                     { color: mode === "dark" ? "#A78BFA" : "#7C3AED", label: "Child / Marriage" },
                     { color: mode === "dark" ? "#EF4444" : "#DC2626", label: "Avg. death" },
                   ].map((item, i) => (
@@ -2140,6 +2294,7 @@ export default function PhiloApp() {
                   ))}
                 </div>
               </div>
+
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 14px", textTransform: "uppercase", fontWeight: 600 }}>MILESTONES</p>
                 {milestones.map((m, i) => {
@@ -2159,11 +2314,20 @@ export default function PhiloApp() {
                   );
                 })}
               </div>
+
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 10px", textTransform: "uppercase", fontWeight: 600 }}>PERSPECTIVE</p>
-                <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300 }}>
-                  You've used {pctLived}% of your time. That's {yearsLived * 365} days gone, {yearsLeft * 365} days ahead. {yearsLeft * 52} Sundays left. Make them count.
-                </p>
+                {(() => {
+                  const perspectives = [
+                    `You've lived ${pctLived.toFixed(1)}% of your estimated life. ${weeksLeft.toLocaleString()} weeks remain — ${Math.floor((30 - exactAge) * 52).toLocaleString()} of them until the average age of marriage or first child. The clock is quiet but it never stops.`,
+                    `${weeksLeft.toLocaleString()} Sundays. That's what's left. ${Math.floor((30 - exactAge) * 52).toLocaleString()} of them until most people have started a family. You have time — but not as much as it feels like.`,
+                    `${Math.floor(exactAge)} years in. ${Math.floor(avgDeath - exactAge)} to go. ${Math.floor((30 - exactAge) * 52).toLocaleString()} weeks until the world expects you to have it figured out. You don't have to follow the timeline — but you should know it exists.`,
+                    `You've spent ${pctLived.toFixed(1)}% of your estimated life. ${daysLeft.toLocaleString()} mornings remain. ${Math.floor((30 - exactAge) * 52).toLocaleString()} weeks until the average first child or marriage. Each morning is a choice.`,
+                    `${weeksLeft.toLocaleString()} weeks remaining. ${Math.floor((30 - exactAge) * 52).toLocaleString()} until the average milestone of family or marriage. The question isn't whether time is passing — it's what you're building while it does.`,
+                  ];
+                  const idx = Math.floor((Date.now() / 86400000)) % perspectives.length;
+                  return <p style={{ fontSize: "14px", color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300 }}>{perspectives[idx]}</p>;
+                })()}
               </div>
             </div>
           );
@@ -2350,7 +2514,7 @@ export default function PhiloApp() {
               </div>
 
               {/* Reset onboarding */}
-              <button onClick={() => { setOnboardingDone(false); setScreen("onboarding"); setShowIntro(true); setIntroStep(0); setOnboardingStep(0); }} style={{
+              <button onClick={() => { setOnboardingDone(false); setScreen("onboarding"); setShowIntro(true); setIntroStep(0); setOnboardingStep(0); try { localStorage.removeItem("praxis_intro_seen"); localStorage.removeItem("praxis_onboarding_done"); } catch {} }} style={{
                 width: "100%", padding: "14px", background: "transparent",
                 border: `1px solid ${t.borderLight}`, borderRadius: "12px", cursor: "pointer",
                 color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
@@ -2427,6 +2591,122 @@ export default function PhiloApp() {
         </div>
       )}
 
+      {/* Repeat Picker Modal */}
+      {(repeatPickerRecurId !== null) && (() => {
+        const isNew = repeatPickerRecurId === "new";
+        const allDaysList = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+        const toggleDay = (d) => {
+          if (pickerDays === "daily") { setPickerDays([d]); return; }
+          const arr = Array.isArray(pickerDays) ? pickerDays : [];
+          setPickerDays(arr.includes(d) ? arr.filter(x => x !== d) : [...arr, d]);
+        };
+        return (
+          <div onClick={() => setRepeatPickerRecurId(null)} style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "flex-end", justifyContent: "center",
+          }}>
+            <div onClick={e => e.stopPropagation()} style={{
+              width: "100%", maxWidth: "520px",
+              background: t.surface, borderRadius: "20px 20px 0 0",
+              padding: "24px 24px calc(env(safe-area-inset-bottom,16px) + 24px)",
+              border: `1px solid ${t.border}`,
+              maxHeight: "85vh", overflowY: "auto",
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+                <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "18px", fontWeight: 700 }}>
+                  {isNew ? "New Recurring Task" : "Edit Recurring Task"}
+                </span>
+                <button onClick={() => setRepeatPickerRecurId(null)} style={{
+                  background: "transparent", border: "none", color: t.textMuted,
+                  fontSize: "20px", cursor: "pointer", lineHeight: 1,
+                }}>×</button>
+              </div>
+
+              {/* Task name input */}
+              <input
+                value={pickerText}
+                onChange={e => setPickerText(e.target.value)}
+                placeholder="Task name (e.g. Take NAC 600mg)"
+                style={{
+                  width: "100%", background: t.inputBg, border: `1px solid ${t.border}`,
+                  borderRadius: "10px", padding: "12px 14px", fontSize: "14px",
+                  fontFamily: "'DM Sans', sans-serif", color: t.text, outline: "none",
+                  boxSizing: "border-box", marginBottom: "20px",
+                }}
+              />
+
+              {/* Repeat options */}
+              <p style={{ fontSize: "11px", letterSpacing: "2px", color: t.textMuted, margin: "0 0 12px", fontWeight: 500 }}>REPEAT</p>
+              <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
+                <button onClick={() => setPickerDays("daily")} style={{
+                  padding: "7px 16px", borderRadius: "20px", cursor: "pointer",
+                  background: pickerDays === "daily" ? t.accentBg : "transparent",
+                  border: `1.5px solid ${pickerDays === "daily" ? t.accent : t.borderLight}`,
+                  color: pickerDays === "daily" ? t.accentText : t.text,
+                  fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif",
+                  transition: "all 0.15s ease",
+                }}>Every day</button>
+                <button onClick={() => { if (pickerDays === "daily") setPickerDays([]); }} style={{
+                  padding: "7px 16px", borderRadius: "20px", cursor: "pointer",
+                  background: Array.isArray(pickerDays) ? t.accentBg : "transparent",
+                  border: `1.5px solid ${Array.isArray(pickerDays) ? t.accent : t.borderLight}`,
+                  color: Array.isArray(pickerDays) ? t.accentText : t.text,
+                  fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif",
+                  transition: "all 0.15s ease",
+                }}>Specific days</button>
+              </div>
+
+              {Array.isArray(pickerDays) && (
+                <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+                  {allDaysList.map(d => {
+                    const on = pickerDays.includes(d);
+                    return (
+                      <button key={d} onClick={() => toggleDay(d)} style={{
+                        flex: 1, padding: "8px 0", borderRadius: "10px", cursor: "pointer",
+                        background: on ? t.accentBg : "transparent",
+                        border: `1.5px solid ${on ? t.accent : t.borderLight}`,
+                        color: on ? t.accentText : t.textMuted,
+                        fontSize: "11px", fontWeight: on ? 700 : 400,
+                        fontFamily: "'DM Sans', sans-serif",
+                        transition: "all 0.15s ease",
+                      }}>{d}</button>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div style={{ display: "flex", gap: "10px" }}>
+                {!isNew && (
+                  <button onClick={() => { deleteRecurringTask(repeatPickerRecurId); setRepeatPickerRecurId(null); }} style={{
+                    padding: "13px 18px", borderRadius: "12px", cursor: "pointer",
+                    background: "transparent", border: `1px solid ${t.borderLight}`,
+                    color: "#e05555", fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
+                  }}>Delete</button>
+                )}
+                <button
+                  onClick={() => {
+                    if (!pickerText.trim()) return;
+                    const days = pickerDays === "daily" ? "daily" : (Array.isArray(pickerDays) && pickerDays.length > 0 ? pickerDays : "daily");
+                    if (isNew) {
+                      addRecurringTask(pickerText.trim(), days);
+                    } else {
+                      updateRecurringTask(repeatPickerRecurId, { text: pickerText.trim(), days });
+                    }
+                    setRepeatPickerRecurId(null);
+                  }}
+                  style={{
+                    flex: 1, padding: "13px", borderRadius: "12px", cursor: "pointer",
+                    background: t.accentBg, border: "none",
+                    color: t.accentText, fontSize: "14px", fontWeight: 600,
+                    fontFamily: "'Nunito', sans-serif",
+                  }}
+                >{isNew ? "Add Task" : "Save"}</button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Bottom tab bar */}
       <div style={{
         position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
@@ -2461,7 +2741,7 @@ export default function PhiloApp() {
 const globalCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
   * { box-sizing: border-box; }
-  .theme-transition, .theme-transition * {
+  .theme-transition *:not(svg):not(path):not(circle):not(rect):not(polygon) {
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
   }
   html, body { margin: 0; padding: 0; height: 100%; background: #0A0A0A; }
