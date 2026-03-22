@@ -1328,10 +1328,17 @@ export default function PhiloApp() {
     }
   };
 
+  // Sanitize user input — strips HTML tags and script-like patterns
+  const sanitize = (str) => str
+    .replace(/<[^>]*>/g, "")           // strip HTML tags
+    .replace(/javascript:/gi, "")      // strip js: protocol
+    .replace(/on\w+\s*=/gi, "")        // strip event handlers like onclick=
+    .slice(0, 500);                    // hard length cap
+
   const updateTaskText = (day, taskId, text) => {
     setWeekTasks({
       ...weekTasks,
-      [day]: weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, text } : tk)),
+      [day]: weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, text: sanitize(text) } : tk)),
     });
   };
 
@@ -1374,10 +1381,11 @@ export default function PhiloApp() {
   });
 
   const saveJournal = (day, text) => {
-    setJournalEntries(prev => ({ ...prev, [day]: text }));
+    const clean = text === "" ? "" : sanitize(text.slice(0, 5000));
+    setJournalEntries(prev => ({ ...prev, [day]: clean }));
     try {
       localStorage.setItem(getJournalKey(day), JSON.stringify({
-        text,
+        text: clean,
         date: new Date().toDateString(),
       }));
     } catch {}
@@ -2439,8 +2447,9 @@ export default function PhiloApp() {
                   <input
                     value={profileName}
                     onChange={(e) => {
-                      setProfileName(e.target.value);
-                      try { localStorage.setItem("praxis_name", e.target.value); } catch {}
+                      const clean = sanitize(e.target.value).slice(0, 50);
+                      setProfileName(clean);
+                      try { localStorage.setItem("praxis_name", clean); } catch {}
                     }}
                     placeholder="Your name"
                     spellCheck={false}
@@ -2676,7 +2685,7 @@ export default function PhiloApp() {
               {/* Task name input */}
               <input
                 value={pickerText}
-                onChange={e => setPickerText(e.target.value)}
+                onChange={e => setPickerText(sanitize(e.target.value))}
                 placeholder="Task name (e.g. Take NAC 600mg)"
                 style={{
                   width: "100%", background: t.inputBg, border: `1px solid ${t.border}`,
