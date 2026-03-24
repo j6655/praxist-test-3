@@ -42,7 +42,7 @@ const themes = {
 const onboardingQuestions = [
   {
     id: 0,
-    question: "What are you trying to improve?",
+    question: "What's the one area of your life that feels most out of alignment right now?",
     subtitle: "Choose what matters most right now.",
     options: [
       { label: "Discipline" },
@@ -56,15 +56,16 @@ const onboardingQuestions = [
   },
   {
     id: 1,
-    question: "How are you feeling lately?",
-    subtitle: "Be honest. No wrong answers.",
+    question: "Be honest — what's actually holding you back?",
+    subtitle: "No wrong answers.",
     options: [
-      { label: "Overwhelmed" },
-      { label: "Lost" },
-      { label: "Motivated" },
-      { label: "Curious" },
-      { label: "Anxious" },
-      { label: "Calm" },
+      { label: "My own discipline" },
+      { label: "Lack of clarity" },
+      { label: "Fear" },
+      { label: "Distraction" },
+      { label: "Social media / screen time" },
+      { label: "Outside circumstances" },
+      { label: "I'm not sure" },
     ],
     multi: true,
   },
@@ -84,26 +85,29 @@ const onboardingQuestions = [
   },
   {
     id: 3,
-    question: "When do you reflect?",
-    subtitle: "We'll time your quotes around this.",
+    question: "How do you see yourself in 5 years?",
+    subtitle: "Be specific. This shapes your experience.",
     options: [
-      { label: "Morning" },
-      { label: "Midday" },
-      { label: "Evening" },
-      { label: "Late Night" },
+      { label: "Building something" },
+      { label: "Leading others" },
+      { label: "At peace" },
+      { label: "Financially free" },
+      { label: "Still figuring it out" },
+      { label: "Making an impact" },
     ],
     multi: true,
   },
   {
     id: 4,
-    question: "What's your goal?",
-    subtitle: "What should this app do for you?",
+    question: "What does your ideal version of yourself look like?",
+    subtitle: "This is who we're building toward.",
     options: [
-      { label: "Daily motivation" },
-      { label: "Deeper thinking" },
-      { label: "Emotional resilience" },
-      { label: "Learn philosophy" },
-      { label: "Self-discipline" },
+      { label: "Disciplined & focused" },
+      { label: "Calm & grounded" },
+      { label: "Fearless" },
+      { label: "Purposeful" },
+      { label: "Wealthy & free" },
+      { label: "Deeply connected" },
     ],
     multi: true,
   },
@@ -152,7 +156,7 @@ const screenTimeData = {
   Thu: { total: 2.8, apps: [{ name: "Instagram", hrs: 0.6 }, { name: "YouTube", hrs: 0.9 }, { name: "Twitter", hrs: 0.7 }, { name: "Other", hrs: 0.6 }] },
   Fri: { total: 3.6, apps: [{ name: "Instagram", hrs: 1.2 }, { name: "YouTube", hrs: 1.0 }, { name: "Twitter", hrs: 0.6 }, { name: "Other", hrs: 0.8 }] },
   Sat: { total: 6.1, apps: [{ name: "Instagram", hrs: 2.5 }, { name: "YouTube", hrs: 2.0 }, { name: "Twitter", hrs: 0.8 }, { name: "Other", hrs: 0.8 }] },
-  Sun: { total: 4.5, apps: [{ name: "Instagram", hrs: 1.8 }, { name: "YouTube", hrs: 1.2 }, { name: "Twitter", hrs: 0.8 }, { name: "Other", hrs: 0.7 }] },
+  Sun: { total: 8.7, apps: [{ name: "Instagram", hrs: 1.8 }, { name: "YouTube", hrs: 1.2 }, { name: "Twitter", hrs: 0.8 }, { name: "TikTok", hrs: 4.2 }, { name: "Other", hrs: 0.7 }] },
 };
 
 // ============================================================
@@ -1089,6 +1093,11 @@ export default function PhiloApp() {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    // Validate file type by MIME — not just extension
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) return;
+    // Cap file size at 10MB
+    if (file.size > 10 * 1024 * 1024) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
       const img = new Image();
@@ -1131,6 +1140,19 @@ export default function PhiloApp() {
   useEffect(() => {
     try { localStorage.setItem("praxis_reading_index", String(readingIndex)); } catch {}
   }, [readingIndex]);
+
+  // Lock to portrait orientation
+  useEffect(() => {
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock("portrait").catch(() => {});
+      } else if (window.screen.lockOrientation) {
+        window.screen.lockOrientation("portrait");
+      } else if (window.screen.mozLockOrientation) {
+        window.screen.mozLockOrientation("portrait");
+      }
+    } catch {}
+  }, []);
 
   useEffect(() => {
     document.body.style.background = mode === "dark" ? "#0A0A0A" : "#F5F0E8";
@@ -1182,16 +1204,17 @@ export default function PhiloApp() {
   const goToReading = (idx, direction = null) => {
     if (idx < 0 || idx >= passages.length) return;
     if (direction) {
+      // Step 1: slide current card out
       setSwipeExiting(direction);
       setSwipeOffset(0);
       setTimeout(() => {
+        // Step 2: swap content while invisible, set entering direction
         setSwipeExiting(null);
         setReadingIndex(idx);
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          setSwipeEntering(direction);
-          setTimeout(() => setSwipeEntering(null), 380);
-        }));
-      }, 200);
+        setSwipeEntering(direction);
+        // Step 3: clear entering after animation completes
+        setTimeout(() => setSwipeEntering(null), 400);
+      }, 160);
     } else {
       setReadingAnim(true);
       setTimeout(() => setReadingAnim(false), 350);
@@ -1217,7 +1240,13 @@ export default function PhiloApp() {
   const initWeekTasks = () => {
     try {
       const saved = localStorage.getItem("praxis_tasks");
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Validate it's an object with the right shape
+        if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+          return parsed;
+        }
+      }
     } catch {}
     const obj = {};
     weekDays.forEach((d) => {
@@ -1329,11 +1358,14 @@ export default function PhiloApp() {
   };
 
   // Sanitize user input — strips HTML tags and script-like patterns
-  const sanitize = (str) => str
-    .replace(/<[^>]*>/g, "")           // strip HTML tags
-    .replace(/javascript:/gi, "")      // strip js: protocol
-    .replace(/on\w+\s*=/gi, "")        // strip event handlers like onclick=
-    .slice(0, 500);                    // hard length cap
+  const sanitize = (str) => {
+    if (typeof str !== "string") return "";
+    return str
+      .replace(/<[^>]*>/g, "")
+      .replace(/javascript:/gi, "")
+      .replace(/on\w+\s*=/gi, "")
+      .slice(0, 500);
+  };
 
   const updateTaskText = (day, taskId, text) => {
     setWeekTasks({
@@ -1343,6 +1375,48 @@ export default function PhiloApp() {
   };
 
   const [celebrating, setCelebrating] = useState(false);
+
+  // Onboarding tour
+  const [tourStep, setTourStep] = useState(() => {
+    try { return localStorage.getItem("praxis_tour_done") === "true" ? -1 : 0; } catch { return 0; }
+  });
+  const dismissTour = () => {
+    setTourStep(-1);
+    try { localStorage.setItem("praxis_tour_done", "true"); } catch {}
+  };
+
+  // Daily check-in popup
+  const [showCheckin, setShowCheckin] = useState(() => {
+    try {
+      const last = localStorage.getItem("praxis_checkin_date");
+      return last !== new Date().toDateString();
+    } catch { return true; }
+  });
+  const [checkinInput, setCheckinInput] = useState("");
+
+  const dismissCheckin = () => {
+    try { localStorage.setItem("praxis_checkin_date", new Date().toDateString()); } catch {}
+    if (checkinInput.trim()) {
+      const intention = sanitize(checkinInput.trim());
+      // Add intention as first task of today
+      const todayDay = weekDays[new Date().getDay()];
+      setWeekTasks(prev => {
+        const todayTasks = [...(prev[todayDay] || [])];
+        // Replace first empty task or prepend
+        const firstEmptyIdx = todayTasks.findIndex(tk => !tk.text.trim());
+        if (firstEmptyIdx !== -1) {
+          todayTasks[firstEmptyIdx] = { ...todayTasks[firstEmptyIdx], text: intention };
+        } else {
+          todayTasks.unshift({ id: todayDay + "-intention-" + Date.now(), text: intention, done: false });
+        }
+        return { ...prev, [todayDay]: todayTasks };
+      });
+      setSelectedTaskDay(todayDay);
+      setActiveTab("todo");
+    }
+    setShowCheckin(false);
+    setCheckinInput("");
+  };
 
   // Journal — per day, Option A resets at midnight, Option B keeps all entries
   const [journalMode, setJournalMode] = useState(() => {
@@ -1886,8 +1960,8 @@ export default function PhiloApp() {
               onPointerUp={() => {
                 if (rafRef.current) cancelAnimationFrame(rafRef.current);
                 const delta = dragDeltaX.current;
-                if (delta < -40 && readingIndex < passages.length - 1) goToReading(readingIndex + 1, "left");
-                else if (delta > 40 && readingIndex > 0) goToReading(readingIndex - 1, "right");
+                if (delta < -40) goToReading(readingIndex === passages.length - 1 ? 0 : readingIndex + 1, "left");
+                else if (delta > 40) goToReading(readingIndex === 0 ? passages.length - 1 : readingIndex - 1, "right");
                 else setSwipeOffset(0);
                 dragStartX.current = null; dragDeltaX.current = 0;
               }}
@@ -1897,16 +1971,19 @@ export default function PhiloApp() {
             <div style={{
                 padding: "24px", border: `1px solid ${t.border}`, borderRadius: "12px",
                 marginBottom: "12px", background: t.card, boxShadow: t.shadow,
-                willChange: "transform",
+                willChange: "transform, opacity",
                 transform: swipeExiting === "left" ? "translateX(-115%) rotate(-2deg)"
                   : swipeExiting === "right" ? "translateX(115%) rotate(2deg)"
+                  : swipeEntering === "left" ? "translateX(60px)"
+                  : swipeEntering === "right" ? "translateX(-60px)"
                   : `translateX(${swipeOffset}px) rotate(${swipeOffset * 0.015}deg)`,
-                opacity: swipeExiting ? 0 : Math.max(0.5, 1 - Math.abs(swipeOffset) / 350),
-                transition: swipeExiting ? "transform 0.2s cubic-bezier(0.55,0,1,0.45), opacity 0.2s ease"
-                  : swipeOffset === 0 ? "transform 0.32s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease"
+                opacity: (swipeExiting || swipeEntering) ? 0 : Math.max(0.5, 1 - Math.abs(swipeOffset) / 350),
+                transition: swipeExiting ? "transform 0.16s cubic-bezier(0.4,0,1,1), opacity 0.16s ease"
+                  : swipeEntering ? "none"
+                  : swipeOffset === 0 ? "transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease"
                   : "none",
-                animation: swipeEntering === "left" ? "slideInFromRight 0.28s cubic-bezier(0.25,0.46,0.45,0.94) forwards"
-                  : swipeEntering === "right" ? "slideInFromLeft 0.28s cubic-bezier(0.25,0.46,0.45,0.94) forwards"
+                animation: swipeEntering === "left" ? "slideInFromRight 0.35s cubic-bezier(0.25,0.46,0.45,0.94) forwards"
+                  : swipeEntering === "right" ? "slideInFromLeft 0.35s cubic-bezier(0.25,0.46,0.45,0.94) forwards"
                   : readingAnim ? "fadeUp 0.3s ease forwards" : "none",
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
@@ -1936,16 +2013,19 @@ export default function PhiloApp() {
             {/* Reflect prompt */}
             <div style={{
               padding: "16px 20px", background: t.surface, borderRadius: "10px", border: `1px solid ${t.border}`, marginBottom: "16px",
-              willChange: "transform",
+              willChange: "transform, opacity",
               transform: swipeExiting === "left" ? "translateX(-115%)"
                 : swipeExiting === "right" ? "translateX(115%)"
-                : `translateX(${swipeOffset * 0.65}px)`,
-              opacity: swipeExiting ? 0 : Math.max(0.4, 1 - Math.abs(swipeOffset) / 400),
-              transition: swipeExiting ? "transform 0.22s cubic-bezier(0.55,0,1,0.45) 0.03s, opacity 0.22s ease 0.03s"
-                : swipeOffset === 0 ? "transform 0.36s cubic-bezier(0.34,1.56,0.64,1), opacity 0.28s ease"
+                : swipeEntering === "left" ? "translateX(40px)"
+                : swipeEntering === "right" ? "translateX(-40px)"
+                : `translateX(${swipeOffset * 0.6}px)`,
+              opacity: (swipeExiting || swipeEntering) ? 0 : Math.max(0.4, 1 - Math.abs(swipeOffset) / 400),
+              transition: swipeExiting ? "transform 0.18s cubic-bezier(0.4,0,1,1) 0.02s, opacity 0.18s ease 0.02s"
+                : swipeEntering ? "none"
+                : swipeOffset === 0 ? "transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.32s ease"
                 : "none",
-              animation: swipeEntering === "left" ? "slideInFromRight 0.32s cubic-bezier(0.25,0.46,0.45,0.94) 0.05s both"
-                : swipeEntering === "right" ? "slideInFromLeft 0.32s cubic-bezier(0.25,0.46,0.45,0.94) 0.05s both"
+              animation: swipeEntering === "left" ? "slideInFromRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94) 0.05s both"
+                : swipeEntering === "right" ? "slideInFromLeft 0.38s cubic-bezier(0.25,0.46,0.45,0.94) 0.05s both"
                 : "none",
             }}>
               <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
@@ -2197,9 +2277,14 @@ export default function PhiloApp() {
             </div>
               <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>Weekly overview — tap a day for details</p>
             </div>
+            {(() => {
+              const getColor = (hrs) => hrs >= 4 ? "#ef4444" : hrs >= 2 ? "#f59e0b" : "#22c55e";
+              const avgTotal = Object.values(screenTimeData).reduce((a, d) => a + d.total, 0) / 7;
+              return (
+              <>
             <div style={{ textAlign: "center", marginBottom: "28px" }}>
               <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "48px", fontWeight: 900 }}>
-                {(Object.values(screenTimeData).reduce((a, d) => a + d.total, 0) / 7).toFixed(1)}
+                {avgTotal.toFixed(1)}
               </span>
               <span style={{ fontSize: "14px", color: t.textMuted, fontWeight: 300, marginLeft: "6px" }}>hrs / day avg</span>
             </div>
@@ -2219,25 +2304,41 @@ export default function PhiloApp() {
             </div>
             <div style={{ marginTop: "24px", padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "8px" }}>
               <p style={{ fontSize: "12px", color: t.textMuted, letterSpacing: "2px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 500 }}>{selectedDay} BREAKDOWN</p>
-              {screenTimeData[selectedDay].apps.map((app, i) => {
+              {[...screenTimeData[selectedDay].apps].sort((a, b) => b.hrs - a.hrs).map((app, i) => {
                 const pct = (app.hrs / screenTimeData[selectedDay].total) * 100;
+                const appColor = getColor(app.hrs);
                 return (
                   <div key={i} style={{ marginBottom: "14px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                      <span style={{ fontSize: "13px", color: t.text, fontWeight: 400 }}>{app.name}</span>
-                      <span style={{ fontSize: "13px", color: t.textSecondary, fontWeight: 300 }}>{app.hrs}h</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: appColor, flexShrink: 0, transition: "background 0.3s ease" }} />
+                        <span style={{ fontSize: "13px", color: t.text, fontWeight: 400 }}>{app.name}</span>
+                      </div>
+                      <span style={{ fontSize: "13px", color: appColor, fontWeight: 500, transition: "color 0.3s ease" }}>{app.hrs}h</span>
                     </div>
                     <div style={{ width: "100%", height: "4px", background: t.border, borderRadius: "2px", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${pct}%`, background: t.accent, borderRadius: "2px", transition: "width 0.4s ease" }} />
+                      <div style={{ height: "100%", width: `${pct}%`, background: appColor, borderRadius: "2px", transition: "width 0.4s ease, background 0.3s ease" }} />
                     </div>
                   </div>
                 );
               })}
-              <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between" }}>
+              <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "13px", color: t.textSecondary, fontWeight: 400 }}>Total</span>
-                <span style={{ fontSize: "13px", color: t.text, fontWeight: 500 }}>{screenTimeData[selectedDay].total}h</span>
+                <span style={{ fontSize: "13px", color: getColor(screenTimeData[selectedDay].total), fontWeight: 600 }}>{screenTimeData[selectedDay].total}h</span>
               </div>
             </div>
+            {/* Legend */}
+            <div style={{ display: "flex", gap: "16px", marginTop: "14px", justifyContent: "center" }}>
+              {[["#22c55e", "0–2h healthy"], ["#f59e0b", "2–4h moderate"], ["#ef4444", "4h+ excessive"]].map(([color, label]) => (
+                <div key={label} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                  <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: color }} />
+                  <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 300 }}>{label}</span>
+                </div>
+              ))}
+            </div>
+            </>
+              );
+            })()}
           </div>
         )}
 
@@ -2268,7 +2369,7 @@ export default function PhiloApp() {
 
           const getDotStyle = (year) => {
             if (year < yearsLived) return { bg: t.accent, opacity: 0.85 };
-            if (year === yearsLived) return { bg: t.accent, opacity: 1, ring: true, pulse: true };
+            if (year === yearsLived) return { bg: "#3B82F6", opacity: 1, ring: true, pulse: true };
             const ms = milestones.find((m) => m.age === year);
             if (ms) return { bg: ms.color, opacity: 1, milestone: true };
             return { bg: t.border, opacity: 1 };
@@ -2317,7 +2418,7 @@ export default function PhiloApp() {
 
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 600 }}>EACH DOT = ONE YEAR</p>
-                <style>{`@keyframes lifePulse { 0%,100%{box-shadow:0 0 0 0 ${mode==="dark"?"rgba(245,245,240,0.4)":"rgba(0,0,0,0.3)"}} 50%{box-shadow:0 0 0 5px ${mode==="dark"?"rgba(245,245,240,0)":"rgba(0,0,0,0)"}} }`}</style>
+                <style>{`@keyframes lifePulse { 0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.5)} 50%{box-shadow:0 0 0 6px rgba(59,130,246,0)} }`}</style>
                 {Array.from({ length: Math.ceil(totalYears / cols) }, (_, row) => (
                   <div key={row} style={{ display: "flex", alignItems: "center", marginBottom: "6px" }}>
                     <span style={{ width: "28px", fontSize: "9px", color: t.textMuted, fontWeight: 300, textAlign: "right", marginRight: "10px", fontFamily: "'DM Sans', sans-serif" }}>{row * cols}</span>
@@ -2331,7 +2432,7 @@ export default function PhiloApp() {
                             width: "18px", height: "18px", borderRadius: "4px",
                             background: ds.bg, opacity: ds.opacity,
                             transition: "all 0.3s ease",
-                            border: ds.ring ? `2px solid ${t.text}` : "none",
+                            border: ds.ring ? `2px solid #3B82F6` : "none",
                             animation: ds.pulse ? "lifePulse 2s ease-in-out infinite" : "none",
                           }} />
                         );
@@ -2342,7 +2443,7 @@ export default function PhiloApp() {
                 <div style={{ display: "flex", gap: "16px", marginTop: "16px", paddingTop: "12px", borderTop: `1px solid ${t.border}`, flexWrap: "wrap" }}>
                   {[
                     { color: t.accent, opacity: 0.85, label: "Lived" },
-                    { color: t.accent, border: `1.5px solid ${t.text}`, label: "You are here" },
+                    { color: "#3B82F6", border: "1.5px solid #3B82F6", label: "You are here" },
                     { color: mode === "dark" ? "#A78BFA" : "#7C3AED", label: "Child / Marriage" },
                     { color: mode === "dark" ? "#EF4444" : "#DC2626", label: "Avg. death" },
                   ].map((item, i) => (
@@ -2580,6 +2681,12 @@ export default function PhiloApp() {
                 color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 300, marginBottom: "8px",
               }}>Redo onboarding</button>
+              <button onClick={() => { setTourStep(0); setActiveTab("read"); try { localStorage.removeItem("praxis_tour_done"); } catch {} }} style={{
+                width: "100%", padding: "14px", background: "transparent",
+                border: `1px solid ${t.borderLight}`, borderRadius: "12px", cursor: "pointer",
+                color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 300, marginBottom: "8px",
+              }}>Replay Tutorial</button>
             </div>
           );
         })()}
@@ -2647,6 +2754,206 @@ export default function PhiloApp() {
                 transition: "all 0.2s ease",
               }}
             >→</button>
+          </div>
+        </div>
+      )}
+
+      {/* Onboarding Tour */}
+      {tourStep >= 0 && onboardingDone && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 300, pointerEvents: "none" }}>
+          <style dangerouslySetInnerHTML={{ __html: "@keyframes tourFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } } .tour-card { animation: tourFadeIn 0.3s ease forwards; }" }} />
+
+          {/* Constrained app-width container */}
+          <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "center" }}>
+          <div style={{ position: "relative", width: "100%", maxWidth: "520px", height: "100%" }}>
+
+          {(() => {
+            const W = 520; const H = (typeof window !== "undefined" ? window.innerHeight : 812);
+            const pct = (x) => (x / W * 100) + "%";
+
+            const tabH = 83;
+            const tabBarPadX = 16; // tab bar has 16px horizontal padding each side
+            const tabW = (W - tabBarPadX * 2) / 5; // actual tab width: (520-32)/5 = 97.6px
+
+            // Tab centers in SVG coords, accounting for tab bar horizontal padding
+            const tabCenters = [0, 1, 2, 3, 4].map(n => tabBarPadX + (n + 0.5) * tabW);
+
+            const pad = 6;
+
+            // All spotlights in SVG coordinate space
+            const spots = [
+              // Step 0: Read tab — full tab width, correctly offset for padding
+              { x: tabBarPadX + 0 * tabW, y: H - tabH, w: tabW, h: tabH, r: 14 },
+              // Step 1: Shuffle button — 3rd from left (A−, A+, shuffle, Aa), right-aligned 24px margin
+              { x: W-24-32-6-32-2, y: 105, w: 36, h: 36, r: 10 },
+              // Step 2: Mark as Read — matches actual button: left arrow 48px + gap 10px offset each side
+              { x: 74, y: H - tabH - 72, w: W - 148, h: 52, r: 28 },
+              // Step 3: Tasks tab
+              { x: tabBarPadX + 1 * tabW, y: H - tabH, w: tabW, h: tabH, r: 14 },
+              // Step 4: Screen tab
+              { x: tabBarPadX + 2 * tabW, y: H - tabH, w: tabW, h: tabH, r: 14 },
+              // Step 5: Life tab
+              { x: tabBarPadX + 3 * tabW, y: H - tabH, w: tabW, h: tabH, r: 14 },
+            ];
+
+            const spot = spots[tourStep];
+            const rx = spot.x - pad, ry = spot.y - pad;
+            const rw = spot.w + pad*2, rh = spot.h + pad*2;
+            const spotCenterPct = pct(spot.x + spot.w / 2);
+
+            const steps = [
+              { tab: "read",  tooltipTop: "32%", tooltipLeft: "24px",
+                arrowDir: "down", arrowPct: pct(tabCenters[0]),
+                title: "Daily Reading", text: "Your daily passage from history's greatest minds." },
+              { tab: "read",  tooltipTop: "44%", tooltipLeft: "50%", tooltipLeftTransform: "-50%",
+                arrowDir: "up", arrowPct: pct(spot.x + spot.w/2), arrowY: spot.y + spot.h + pad,
+                title: "Shuffle", text: "Jump to a random passage whenever you need it." },
+              { tab: "read",  tooltipTop: "30%", tooltipLeft: "50%", tooltipLeftTransform: "-50%",
+                arrowDir: "none",
+                title: "Mark as Read", text: "Track your streak. Show up every day." },
+              { tab: "todo",  tooltipTop: "32%", tooltipLeft: "24px",
+                arrowDir: "down", arrowPct: pct(tabCenters[1]),
+                title: "Daily Tasks", text: "Set intentions for each day. Discipline compounds." },
+              { tab: "time",  tooltipTop: "32%", tooltipLeft: "50%", tooltipLeftTransform: "-50%",
+                arrowDir: "down", arrowPct: pct(tabCenters[2]),
+                title: "Screen Time", text: "See where your hours go. Less scrolling, more living." },
+              { tab: "life",  tooltipTop: "32%", tooltipLeft: "50%", tooltipLeftTransform: "-50%",
+                arrowDir: "down", arrowPct: pct(tabCenters[3]),
+                title: "Your Life in Years", text: "Every dot is one year. Count what remains." },
+            ];
+
+            const s = steps[tourStep];
+
+            const advanceTour = () => {
+              if (tourStep < steps.length - 1) {
+                setActiveTab(steps[tourStep + 1].tab);
+                setTourStep(tourStep + 1);
+              } else dismissTour();
+            };
+
+            return (
+              <>
+                <svg
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+                  viewBox={"0 0 " + W + " " + H}
+                  preserveAspectRatio="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <mask id="tour-mask">
+                      <rect width={W} height={H} fill="white" />
+                      <rect x={rx} y={ry} width={rw} height={rh} rx={spot.r + pad} ry={spot.r + pad} fill="black" />
+                    </mask>
+                  </defs>
+                  <rect width={W} height={H} fill="rgba(0,0,0,0.72)" mask="url(#tour-mask)" />
+                  <rect x={rx} y={ry} width={rw} height={rh} rx={spot.r + pad} ry={spot.r + pad} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+                </svg>
+
+                {s.arrowDir === "down" && (
+                  <div style={{ position: "absolute", left: s.arrowPct, bottom: tabH + 72, transform: "translateX(-50%)" }}>
+                    <svg width="20" height="44" viewBox="0 0 20 44" fill="none">
+                      <line x1="10" y1="0" x2="10" y2="36" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round"/>
+                      <polyline points="4,30 10,38 16,30" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    </svg>
+                  </div>
+                )}
+                {s.arrowDir === "up" && (
+                  <div style={{ position: "absolute", left: s.arrowPct, top: s.arrowY + 8, transform: "translateX(-50%)" }}>
+                    <svg width="20" height="44" viewBox="0 0 20 44" fill="none">
+                      <line x1="10" y1="44" x2="10" y2="8" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round"/>
+                      <polyline points="4,14 10,6 16,14" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    </svg>
+                  </div>
+                )}
+
+                {/* Tooltip */}
+                <div className="tour-card" key={tourStep} style={{
+                  position: "absolute",
+                  top: s.tooltipTop,
+                  left: s.tooltipLeft,
+                  transform: s.tooltipLeftTransform ? "translateX(" + s.tooltipLeftTransform + ")" : "none",
+                  width: "260px",
+                  pointerEvents: "all",
+                  zIndex: 10,
+                }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", lineHeight: 1.2 }}>{s.title}</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: 300, color: "rgba(255,255,255,0.8)", margin: 0, lineHeight: 1.6 }}>{s.text}</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.35)", margin: "8px 0 0", textAlign: "right" }}>{tourStep + 1} / {steps.length}</p>
+                  <div style={{ display: "flex", gap: "8px", marginTop: "14px" }}>
+                    <button onClick={dismissTour} style={{ flex: 1, padding: "9px", background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Skip</button>
+                    <button onClick={advanceTour} style={{ flex: 2, padding: "9px", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.35)", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF" }}>{tourStep < steps.length - 1 ? "Next →" : "Got it!"}</button>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+          </div>
+          </div>
+        </div>
+      )}
+
+      {/* Daily Check-in Popup — suppressed while tour is active */}
+      {showCheckin && onboardingDone && tourStep < 0 && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 200,
+          background: "rgba(0,0,0,0.7)",
+          display: "flex", alignItems: "flex-end", justifyContent: "center",
+          animation: "fadeUp 0.3s ease forwards",
+        }}>
+          <div style={{
+            width: "100%", maxWidth: "520px",
+            background: t.surface, borderRadius: "24px 24px 0 0",
+            padding: "28px 24px calc(env(safe-area-inset-bottom, 16px) + 28px)",
+            border: `1px solid ${t.border}`,
+          }}>
+            {/* Date + greeting */}
+            <p style={{ fontSize: "11px", color: t.textMuted, letterSpacing: "3px", fontWeight: 500, margin: "0 0 8px" }}>
+              {new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }).toUpperCase()}
+            </p>
+            <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "24px", fontWeight: 800, margin: "0 0 6px", color: t.text }}>
+              Good {new Date().getHours() < 12 ? "morning" : new Date().getHours() < 17 ? "afternoon" : "evening"}.
+            </h2>
+            <p style={{ fontSize: "14px", color: t.textSecondary, fontWeight: 300, margin: "0 0 24px", lineHeight: 1.6 }}>
+              {(() => {
+                const area = (onboardingAnswers[0] || [])[0];
+                return area
+                  ? `You said you're working on ${area.toLowerCase()}. What's your one intention for today?`
+                  : "What's your one intention for today?";
+              })()}
+            </p>
+            {/* Intention input */}
+            <input
+              value={checkinInput}
+              onChange={e => setCheckinInput(sanitize(e.target.value).slice(0, 120))}
+              placeholder="e.g. Stay off my phone until noon..."
+              style={{
+                width: "100%", background: t.inputBg, border: `1px solid ${t.border}`,
+                borderRadius: "12px", padding: "14px 16px", fontSize: "14px",
+                fontFamily: "'DM Sans', sans-serif", color: t.text, outline: "none",
+                boxSizing: "border-box", marginBottom: "16px", lineHeight: 1.5,
+              }}
+              onFocus={e => e.target.style.borderColor = t.borderLight}
+              onBlur={e => e.target.style.borderColor = t.border}
+              autoFocus
+            />
+            {/* Begin button */}
+            <button
+              onClick={dismissCheckin}
+              style={{
+                width: "100%", padding: "15px",
+                background: t.accentBg, border: "none", borderRadius: "32px",
+                color: t.accentText, fontSize: "15px", fontWeight: 700,
+                fontFamily: "'Nunito', sans-serif", cursor: "pointer",
+                letterSpacing: "0.5px",
+                boxShadow: `0 3px 0px ${mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.15)"}`,
+              }}
+            >Begin my day</button>
+            {/* Skip */}
+            <button onClick={dismissCheckin} style={{
+              width: "100%", padding: "12px", marginTop: "8px",
+              background: "transparent", border: "none", cursor: "pointer",
+              color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
+            }}>Skip for today</button>
           </div>
         </div>
       )}
@@ -2805,6 +3112,20 @@ const globalCSS = `
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
   }
   html, body { margin: 0; padding: 0; height: 100%; background: #0A0A0A; }
+
+  /* Force portrait on mobile landscape only — not desktop */
+  @media screen and (orientation: landscape) and (max-height: 500px) {
+    html {
+      transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      height: 100vw;
+      overflow-x: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+  }
   input, textarea, button, select {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
