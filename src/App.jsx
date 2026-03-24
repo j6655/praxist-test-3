@@ -2775,7 +2775,9 @@ export default function PhiloApp() {
             const H = window.innerHeight;
             const pct = (x) => (x / W * 100) + "%";
 
-            const tabBarH = 85;
+            // Safe area bottom — 34px on iPhone home screen PWA, 0 in browser
+            const safeBottom = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 34 : 0;
+            const tabBarH = 85 + safeBottom;
             const tabBarPadX = 16;
             const tabW = (W - tabBarPadX * 2) / 5;
             const tabCenters = [0, 1, 2, 3, 4].map(n => tabBarPadX + (n + 0.5) * tabW);
@@ -2783,22 +2785,15 @@ export default function PhiloApp() {
             const cardH = 170;
 
             const spots = [
-              // Read tab — clamp so bottom doesn't peek past screen
-              { x: tabBarPadX,              y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
-              // Shuffle button
-              { x: W - 94,                  y: 78,          w: 32,           h: 32,      r: 10 },
-              // Mark as Read button
-              { x: 64,                      y: H - 150,     w: W - 128,      h: 48,      r: 28 },
-              // Tasks tab
-              { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
-              // Screen tab
-              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
-              // Life tab
-              { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
+              { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              { x: W - 94,                  y: 78,          w: 32,              h: 32,      r: 10 },
+              { x: 64,                      y: H - tabBarH - 66, w: W - 128,    h: 48,      r: 28 },
+              { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
             ];
 
             const spot = spots[tourStep];
-            // For tab spots: don't pad the bottom so it doesn't overflow screen
             const isTabSpot = [0, 3, 4, 5].includes(tourStep);
             const isMarkAsRead = tourStep === 2;
             const rx = spot.x - pad;
@@ -2806,10 +2801,9 @@ export default function PhiloApp() {
             const rw = spot.w + pad * 2;
             const rh = isTabSpot ? spot.h : spot.h + pad * 2;
 
-            // Card positions — each card sits CLOSE to its spotlight, short arrow
-            const tabCardTop = H - tabBarH - pad - cardH - 60;
+            // Percentage-based card tops — reliable across all screen heights
+            const tabCardTop = Math.round(H * 0.58);
             const shuffleCardTop = spots[1].y + spots[1].h + pad + 12;
-            // Mark as Read: longer gap = more visible arrow
             const markCardTop = spots[2].y - cardH - 90;
 
             const steps = [
