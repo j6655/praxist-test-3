@@ -2784,9 +2784,14 @@ export default function PhiloApp() {
             const pad = 6;
             const cardH = 170;
 
+            // Safe area top — ~54px on iPhone PWA (status bar), ~20px in browser
+            const safeTop = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 54 : 20;
+            // Shuffle button sits in the header row: safeTop + PRAXIS bar (~44px) + button offset (~10px)
+            const shuffleY = safeTop + 44 + 10;
+
             const spots = [
               { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              { x: W - 94,                  y: 78,          w: 32,              h: 32,      r: 10 },
+              { x: W - 94,                  y: shuffleY,    w: 32,              h: 32,      r: 10 },
               { x: 64,                      y: H - tabBarH - 66, w: W - 128,    h: 48,      r: 28 },
               { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
               { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
@@ -2803,7 +2808,7 @@ export default function PhiloApp() {
 
             // Percentage-based card tops — reliable across all screen heights
             const tabCardTop = Math.round(H * 0.58);
-            const shuffleCardTop = spots[1].y + spots[1].h + pad + 12;
+            const shuffleCardTop = shuffleY + 32 + pad + 16;
             const markCardTop = spots[2].y - cardH - 90;
 
             const steps = [
