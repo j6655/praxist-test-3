@@ -2712,7 +2712,8 @@ export default function PhiloApp() {
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text,
                 fontSize: "18px", cursor: "pointer",
-                opacity: 1,
+                opacity: tourStep === 2 ? 0 : 1,
+                pointerEvents: tourStep === 2 ? "none" : "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
@@ -2752,7 +2753,8 @@ export default function PhiloApp() {
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text,
                 fontSize: "18px", cursor: "pointer",
-                opacity: 1,
+                opacity: tourStep === 2 ? 0 : 1,
+                pointerEvents: tourStep === 2 ? "none" : "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
@@ -2786,8 +2788,8 @@ export default function PhiloApp() {
 
             // Safe area top — ~54px on iPhone PWA (status bar), ~20px in browser
             const safeTop = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 54 : 20;
-            // Shuffle button sits in the header row: safeTop + PRAXIS bar (~44px) + button offset (~10px)
-            const shuffleY = safeTop + 44 + 10;
+            // Shuffle button: safeTop + PRAXIS title bar (~60px) + subtitle row (~30px) + button area
+            const shuffleY = safeTop + 100;
 
             const spots = [
               { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
