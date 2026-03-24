@@ -1046,7 +1046,7 @@ const philosophers = [
     years: "121 – 180 AD",
     role: "Roman Emperor & Stoic",
     description: "His private journals became one of history's most enduring works of philosophy.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg/600px-Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg/600px-Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg",
     color: "#8B7355",
     works: "Meditations",
     filter: (p) => !p.ref.includes("Social Contract"),
@@ -1057,7 +1057,7 @@ const philosophers = [
     years: "1712 – 1778",
     role: "Philosopher & Political Theorist",
     description: "His ideas on freedom and equality ignited the French Revolution.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Jean-Jacques_Rousseau_%28painted_portrait%29.jpg/440px-Jean-Jacques_Rousseau_%28painted_portrait%29.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Jean-Jacques_Rousseau_%28painted_portrait%29.jpg/440px-Jean-Jacques_Rousseau_%28painted_portrait%29.jpg",
     color: "#5B7A6B",
     works: "The Social Contract",
     filter: (p) => p.ref.includes("Social Contract"),
@@ -1068,7 +1068,7 @@ const philosophers = [
     years: "50 – 135 AD",
     role: "Stoic Philosopher",
     description: "Born a slave, became one of the most influential Stoic teachers of the ancient world.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Epiktetos.jpg/440px-Epiktetos.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/3/35/Epicteti_Enchiridion_Latinis_versibus_adumbratum_%28Oxford_1715%29_frontispiece.jpg/440px-Epicteti_Enchiridion_Latinis_versibus_adumbratum_%28Oxford_1715%29_frontispiece.jpg",
     color: "#6B5E8B",
     works: "Enchiridion, Discourses",
     filter: () => false,
@@ -1080,7 +1080,7 @@ const philosophers = [
     years: "4 BC – 65 AD",
     role: "Stoic Philosopher & Statesman",
     description: "Advisor to Emperor Nero. His letters on living well remain startlingly modern.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seneca-berlinAntikensammlung.jpg/440px-Seneca-berlinAntikensammlung.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seneca-berlinAntikensammlung.jpg/440px-Seneca-berlinAntikensammlung.jpg",
     color: "#7A5B5B",
     works: "Letters from a Stoic",
     filter: () => false,
@@ -1092,7 +1092,7 @@ const philosophers = [
     years: "428 – 348 BC",
     role: "Greek Philosopher",
     description: "Student of Socrates. His dialogues on justice, beauty, and equality shaped Western thought.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/440px-Plato_Silanion_Musei_Capitolini_MC1377.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/440px-Plato_Silanion_Musei_Capitolini_MC1377.jpg",
     color: "#5B7A8B",
     works: "The Republic, Symposium",
     filter: () => false,
@@ -1104,7 +1104,7 @@ const philosophers = [
     years: "1844 – 1900",
     role: "German Philosopher",
     description: "Radical thinker who challenged morality, religion, and the nature of truth.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/440px-Nietzsche187a.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/440px-Nietzsche187a.jpg",
     color: "#5B5B7A",
     works: "Thus Spoke Zarathustra, Beyond Good and Evil",
     filter: () => false,
@@ -1116,7 +1116,7 @@ const philosophers = [
     years: "6th century BC",
     role: "Chinese Philosopher",
     description: "Founder of Taoism. The Tao Te Ching is one of the most translated books in history.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg/440px-Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg/440px-Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg",
     color: "#5B7A6B",
     works: "Tao Te Ching",
     filter: () => false,
@@ -1128,7 +1128,7 @@ const philosophers = [
     years: "551 – 479 BC",
     role: "Chinese Philosopher",
     description: "His teachings on ethics, family, and good governance shaped East Asian civilization.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Confucius_Tang_Dynasty.jpg/440px-Confucius_Tang_Dynasty.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Confucius_Tang_Dynasty.jpg/440px-Confucius_Tang_Dynasty.jpg",
     color: "#7A6B5B",
     works: "The Analects",
     filter: () => false,
@@ -1140,7 +1140,7 @@ const philosophers = [
     years: "384 – 322 BC",
     role: "Greek Philosopher",
     description: "Student of Plato, tutor of Alexander the Great. Father of logic, science, and ethics.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg",
     color: "#6B7A5B",
     works: "Nicomachean Ethics, Politics",
     filter: () => false,
@@ -1152,7 +1152,7 @@ const philosophers = [
     years: "544 – 496 BC",
     role: "Chinese Military Strategist",
     description: "Author of The Art of War — 13 chapters on strategy that still influence leaders worldwide.",
-    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sun_Tzu_by_Hanban.jpg/440px-Sun_Tzu_by_Hanban.jpg&w=600&output=jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Sun_Tzu_by_Hanban.jpg/440px-Sun_Tzu_by_Hanban.jpg",
     color: "#7A5B6B",
     works: "The Art of War",
     filter: () => false,
@@ -2038,7 +2038,7 @@ export default function PhiloApp() {
                 return (
                   <div
                     key={ph.id}
-                    onClick={() => { if (!isLocked) { setSelectedPhilosopher(ph.id); setReadScreen("reading"); } }}
+                    onClick={() => { if (!isLocked) { setSelectedPhilosopher(ph.id); setReadScreen("reading"); if (tourStep === 1) { setTourStep(2); } } }}
                     style={{
                       borderRadius: "20px", overflow: "hidden",
                       cursor: isLocked ? "default" : "pointer",
@@ -2061,6 +2061,8 @@ export default function PhiloApp() {
                     <img
                       src={ph.image}
                       alt={ph.name}
+                      crossOrigin="anonymous"
+                      loading="lazy"
                       style={{
                         position: "absolute", inset: 0, width: "100%", height: "100%",
                         objectFit: "cover", objectPosition: "center top",
@@ -3076,8 +3078,8 @@ export default function PhiloApp() {
                 cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[0] },
               { tab: "read", readScreen: "gallery",
-                title: "Choose a Philosopher", text: "Browse the library and pick a thinker to read from. More are coming soon.",
-                cardTop: 100, cardLeft: "16px", cardWidth: "calc(100% - 32px)",
+                title: "Choose a Philosopher", text: "Tap a philosopher to begin reading. More coming soon.",
+                isBanner: true,
                 arrowDir: "none" },
               { tab: "read", readScreen: "reading",
                 title: "Shuffle", text: "Jump to a random passage whenever you need it.",
@@ -3148,7 +3150,32 @@ export default function PhiloApp() {
                   <rect width={W} height={H} fill="rgba(0,0,0,0.72)" mask="url(#tour-mask)" />
                 </svg>
 
-                {/* Tooltip card — frosted glass body, white solid buttons */}
+                {/* Tooltip card — banner style for philosopher step, frosted card for others */}
+                {s.isBanner ? (
+                  <div className="tour-card" key={tourStep} style={{
+                    position: "absolute",
+                    top: "calc(env(safe-area-inset-top, 44px) + 56px)",
+                    left: "16px", right: "16px",
+                    pointerEvents: "all",
+                    zIndex: 10,
+                    background: "rgba(20,20,20,0.82)",
+                    backdropFilter: "blur(20px)",
+                    WebkitBackdropFilter: "blur(20px)",
+                    borderRadius: "14px",
+                    padding: "14px 16px",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    display: "flex", alignItems: "center", gap: "12px",
+                  }}>
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 2px" }}>{s.title}</p>
+                      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", fontWeight: 300, color: "rgba(255,255,255,0.7)", margin: 0 }}>{s.text}</p>
+                    </div>
+                    <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
+                      <button onClick={goBack} style={{ padding: "7px 12px", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>← Back</button>
+                      <button onClick={advanceTour} style={{ padding: "7px 14px", background: "#FFFFFF", border: "none", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "12px", fontWeight: 700, color: "#0A0A0A" }}>Next →</button>
+                    </div>
+                  </div>
+                ) : (
                 <div className="tour-card" key={tourStep} style={{
                   position: "absolute",
                   top: s.cardTop,
@@ -3175,6 +3202,7 @@ export default function PhiloApp() {
                     <button onClick={advanceTour} style={{ flex: 2, padding: "9px", background: "#FFFFFF", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: "#0A0A0A" }}>{tourStep < steps.length - 1 ? "Next →" : "Got it!"}</button>
                   </div>
                 </div>
+                )}
               </>
             );
           })()}
@@ -3386,7 +3414,7 @@ export default function PhiloApp() {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
           return (
-            <button key={tab.key} onClick={() => { setActiveTab(tab.key); setCelebrating(false); if (tab.key !== "read") setReadScreen("gallery"); }} style={{
+            <button key={tab.key} onClick={() => { if (tab.key === "read") { setActiveTab("read"); setReadScreen("gallery"); } else { setActiveTab(tab.key); setCelebrating(false); setReadScreen("gallery"); } }} style={{
               background: "transparent", border: "none", cursor: "pointer",
               display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
               padding: "6px 16px", flex: 1,
