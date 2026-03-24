@@ -1046,7 +1046,7 @@ const philosophers = [
     years: "121 – 180 AD",
     role: "Roman Emperor & Stoic",
     description: "His private journals became one of history's most enduring works of philosophy.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg/600px-Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg/600px-Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg&w=600&output=jpg",
     color: "#8B7355",
     works: "Meditations",
     filter: (p) => !p.ref.includes("Social Contract"),
@@ -1057,7 +1057,7 @@ const philosophers = [
     years: "1712 – 1778",
     role: "Philosopher & Political Theorist",
     description: "His ideas on freedom and equality ignited the French Revolution.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Jean-Jacques_Rousseau_%28painted_portrait%29.jpg/440px-Jean-Jacques_Rousseau_%28painted_portrait%29.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Jean-Jacques_Rousseau_%28painted_portrait%29.jpg/440px-Jean-Jacques_Rousseau_%28painted_portrait%29.jpg&w=600&output=jpg",
     color: "#5B7A6B",
     works: "The Social Contract",
     filter: (p) => p.ref.includes("Social Contract"),
@@ -1068,7 +1068,7 @@ const philosophers = [
     years: "50 – 135 AD",
     role: "Stoic Philosopher",
     description: "Born a slave, became one of the most influential Stoic teachers of the ancient world.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Epiktetos.jpg/440px-Epiktetos.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Epiktetos.jpg/440px-Epiktetos.jpg&w=600&output=jpg",
     color: "#6B5E8B",
     works: "Enchiridion, Discourses",
     filter: () => false,
@@ -1080,7 +1080,7 @@ const philosophers = [
     years: "4 BC – 65 AD",
     role: "Stoic Philosopher & Statesman",
     description: "Advisor to Emperor Nero. His letters on living well remain startlingly modern.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seneca-berlinAntikensammlung.jpg/440px-Seneca-berlinAntikensammlung.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seneca-berlinAntikensammlung.jpg/440px-Seneca-berlinAntikensammlung.jpg&w=600&output=jpg",
     color: "#7A5B5B",
     works: "Letters from a Stoic",
     filter: () => false,
@@ -1092,7 +1092,7 @@ const philosophers = [
     years: "428 – 348 BC",
     role: "Greek Philosopher",
     description: "Student of Socrates. His dialogues on justice, beauty, and equality shaped Western thought.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/440px-Plato_Silanion_Musei_Capitolini_MC1377.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/440px-Plato_Silanion_Musei_Capitolini_MC1377.jpg&w=600&output=jpg",
     color: "#5B7A8B",
     works: "The Republic, Symposium",
     filter: () => false,
@@ -1104,7 +1104,7 @@ const philosophers = [
     years: "1844 – 1900",
     role: "German Philosopher",
     description: "Radical thinker who challenged morality, religion, and the nature of truth.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/440px-Nietzsche187a.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/440px-Nietzsche187a.jpg&w=600&output=jpg",
     color: "#5B5B7A",
     works: "Thus Spoke Zarathustra, Beyond Good and Evil",
     filter: () => false,
@@ -1116,7 +1116,7 @@ const philosophers = [
     years: "6th century BC",
     role: "Chinese Philosopher",
     description: "Founder of Taoism. The Tao Te Ching is one of the most translated books in history.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg/440px-Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg/440px-Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg&w=600&output=jpg",
     color: "#5B7A6B",
     works: "Tao Te Ching",
     filter: () => false,
@@ -1128,7 +1128,7 @@ const philosophers = [
     years: "551 – 479 BC",
     role: "Chinese Philosopher",
     description: "His teachings on ethics, family, and good governance shaped East Asian civilization.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Confucius_Tang_Dynasty.jpg/440px-Confucius_Tang_Dynasty.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Confucius_Tang_Dynasty.jpg/440px-Confucius_Tang_Dynasty.jpg&w=600&output=jpg",
     color: "#7A6B5B",
     works: "The Analects",
     filter: () => false,
@@ -1140,7 +1140,7 @@ const philosophers = [
     years: "384 – 322 BC",
     role: "Greek Philosopher",
     description: "Student of Plato, tutor of Alexander the Great. Father of logic, science, and ethics.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg&w=600&output=jpg",
     color: "#6B7A5B",
     works: "Nicomachean Ethics, Politics",
     filter: () => false,
@@ -1152,7 +1152,7 @@ const philosophers = [
     years: "544 – 496 BC",
     role: "Chinese Military Strategist",
     description: "Author of The Art of War — 13 chapters on strategy that still influence leaders worldwide.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sun_Tzu_by_Hanban.jpg/440px-Sun_Tzu_by_Hanban.jpg",
+    image: "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sun_Tzu_by_Hanban.jpg/440px-Sun_Tzu_by_Hanban.jpg&w=600&output=jpg",
     color: "#7A5B6B",
     works: "The Art of War",
     filter: () => false,
@@ -1324,6 +1324,7 @@ export default function PhiloApp() {
   const dotScrollRef = useRef(null);
   const galleryScrollRef = useRef(null);
   const [galleryScrollTop, setGalleryScrollTop] = useState(0);
+  const [galleryAtBottom, setGalleryAtBottom] = useState(false);
 
   const goToReading = (idx, direction = null) => {
     if (idx < 0 || idx >= passages.length) return;
@@ -1993,7 +1994,13 @@ export default function PhiloApp() {
 
       <div
         ref={galleryScrollRef}
-        onScroll={e => { if (activeTab === "read" && readScreen === "gallery") setGalleryScrollTop(e.currentTarget.scrollTop); }}
+        onScroll={e => {
+          if (activeTab === "read" && readScreen === "gallery") {
+            const el = e.currentTarget;
+            setGalleryScrollTop(el.scrollTop);
+            setGalleryAtBottom(el.scrollTop + el.clientHeight >= el.scrollHeight - 20);
+          }
+        }}
         style={{
           flex: 1,
           overflow: activeTab === "profile" ? "hidden" : "auto",
@@ -2001,10 +2008,14 @@ export default function PhiloApp() {
           scrollBehavior: "smooth",
           padding: "0 24px calc(env(safe-area-inset-bottom, 0px) + " + (activeTab === "read" ? "140px" : "90px") + ")",
           maskImage: (activeTab === "read" && readScreen === "gallery")
-            ? "linear-gradient(to bottom, " + (galleryScrollTop > 20 ? "transparent 0%, black 10%," : "black 0%,") + " black 85%, transparent 100%)"
+            ? "linear-gradient(to bottom, " +
+              (galleryScrollTop > 20 ? "transparent 0%, black 10%, " : "black 0%, ") +
+              (galleryAtBottom ? "black 100%)" : "black 85%, transparent 100%)")
             : "none",
           WebkitMaskImage: (activeTab === "read" && readScreen === "gallery")
-            ? "linear-gradient(to bottom, " + (galleryScrollTop > 20 ? "transparent 0%, black 10%," : "black 0%,") + " black 85%, transparent 100%)"
+            ? "linear-gradient(to bottom, " +
+              (galleryScrollTop > 20 ? "transparent 0%, black 10%, " : "black 0%, ") +
+              (galleryAtBottom ? "black 100%)" : "black 85%, transparent 100%)")
             : "none",
         }}>
 
@@ -2036,8 +2047,8 @@ export default function PhiloApp() {
                       background: t.surface,
                       touchAction: "manipulation",
                       WebkitTapHighlightColor: "transparent",
-                      animation: "cardSlideUp 0.4s ease both",
-                      animationDelay: (idx * 60) + "ms",
+                      animation: "cinematicFadeIn 0.7s ease both",
+                      animationDelay: (idx * 80) + "ms",
                       opacity: isLocked ? 0.7 : 1,
                     }}
                     onPointerDown={e => { if (!isLocked) e.currentTarget.style.transform = "scale(0.97)"; }}
@@ -2137,9 +2148,9 @@ export default function PhiloApp() {
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>A+</button>
                 <button onClick={() => goToReading(Math.floor(Math.random() * passages.length))} style={{
-                  background: tourStep === 1 ? (mode === "dark" ? "#FFFFFF" : "#0A0A0A") : "transparent",
-                  border: tourStep === 1 ? "none" : `1px solid ${t.borderLight}`,
-                  color: tourStep === 1 ? (mode === "dark" ? "#0A0A0A" : "#FFFFFF") : t.textMuted,
+                  background: tourStep === 2 ? (mode === "dark" ? "#FFFFFF" : "#0A0A0A") : "transparent",
+                  border: tourStep === 2 ? "none" : `1px solid ${t.borderLight}`,
+                  color: tourStep === 2 ? (mode === "dark" ? "#0A0A0A" : "#FFFFFF") : t.textMuted,
                   width: "32px", height: "32px", borderRadius: "8px",
                   fontSize: "14px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
@@ -2609,9 +2620,9 @@ export default function PhiloApp() {
 
           const getDotStyle = (year) => {
             if (year < yearsLived) return { bg: t.accent, opacity: 0.85 };
-            if (year === yearsLived) return { bg: "#3B82F6", opacity: 1, ring: true, pulse: true };
+            if (year === yearsLived) return { bg: "#3B82F6", opacity: 1, ring: true, pulse: "current" };
             const ms = milestones.find((m) => m.age === year);
-            if (ms) return { bg: ms.color, opacity: 1, milestone: true };
+            if (ms) return { bg: ms.color, opacity: 1, milestone: true, pulse: ms.age === 30 ? "milestone" : false };
             return { bg: t.border, opacity: 1 };
           };
 
@@ -2658,7 +2669,7 @@ export default function PhiloApp() {
 
               <div style={{ padding: "20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "16px" }}>
                 <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 16px", textTransform: "uppercase", fontWeight: 600 }}>EACH DOT = ONE YEAR</p>
-                <style>{`@keyframes lifePulse { 0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.5)} 50%{box-shadow:0 0 0 6px rgba(59,130,246,0)} }`}</style>
+                <style dangerouslySetInnerHTML={{ __html: "@keyframes lifePulseCurrent { 0%,100%{ opacity:1; box-shadow:0 0 0 0 rgba(59,130,246,0.6); } 50%{ opacity:0.5; box-shadow:0 0 0 7px rgba(59,130,246,0); } } @keyframes lifePulseMilestone { 0%,100%{ opacity:1; box-shadow:0 0 0 0 rgba(167,139,250,0.6); } 50%{ opacity:0.4; box-shadow:0 0 0 6px rgba(167,139,250,0); } }" }} />
                 {Array.from({ length: Math.ceil(totalYears / cols) }, (_, row) => (
                   <div key={row} style={{ display: "flex", alignItems: "center", marginBottom: "6px" }}>
                     <span style={{ width: "28px", fontSize: "9px", color: t.textMuted, fontWeight: 300, textAlign: "right", marginRight: "10px", fontFamily: "'DM Sans', sans-serif" }}>{row * cols}</span>
@@ -2672,8 +2683,10 @@ export default function PhiloApp() {
                             width: "18px", height: "18px", borderRadius: "4px",
                             background: ds.bg, opacity: ds.opacity,
                             transition: "all 0.3s ease",
-                            border: ds.ring ? `2px solid #3B82F6` : "none",
-                            animation: ds.pulse ? "lifePulse 2s ease-in-out infinite" : "none",
+                            border: ds.ring ? "2px solid #3B82F6" : "none",
+                            animation: ds.pulse === "current" ? "lifePulseCurrent 2s ease-in-out infinite"
+                              : ds.pulse === "milestone" ? "lifePulseMilestone 2s ease-in-out infinite"
+                              : "none",
                           }} />
                         );
                       })}
@@ -2921,7 +2934,7 @@ export default function PhiloApp() {
                 color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 300, marginBottom: "8px",
               }}>Redo onboarding</button>
-              <button onClick={() => { setTourStep(0); setActiveTab("read"); try { localStorage.removeItem("praxis_tour_done"); } catch {} }} style={{
+              <button onClick={() => { setTourStep(0); setActiveTab("read"); setReadScreen("gallery"); try { localStorage.removeItem("praxis_tour_done"); } catch {} }} style={{
                 width: "100%", padding: "14px", background: "transparent",
                 border: `1px solid ${t.borderLight}`, borderRadius: "12px", cursor: "pointer",
                 color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif",
@@ -2949,8 +2962,8 @@ export default function PhiloApp() {
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text,
                 fontSize: "18px", cursor: "pointer",
-                opacity: tourStep === 2 ? 0 : 1,
-                pointerEvents: tourStep === 2 ? "none" : "auto",
+                opacity: tourStep === 3 ? 0 : 1,
+                pointerEvents: tourStep === 3 ? "none" : "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
@@ -2990,8 +3003,8 @@ export default function PhiloApp() {
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text,
                 fontSize: "18px", cursor: "pointer",
-                opacity: tourStep === 2 ? 0 : 1,
-                pointerEvents: tourStep === 2 ? "none" : "auto",
+                opacity: tourStep === 3 ? 0 : 1,
+                pointerEvents: tourStep === 3 ? "none" : "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
@@ -3029,50 +3042,61 @@ export default function PhiloApp() {
             const shuffleY = safeTop + 90;
 
             const spots = [
+              // 0: Read tab
               { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              // 1: Philosopher cards — spotlight covers cards area from top
+              { x: 0,                       y: 0,            w: W,      h: H - tabBarH, r: 0 },
+              // 2: Shuffle button
               { x: W - 94,                  y: shuffleY,    w: 32,              h: 32,      r: 10 },
+              // 3: Mark as Read
               { x: 64,                      y: H - tabBarH - 66, w: W - 128,    h: 48,      r: 28 },
+              // 4: Tasks tab
               { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              // 5: Screen tab
               { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              // 6: Life tab
               { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
             ];
 
             const spot = spots[tourStep];
-            const isTabSpot = [0, 3, 4, 5].includes(tourStep);
-            const isMarkAsRead = tourStep === 2;
+            const isTabSpot = [0, 4, 5, 6].includes(tourStep);
+            const isMarkAsRead = tourStep === 3;
             const rx = spot.x - pad;
             const ry = isTabSpot ? spot.y : spot.y - pad;
             const rw = spot.w + pad * 2;
             const rh = isTabSpot ? spot.h : spot.h + pad * 2;
 
-            // Percentage-based card tops — reliable across all screen heights
             const tabCardTop = Math.round(H * 0.58);
             const shuffleCardTop = shuffleY + 32 + pad + 16;
-            const markCardTop = spots[2].y - cardH - 90;
+            const markCardTop = spots[3].y - cardH - 90;
 
             const steps = [
-              { tab: "read",
+              { tab: "read", readScreen: "gallery",
                 title: "Daily Reading", text: "Your daily passage from history's greatest minds.",
                 cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[0] },
-              { tab: "read",
+              { tab: "read", readScreen: "gallery",
+                title: "Choose a Philosopher", text: "Browse the library and pick a thinker to read from. More are coming soon.",
+                cardTop: 100, cardLeft: "16px", cardWidth: "calc(100% - 32px)",
+                arrowDir: "none" },
+              { tab: "read", readScreen: "reading",
                 title: "Shuffle", text: "Jump to a random passage whenever you need it.",
                 cardTop: shuffleCardTop,
-                cardLeft: Math.min(spots[1].x + spots[1].w / 2 - 130, W - 280) + "px",
-                arrowDir: "up", arrowCenterX: spots[1].x + spots[1].w / 2 },
-              { tab: "read",
+                cardLeft: Math.min(spots[2].x + spots[2].w / 2 - 130, W - 280) + "px",
+                arrowDir: "up", arrowCenterX: spots[2].x + spots[2].w / 2 },
+              { tab: "read", readScreen: "reading",
                 title: "Mark as Read", text: "Track your streak. Show up every day.",
                 cardTop: markCardTop, cardLeft: "16px", cardWidth: "calc(100% - 32px)",
                 arrowDir: "down", arrowCenterX: spots[2].x + spots[2].w / 2 },
-              { tab: "todo",
+              { tab: "todo", readScreen: "gallery",
                 title: "Daily Tasks", text: "Set intentions for each day. Discipline compounds.",
                 cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[1] },
-              { tab: "time",
+              { tab: "time", readScreen: "gallery",
                 title: "Screen Time", text: "See where your hours go. Less scrolling, more living.",
                 cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[2] },
-              { tab: "life",
+              { tab: "life", readScreen: "gallery",
                 title: "Your Life in Years", text: "Every dot is one year. Count what remains.",
                 cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[3] },
@@ -3082,14 +3106,18 @@ export default function PhiloApp() {
 
             const advanceTour = () => {
               if (tourStep < steps.length - 1) {
-                setActiveTab(steps[tourStep + 1].tab);
+                const next = steps[tourStep + 1];
+                setActiveTab(next.tab);
+                if (next.readScreen) setReadScreen(next.readScreen);
                 setTourStep(tourStep + 1);
               } else dismissTour();
             };
 
             const goBack = () => {
               if (tourStep > 0) {
-                setActiveTab(steps[tourStep - 1].tab);
+                const prev = steps[tourStep - 1];
+                setActiveTab(prev.tab);
+                if (prev.readScreen) setReadScreen(prev.readScreen);
                 setTourStep(tourStep - 1);
               }
             };
