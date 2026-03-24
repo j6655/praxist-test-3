@@ -2789,7 +2789,7 @@ export default function PhiloApp() {
             // Safe area top — ~54px on iPhone PWA (status bar), ~20px in browser
             const safeTop = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 54 : 20;
             // Shuffle button: safeTop + PRAXIS title bar (~60px) + subtitle row (~30px) + button area
-            const shuffleY = safeTop + 100;
+            const shuffleY = safeTop + 75;
 
             const spots = [
               { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
