@@ -1900,10 +1900,13 @@ export default function PhiloApp() {
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>A+</button>
                 <button onClick={() => goToReading(Math.floor(Math.random() * passages.length))} style={{
-                  background: "transparent", border: `1px solid ${t.borderLight}`,
-                  color: t.textMuted, width: "32px", height: "32px", borderRadius: "8px",
+                  background: tourStep === 1 ? (mode === "dark" ? "#FFFFFF" : "#0A0A0A") : "transparent",
+                  border: tourStep === 1 ? "none" : `1px solid ${t.borderLight}`,
+                  color: tourStep === 1 ? (mode === "dark" ? "#0A0A0A" : "#FFFFFF") : t.textMuted,
+                  width: "32px", height: "32px", borderRadius: "8px",
                   fontSize: "14px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
+                  transition: "all 0.2s ease",
                 }}>
                   <svg width="17" height="13" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 5 C8 5 10 5 16 13 C22 21 24 21 30 21" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
@@ -2772,65 +2775,68 @@ export default function PhiloApp() {
             const H = window.innerHeight;
             const pct = (x) => (x / W * 100) + "%";
 
-            // Measured exact values: tabBarH=85 (14px top pad + 55px btn + 16px bottom pad)
             const tabBarH = 85;
             const tabBarPadX = 16;
             const tabW = (W - tabBarPadX * 2) / 5;
             const tabCenters = [0, 1, 2, 3, 4].map(n => tabBarPadX + (n + 0.5) * tabW);
             const pad = 6;
-            const cardH = 155; // approximate rendered height of tour card
+            const cardH = 170;
 
-            // Spotlights — all coordinates measured from live DOM (getBoundingClientRect)
             const spots = [
-              // Step 0: Read tab (full tab bar column)
-              { x: tabBarPadX,              y: H - tabBarH, w: tabW,    h: tabBarH, r: 14 },
-              // Step 1: Shuffle button — measured: x=W-94, y=78, 32×32
-              { x: W - 94,                  y: 78,          w: 32,      h: 32,      r: 10 },
-              // Step 2: Mark as Read — measured: x=74, y=H-148, w=W-148, h=48
-              { x: 74,                      y: H - 148,     w: W - 148, h: 48,      r: 28 },
-              // Step 3: Tasks tab
-              { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,    h: tabBarH, r: 14 },
-              // Step 4: Screen tab
-              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,    h: tabBarH, r: 14 },
-              // Step 5: Life tab
-              { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,    h: tabBarH, r: 14 },
+              // Read tab — clamp so bottom doesn't peek past screen
+              { x: tabBarPadX,              y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
+              // Shuffle button
+              { x: W - 94,                  y: 78,          w: 32,           h: 32,      r: 10 },
+              // Mark as Read button
+              { x: 64,                      y: H - 150,     w: W - 128,      h: 48,      r: 28 },
+              // Tasks tab
+              { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
+              // Screen tab
+              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
+              // Life tab
+              { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,         h: tabBarH, r: 12 },
             ];
 
             const spot = spots[tourStep];
-            const rx = spot.x - pad, ry = spot.y - pad;
-            const rw = spot.w + pad * 2, rh = spot.h + pad * 2;
+            // For tab spots: don't pad the bottom so it doesn't overflow screen
+            const isTabSpot = [0, 3, 4, 5].includes(tourStep);
+            const isMarkAsRead = tourStep === 2;
+            const rx = spot.x - pad;
+            const ry = isTabSpot ? spot.y : spot.y - pad;
+            const rw = spot.w + pad * 2;
+            const rh = isTabSpot ? spot.h : spot.h + pad * 2;
 
-            // Tooltip vertical positions — card placed so arrow visually connects it to spotlight
-            // Tab steps: card sits at 55% height; arrow bridges card→tab bar (~130px)
-            const tabCardTop = Math.round(H * 0.55);
-            // Shuffle (step 1): card sits just below the arrow which hangs from the spotlight
-            const shuffleCardTop = spots[1].y + spots[1].h + pad + 8 + 44 + 8; // 78+32+6+8+44+8 = 176
+            // Card positions — each card sits CLOSE to its spotlight, short arrow
+            const tabCardTop = H - tabBarH - pad - cardH - 60;
+            const shuffleCardTop = spots[1].y + spots[1].h + pad + 12;
+            // Mark as Read: longer gap = more visible arrow
+            const markCardTop = spots[2].y - cardH - 90;
 
             const steps = [
               { tab: "read",
                 title: "Daily Reading", text: "Your daily passage from history's greatest minds.",
-                cardTop: tabCardTop, cardLeft: "24px",
+                cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[0] },
               { tab: "read",
                 title: "Shuffle", text: "Jump to a random passage whenever you need it.",
                 cardTop: shuffleCardTop,
-                cardLeft: Math.max(16, Math.min(spots[1].x + spots[1].w / 2 - 130, W - 276)) + "px",
+                cardLeft: Math.min(spots[1].x + spots[1].w / 2 - 130, W - 280) + "px",
                 arrowDir: "up", arrowCenterX: spots[1].x + spots[1].w / 2 },
               { tab: "read",
                 title: "Mark as Read", text: "Track your streak. Show up every day.",
-                cardTop: Math.round(H * 0.38), cardLeft: "50%", cardTransform: "-50%",
-                arrowDir: "down", arrowCenterX: 74 + (W - 148) / 2 },
+                cardTop: markCardTop, cardLeft: "16px", cardWidth: "calc(100% - 32px)",
+                arrowDir: "down", arrowCenterX: spots[2].x + spots[2].w / 2 },
               { tab: "todo",
                 title: "Daily Tasks", text: "Set intentions for each day. Discipline compounds.",
-                cardTop: tabCardTop, cardLeft: "24px",
+                cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[1] },
               { tab: "time",
                 title: "Screen Time", text: "See where your hours go. Less scrolling, more living.",
-                cardTop: tabCardTop, cardLeft: "50%", cardTransform: "-50%",
+                cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[2] },
               { tab: "life",
                 title: "Your Life in Years", text: "Every dot is one year. Count what remains.",
-                cardTop: tabCardTop, cardLeft: "50%", cardTransform: "-50%",
+                cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[3] },
             ];
 
@@ -2843,13 +2849,19 @@ export default function PhiloApp() {
               } else dismissTour();
             };
 
-            // Dynamic arrow: stretches from card edge to spotlight edge
+            const goBack = () => {
+              if (tourStep > 0) {
+                setActiveTab(steps[tourStep - 1].tab);
+                setTourStep(tourStep - 1);
+              }
+            };
+
             const arrowFromY = s.arrowDir === "down"
-              ? s.cardTop + cardH + 8          // 8px below card bottom
-              : spot.y + spot.h + pad + 8;      // 8px below spotlight ring
+              ? s.cardTop + cardH + 8
+              : spot.y + spot.h + pad + 8;
             const arrowToY = s.arrowDir === "down"
-              ? spot.y - pad - 8                // 8px above spotlight ring
-              : s.cardTop - 8;                  // 8px above card top
+              ? spot.y - pad - 8
+              : s.cardTop - 8;
             const arrowH = Math.max(20, arrowToY - arrowFromY);
 
             return (
@@ -2868,40 +2880,33 @@ export default function PhiloApp() {
                     </mask>
                   </defs>
                   <rect width={W} height={H} fill="rgba(0,0,0,0.72)" mask="url(#tour-mask)" />
-                  <rect x={rx} y={ry} width={rw} height={rh} rx={spot.r + pad} ry={spot.r + pad} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
                 </svg>
 
-                {/* Arrow — dynamic height, connects card to spotlight */}
-                <div style={{ position: "absolute", left: pct(s.arrowCenterX), top: arrowFromY, transform: "translateX(-50%)", pointerEvents: "none" }}>
-                  {s.arrowDir === "down" ? (
-                    <svg width="20" height={arrowH} viewBox={"0 0 20 " + arrowH} fill="none">
-                      <line x1="10" y1="0" x2="10" y2={arrowH - 8} stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="4 5"/>
-                      <polyline points={"4," + (arrowH - 14) + " 10," + (arrowH - 6) + " 16," + (arrowH - 14)} stroke="rgba(255,255,255,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                    </svg>
-                  ) : (
-                    <svg width="20" height={arrowH} viewBox={"0 0 20 " + arrowH} fill="none">
-                      <polyline points="4,14 10,6 16,14" stroke="rgba(255,255,255,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                      <line x1="10" y1="8" x2="10" y2={arrowH} stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="4 5"/>
-                    </svg>
-                  )}
-                </div>
-
-                {/* Tooltip card */}
+                {/* Tooltip card — frosted glass body, white solid buttons */}
                 <div className="tour-card" key={tourStep} style={{
                   position: "absolute",
                   top: s.cardTop,
                   left: s.cardLeft,
                   transform: s.cardTransform ? "translateX(" + s.cardTransform + ")" : "none",
-                  width: "260px",
+                  width: s.cardWidth || "260px",
                   pointerEvents: "all",
                   zIndex: 10,
+                  background: "rgba(20,20,20,0.72)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  borderRadius: "18px",
+                  padding: "18px 18px 14px",
+                  border: "1px solid rgba(255,255,255,0.1)",
                 }}>
                   <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", lineHeight: 1.2 }}>{s.title}</p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: 300, color: "rgba(255,255,255,0.8)", margin: 0, lineHeight: 1.6 }}>{s.text}</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: 300, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.6 }}>{s.text}</p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.35)", margin: "8px 0 0", textAlign: "right" }}>{tourStep + 1} / {steps.length}</p>
                   <div style={{ display: "flex", gap: "8px", marginTop: "14px" }}>
-                    <button onClick={dismissTour} style={{ flex: 1, padding: "9px", background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Skip</button>
-                    <button onClick={advanceTour} style={{ flex: 2, padding: "9px", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.35)", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 600, color: "#FFFFFF" }}>{tourStep < steps.length - 1 ? "Next →" : "Got it!"}</button>
+                    <button onClick={dismissTour} style={{ flex: 1, padding: "9px", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Skip</button>
+                    {tourStep > 0 && (
+                      <button onClick={goBack} style={{ flex: 1, padding: "9px", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>← Back</button>
+                    )}
+                    <button onClick={advanceTour} style={{ flex: 2, padding: "9px", background: "#FFFFFF", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: "#0A0A0A" }}>{tourStep < steps.length - 1 ? "Next →" : "Got it!"}</button>
                   </div>
                 </div>
               </>
@@ -3101,11 +3106,16 @@ export default function PhiloApp() {
         padding: "14px 16px calc(env(safe-area-inset-bottom, 16px) + 16px)", background: t.bg, borderTop: `1px solid ${t.border}`,
       }}>
         {[
-          { key: "read", label: "Read", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="11" r="9" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
-          { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><rect x="3" y="3" width="16" height="16" rx="3" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
-          { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,2 21,19 1,19" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
-          { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><polygon points="11,1 21,11 11,21 1,11" stroke={color} strokeWidth="1.8" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
-          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ transition: "all 0.3s ease" }}><circle cx="11" cy="7" r="4" stroke={color} strokeWidth="1.8" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /><path d="M2 21h18M2 21v-1a9 9 0 0 1 18 0v1" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill={active ? color : "none"} style={{ transition: "fill 0.3s ease, stroke 0.3s ease" }} /></svg> },
+          // Read → Lucide book
+          { key: "read", label: "Read", shape: (active, color) => <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg> },
+          // Tasks → checkbox with check (keep)
+          { key: "todo", label: "Tasks", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="4" width="14" height="14" rx="2.5" stroke={color} strokeWidth="1.6" fill={active ? color : "none"} fillOpacity={active ? 0.15 : 0}/><polyline points="7.5,11 10.5,14 14.5,8" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+          // Screen → clock
+          { key: "time", label: "Screen", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8.5" stroke={color} strokeWidth="1.6" fill={active ? color : "none"} fillOpacity={active ? 0.12 : 0}/><polyline points="11,6 11,11 14.5,13.5" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+          // Life → dot grid (keep)
+          { key: "life", label: "Life", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="5" cy="5" r="1.8" fill={color}/><circle cx="11" cy="5" r="1.8" fill={color}/><circle cx="17" cy="5" r="1.8" fill={color}/><circle cx="5" cy="11" r="1.8" fill={color}/><circle cx="11" cy="11" r="1.8" fill={color}/><circle cx="17" cy="11" r="1.8" fill={color}/><circle cx="5" cy="17" r="1.8" fill={color}/><circle cx="11" cy="17" r="1.8" fill={color}/><circle cx="17" cy="17" r="1.8" fill={color}/></svg> },
+          // Profile → person
+          { key: "profile", label: "Profile", shape: (active, color) => <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="3.5" stroke={color} strokeWidth="1.6" fill={active ? color : "none"} fillOpacity={active ? 0.15 : 0}/><path d="M3 20c0-4 3.6-7 8-7s8 3 8 7" stroke={color} strokeWidth="1.6" strokeLinecap="round"/></svg> },
         ].map((tab) => {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
