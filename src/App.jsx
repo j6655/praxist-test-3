@@ -1038,7 +1038,127 @@ const passages = [
   },
 ];
 
-
+// Philosopher gallery data
+const philosophers = [
+  {
+    id: "marcus",
+    name: "Marcus Aurelius",
+    years: "121 – 180 AD",
+    role: "Roman Emperor & Stoic",
+    description: "His private journals became one of history's most enduring works of philosophy.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg/600px-Marble_bust_of_Marcus_Aurelius%2C_Palazzo_Nuovo%2C_Musei_Capitolini_%28inv._1071%29.jpg",
+    color: "#8B7355",
+    works: "Meditations",
+    filter: (p) => !p.ref.includes("Social Contract"),
+  },
+  {
+    id: "rousseau",
+    name: "Jean-Jacques Rousseau",
+    years: "1712 – 1778",
+    role: "Philosopher & Political Theorist",
+    description: "His ideas on freedom and equality ignited the French Revolution.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Jean-Jacques_Rousseau_%28painted_portrait%29.jpg/440px-Jean-Jacques_Rousseau_%28painted_portrait%29.jpg",
+    color: "#5B7A6B",
+    works: "The Social Contract",
+    filter: (p) => p.ref.includes("Social Contract"),
+  },
+  {
+    id: "epictetus",
+    name: "Epictetus",
+    years: "50 – 135 AD",
+    role: "Stoic Philosopher",
+    description: "Born a slave, became one of the most influential Stoic teachers of the ancient world.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Epiktetos.jpg/440px-Epiktetos.jpg",
+    color: "#6B5E8B",
+    works: "Enchiridion, Discourses",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "seneca",
+    name: "Seneca",
+    years: "4 BC – 65 AD",
+    role: "Stoic Philosopher & Statesman",
+    description: "Advisor to Emperor Nero. His letters on living well remain startlingly modern.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seneca-berlinAntikensammlung.jpg/440px-Seneca-berlinAntikensammlung.jpg",
+    color: "#7A5B5B",
+    works: "Letters from a Stoic",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "plato",
+    name: "Plato",
+    years: "428 – 348 BC",
+    role: "Greek Philosopher",
+    description: "Student of Socrates. His dialogues on justice, beauty, and equality shaped Western thought.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/440px-Plato_Silanion_Musei_Capitolini_MC1377.jpg",
+    color: "#5B7A8B",
+    works: "The Republic, Symposium",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "nietzsche",
+    name: "Friedrich Nietzsche",
+    years: "1844 – 1900",
+    role: "German Philosopher",
+    description: "Radical thinker who challenged morality, religion, and the nature of truth.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/440px-Nietzsche187a.jpg",
+    color: "#5B5B7A",
+    works: "Thus Spoke Zarathustra, Beyond Good and Evil",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "laotzu",
+    name: "Lao Tzu",
+    years: "6th century BC",
+    role: "Chinese Philosopher",
+    description: "Founder of Taoism. The Tao Te Ching is one of the most translated books in history.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg/440px-Lao_Tzu_-_Project_Gutenberg_eText_15250.jpg",
+    color: "#5B7A6B",
+    works: "Tao Te Ching",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "confucius",
+    name: "Confucius",
+    years: "551 – 479 BC",
+    role: "Chinese Philosopher",
+    description: "His teachings on ethics, family, and good governance shaped East Asian civilization.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Confucius_Tang_Dynasty.jpg/440px-Confucius_Tang_Dynasty.jpg",
+    color: "#7A6B5B",
+    works: "The Analects",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "aristotle",
+    name: "Aristotle",
+    years: "384 – 322 BC",
+    role: "Greek Philosopher",
+    description: "Student of Plato, tutor of Alexander the Great. Father of logic, science, and ethics.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg",
+    color: "#6B7A5B",
+    works: "Nicomachean Ethics, Politics",
+    filter: () => false,
+    comingSoon: true,
+  },
+  {
+    id: "suntzu",
+    name: "Sun Tzu",
+    years: "544 – 496 BC",
+    role: "Chinese Military Strategist",
+    description: "Author of The Art of War — 13 chapters on strategy that still influence leaders worldwide.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sun_Tzu_by_Hanban.jpg/440px-Sun_Tzu_by_Hanban.jpg",
+    color: "#7A5B6B",
+    works: "The Art of War",
+    filter: () => false,
+    comingSoon: true,
+  },
+];
 
 export default function PhiloApp() {
   const [mode, setMode] = useState(() => {
@@ -1198,8 +1318,12 @@ export default function PhiloApp() {
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [swipeExiting, setSwipeExiting] = useState(null);
   const [swipeEntering, setSwipeEntering] = useState(null);
+  const [readScreen, setReadScreen] = useState("gallery"); // "gallery" | "reading"
+  const [selectedPhilosopher, setSelectedPhilosopher] = useState(null);
 
   const dotScrollRef = useRef(null);
+  const galleryScrollRef = useRef(null);
+  const [galleryScrollTop, setGalleryScrollTop] = useState(0);
 
   const goToReading = (idx, direction = null) => {
     if (idx < 0 || idx >= passages.length) return;
@@ -1867,20 +1991,133 @@ export default function PhiloApp() {
         <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "22px", letterSpacing: "2px", fontWeight: 800 }}>PRAXIS<span style={{ fontSize: "11px", letterSpacing: "1px", fontWeight: 400, marginLeft: "6px", opacity: 0.5 }}>by J</span></span>
       </div>
 
-      <div style={{ flex: 1, overflow: activeTab === "profile" ? "hidden" : "auto", padding: `0 24px calc(env(safe-area-inset-bottom, 0px) + ${activeTab === "read" ? "140px" : "90px"})` }}>
+      <div
+        ref={galleryScrollRef}
+        onScroll={e => { if (activeTab === "read" && readScreen === "gallery") setGalleryScrollTop(e.currentTarget.scrollTop); }}
+        style={{
+          flex: 1,
+          overflow: activeTab === "profile" ? "hidden" : "auto",
+          WebkitOverflowScrolling: "touch",
+          scrollBehavior: "smooth",
+          padding: "0 24px calc(env(safe-area-inset-bottom, 0px) + " + (activeTab === "read" ? "140px" : "90px") + ")",
+          maskImage: (activeTab === "read" && readScreen === "gallery")
+            ? "linear-gradient(to bottom, " + (galleryScrollTop > 20 ? "transparent 0%, black 10%," : "black 0%,") + " black 85%, transparent 100%)"
+            : "none",
+          WebkitMaskImage: (activeTab === "read" && readScreen === "gallery")
+            ? "linear-gradient(to bottom, " + (galleryScrollTop > 20 ? "transparent 0%, black 10%," : "black 0%,") + " black 85%, transparent 100%)"
+            : "none",
+        }}>
 
         {/* DAILY READING TAB */}
-        {activeTab === "read" && (() => {
+        {activeTab === "read" && readScreen === "gallery" && (
+          <div style={{ paddingTop: "8px", animation: "slideDownIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both" }}>
+            <style dangerouslySetInnerHTML={{ __html: "@keyframes cardSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }" }} />
+            <div style={{ marginBottom: "28px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "6px" }}>
+                <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#c9a96e", flexShrink: 0 }} />
+                <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: 0 }}>Read</h2>
+              </div>
+              <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300, paddingLeft: "15px" }}>Choose a philosopher to begin</p>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              {philosophers.map((ph, idx) => {
+                const count = passages.filter(ph.filter).length;
+                const isLocked = ph.comingSoon;
+                return (
+                  <div
+                    key={ph.id}
+                    onClick={() => { if (!isLocked) { setSelectedPhilosopher(ph.id); setReadScreen("reading"); } }}
+                    style={{
+                      borderRadius: "20px", overflow: "hidden",
+                      cursor: isLocked ? "default" : "pointer",
+                      border: "1px solid " + t.border,
+                      position: "relative", height: "200px",
+                      background: t.surface,
+                      touchAction: "manipulation",
+                      WebkitTapHighlightColor: "transparent",
+                      animation: "cardSlideUp 0.4s ease both",
+                      animationDelay: (idx * 60) + "ms",
+                      opacity: isLocked ? 0.7 : 1,
+                    }}
+                    onPointerDown={e => { if (!isLocked) e.currentTarget.style.transform = "scale(0.97)"; }}
+                    onPointerUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                    onPointerLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                    role={isLocked ? undefined : "button"}
+                    aria-label={isLocked ? undefined : "Read passages by " + ph.name}
+                  >
+                    {/* Portrait */}
+                    <img
+                      src={ph.image}
+                      alt={ph.name}
+                      style={{
+                        position: "absolute", inset: 0, width: "100%", height: "100%",
+                        objectFit: "cover", objectPosition: "center top",
+                        filter: isLocked ? "grayscale(80%) brightness(0.4)" : "grayscale(20%) brightness(0.6)",
+                      }}
+                      onError={e => {
+                        e.target.style.display = "none";
+                        e.target.parentElement.style.background = "linear-gradient(135deg, " + ph.color + "55 0%, #0A0A0A 100%)";
+                      }}
+                    />
+                    {/* Gradient */}
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)",
+                    }} />
+                    {/* Coming Soon badge */}
+                    {isLocked && (
+                      <div style={{
+                        position: "absolute", top: "14px", right: "14px",
+                        background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)",
+                        borderRadius: "20px", padding: "4px 12px",
+                        fontSize: "10px", fontWeight: 600, color: "rgba(255,255,255,0.6)",
+                        letterSpacing: "1.5px",
+                      }}>COMING SOON</div>
+                    )}
+                    {/* Text */}
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 18px 18px" }}>
+                      <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.45)", margin: "0 0 3px", letterSpacing: "2px", fontWeight: 400 }}>{ph.years}</p>
+                      <h3 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 800, color: "#fff", margin: "0 0 4px" }}>{ph.name}</h3>
+                      <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.55)", margin: "0 0 12px", fontWeight: 300, lineHeight: 1.5 }}>{ph.description}</p>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.35)", fontWeight: 300 }}>
+                          {isLocked ? ph.works : count + " passages"}
+                        </span>
+                        {!isLocked && (
+                          <span style={{
+                            fontSize: "12px", fontWeight: 600, color: "#fff",
+                            background: "rgba(255,255,255,0.15)", borderRadius: "20px",
+                            padding: "5px 14px", backdropFilter: "blur(8px)",
+                          }}>Read →</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* READING VIEW */}
+        {activeTab === "read" && readScreen === "reading" && (() => {
           const p = passages[readingIndex];
           return (
-          <div>
+          <div style={{ animation: "slideUpIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both" }}>
             <div style={{ margin: "16px 0 20px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <button onClick={() => setReadScreen("gallery")} style={{
+                    background: "transparent", border: "none", cursor: "pointer",
+                    color: t.textMuted, fontSize: "18px", padding: "0",
+                    width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center",
+                    touchAction: "manipulation", flexShrink: 0, marginLeft: "-10px",
+                  }} aria-label="Back to philosophers">←</button>
                   <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#c9a96e", flexShrink: 0 }} />
                   <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 800, margin: 0 }}>Daily Reading</h2>
                 </div>
-                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
+                <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300, paddingLeft: "36px" }}>
                   {todayLabel} — {readDone.size} of {passages.length} read
                   {streak > 0 && <span style={{ marginLeft: "8px", color: "#f97316", fontWeight: 600 }}>🔥 {streak} day{streak !== 1 ? "s" : ""}</span>}
                 </p>
@@ -2694,7 +2931,7 @@ export default function PhiloApp() {
           );
         })()}
       </div>
-      {activeTab === "read" && (
+      {activeTab === "read" && readScreen === "reading" && (
         <div style={{
           position: "fixed",
           bottom: "calc(env(safe-area-inset-bottom, 16px) + 90px)",
@@ -3121,7 +3358,7 @@ export default function PhiloApp() {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
           return (
-            <button key={tab.key} onClick={() => { setActiveTab(tab.key); setCelebrating(false); }} style={{
+            <button key={tab.key} onClick={() => { setActiveTab(tab.key); setCelebrating(false); if (tab.key !== "read") setReadScreen("gallery"); }} style={{
               background: "transparent", border: "none", cursor: "pointer",
               display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
               padding: "6px 16px", flex: 1,
@@ -3143,6 +3380,8 @@ const globalCSS = `
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
   }
   html, body { margin: 0; padding: 0; height: 100%; background: #0A0A0A; }
+  @keyframes slideUpIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideDownIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
   /* Force portrait on mobile landscape only — not desktop */
   @media screen and (orientation: landscape) and (max-height: 500px) {
