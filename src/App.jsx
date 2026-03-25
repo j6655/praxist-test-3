@@ -4446,19 +4446,19 @@ export default function PhiloApp() {
             const shuffleY = safeTop + 90;
 
             const spots = [
-              // 0: Read tab
-              { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              // 1: Philosopher cards — spotlight covers cards area from top
+              // 0: Read tab — 3rd tab (index 2): Screen · Tasks · Read · Life · Profile
+              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              // 1: Philosopher cards — spotlight covers full cards area
               { x: 0,                       y: 0,            w: W,      h: H - tabBarH, r: 0 },
               // 2: Shuffle button
               { x: W - 94,                  y: shuffleY,    w: 32,              h: 32,      r: 10 },
               // 3: Mark as Read
               { x: 64,                      y: H - tabBarH - 66, w: W - 128,    h: 48,      r: 28 },
-              // 4: Tasks tab
+              // 4: Tasks tab — 2nd tab (index 1)
               { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              // 5: Screen tab
-              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              // 6: Life tab
+              // 5: Screen tab — 1st tab (index 0)
+              { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
+              // 6: Life tab — 4th tab (index 3)
               { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
             ];
 
@@ -4476,9 +4476,9 @@ export default function PhiloApp() {
 
             const steps = [
               { tab: "read", readScreen: "gallery",
-                title: "Screen Time", text: "See where your hours go. Less scrolling, more living.",
+                title: "Daily Reading", text: "One passage a day from history's greatest minds. Choose a philosopher to begin.",
                 cardTop: tabCardTop, cardLeft: "16px",
-                arrowDir: "down", arrowCenterX: tabCenters[2] },
+                arrowDir: "down", arrowCenterX: tabCenters[2] },  // Read = tab index 2
               { tab: "read", readScreen: "gallery",
                 title: "Choose a Philosopher", text: "Tap a philosopher to begin reading. More coming soon.",
                 isBanner: true,
@@ -4497,9 +4497,9 @@ export default function PhiloApp() {
                 cardTop: tabCardTop, cardLeft: "16px",
                 arrowDir: "down", arrowCenterX: tabCenters[1] },
               { tab: "time", readScreen: "gallery",
-                title: "Daily Reading", text: "Your daily passage from history's greatest minds.",
+                title: "Screen Time", text: "See exactly where your hours go. Less scrolling, more living.",
                 cardTop: tabCardTop, cardLeft: "16px",
-                arrowDir: "down", arrowCenterX: tabCenters[0] },
+                arrowDir: "down", arrowCenterX: tabCenters[2] },
               { tab: "life", readScreen: "gallery",
                 title: "Your Life in Years", text: "Every dot is one year. Count what remains.",
                 cardTop: tabCardTop, cardLeft: "16px",
