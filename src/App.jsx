@@ -1961,7 +1961,7 @@ const philosophers = [
     comingSoon: true,
   },
   {
-    id: "suntzu", cardBg: "#b5d0da",
+    id: "suntzu", cardBg: "#3a5a6a",
     name: "Sun Tzu",
     years: "544 – 496 BC",
     role: "Chinese Military Strategist",
@@ -1987,6 +1987,8 @@ const philosophers = [
 ];
 
 export default function PhiloApp() {
+  const [showSplash, setShowSplash] = useState(true);
+  const [splashPhase, setSplashPhase] = useState("in"); // "in" | "hold" | "out" | "done"
   const [mode, setMode] = useState(() => {
     try { return localStorage.getItem("praxis_mode") || "dark"; } catch { return "dark"; }
   });
@@ -2008,6 +2010,16 @@ export default function PhiloApp() {
   const [showFontPicker, setShowFontPicker] = useState(false);
   const [fontSize, setFontSize] = useState(15);
   const [onboardingStep, setOnboardingStep] = useState(0);
+
+  // Letter-by-letter splash: each letter staggers in, holds, then staggers out
+  // P-R-A-X-I-S: 6 letters × 70ms stagger = last letter lands ~420ms in
+  useEffect(() => {
+    if (!showSplash) return;
+    const t1 = setTimeout(() => setSplashPhase("hold"), 850);   // S→P all in (540ms + buffer)
+    const t2 = setTimeout(() => setSplashPhase("out"), 1700);   // hold ~850ms then exit
+    const t3 = setTimeout(() => { setSplashPhase("done"); setShowSplash(false); }, 2500); // S→P all out
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, []);
   const [onboardingAnswers, setOnboardingAnswers] = useState(() => {
     try { const s = localStorage.getItem("praxis_onboarding_answers"); return s ? JSON.parse(s) : {}; } catch { return {}; }
   });
@@ -2182,16 +2194,9 @@ export default function PhiloApp() {
     } catch {}
     return philosophers.map(p => p.id);
   });
-  // Touch drag state for philosopher reordering
-  const dragPhiloRef = React.useRef(null);
-  const dragOverPhiloRef = React.useRef(null);
-  const [touchDragIdx, setTouchDragIdx] = useState(null);
-  const [touchDragY, setTouchDragY] = useState(0);
-  const [touchDragOverIdx, setTouchDragOverIdx] = useState(null);
-  const touchDragStartY = useRef(null);
-  const touchDragLongPressTimer = useRef(null);
-  const touchDragCardRefs = useRef([]);
-  const touchDragScrollRef = useRef(null);
+  // Philosopher reorder animation state
+  const [reorderAnimIdx, setReorderAnimIdx] = useState(null);
+  const [reorderAnimDir, setReorderAnimDir] = useState(null); // "up" | "down"
 
   const savePhiloOrder = (newOrder) => {
     setPhiloOrder(newOrder);
@@ -2555,6 +2560,67 @@ export default function PhiloApp() {
   const todayKey = weekDays[localDayIndex];
   const totalTasks = Object.values(weekTasks).flat().filter((tk) => tk.text.trim()).length;
   const totalDone = Object.values(weekTasks).flat().filter((tk) => tk.text.trim() && tk.done).length;
+
+  // STAKE-STYLE SPLASH SCREEN
+  if (showSplash && splashPhase !== "done") {
+    const isOut = splashPhase === "out";
+    const letters = ["P","R","A","X","I","S"];
+    const total = letters.length; // 6
+    // S comes in first (index 5 → reversed = 0), P comes in last (index 0 → reversed = 5)
+    // S goes out first (same reversed logic), P goes out last
+    // reversed stagger: delay = (total - 1 - i) * stepMs
+    return (
+      <div style={{
+        position: "fixed", inset: 0,
+        background: "#0a0a0a",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        zIndex: 9999,
+        overflow: "hidden",
+      }}>
+        <div style={{
+          background: "#fff",
+          display: "flex", alignItems: "center",
+          padding: "10px 18px",
+          lineHeight: 1,
+          gap: "1px",
+        }}>
+          {letters.map((letter, i) => {
+            const reverseDelay = (total - 1 - i) * 90;
+            return (
+              <span
+                key={i}
+                style={{
+                  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "22px",
+                  color: "#0a0a0a",
+                  textTransform: "uppercase",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  display: "inline-block",
+                  animation: isOut
+                    ? `letterOut 0.38s cubic-bezier(0.4, 0, 1, 1) ${reverseDelay}ms both`
+                    : `letterIn 0.38s cubic-bezier(0, 0, 0.2, 1) ${reverseDelay}ms both`,
+                }}
+              >
+                {letter}
+              </span>
+            );
+          })}
+        </div>
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes letterIn {
+            from { opacity: 0; transform: translateX(-48px); }
+            to   { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes letterOut {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(48px); }
+          }
+        `}} />
+      </div>
+    );
+  }
 
   // INTRO SLIDES
   if (screen === "onboarding" && !onboardingDone && showIntro) {
@@ -3009,7 +3075,7 @@ export default function PhiloApp() {
         {activeTab === "read" && readScreen === "gallery" && (
           <div style={{ paddingTop: "8px", animation: "slideDownIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both" }}>
             <style dangerouslySetInnerHTML={{ __html: "@keyframes cardSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }" }} />
-            <div style={{ marginBottom: "28px" }}>
+            <div style={{ marginBottom: "14px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <div style={{ width: "3px", height: "28px", borderRadius: "2px", background: "#c9a96e", flexShrink: 0 }} />
@@ -3028,7 +3094,7 @@ export default function PhiloApp() {
                 >{galleryEditMode ? "Done" : "Edit"}</button>
               </div>
               <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300, paddingLeft: "15px" }}>
-                {galleryEditMode ? "Hold & drag to reorder" : "Choose a philosopher to begin"}
+                {galleryEditMode ? "Tap arrows to reorder" : ""}
               </p>
             </div>
 
@@ -3066,6 +3132,9 @@ export default function PhiloApp() {
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg>
               </div>
               </div>
+              <p style={{ fontSize: "12px", color: t.textMuted, margin: "0 0 8px", fontWeight: 300, paddingLeft: "2px", letterSpacing: "0.3px" }}>
+                Choose a philosopher to begin
+              </p>
               <div className={tourStep === 2 ? "tour-glow" : ""} style={{ display: "flex", flexDirection: "column", gap: "14px", borderRadius: "20px" }}>
               {orderedPhilosophers.map((ph, idx) => {
                 const count = passages.filter(ph.filter).length;
@@ -3073,10 +3142,8 @@ export default function PhiloApp() {
                 return (
                   <div
                     key={ph.id}
-                    ref={el => { touchDragCardRefs.current[idx] = el; }}
                     onClick={() => {
                       if (galleryEditMode) return;
-                      if (touchDragIdx !== null) return;
                       if (!isLocked) {
                         setSelectedPhilosopher(ph.id);
                         const firstIdx = passages.indexOf(passages.filter(ph.filter)[0]);
@@ -3085,71 +3152,26 @@ export default function PhiloApp() {
                         if (tourStep === 2) { setTourStep(3); }
                       }
                     }}
-                    onPointerDown={e => {
-                      if (!galleryEditMode) {
-                        if (!isLocked) e.currentTarget.style.transform = "scale(0.97)";
-                        return;
-                      }
-                      e.currentTarget.setPointerCapture(e.pointerId);
-                      touchDragStartY.current = e.clientY;
-                      touchDragLongPressTimer.current = setTimeout(() => {
-                        setTouchDragIdx(idx);
-                        setTouchDragY(e.clientY);
-                        setTouchDragOverIdx(idx);
-                        if (navigator.vibrate) navigator.vibrate(30);
-                      }, 150);
-                    }}
-                    onPointerMove={e => {
-                      if (!galleryEditMode || touchDragIdx !== idx) return;
-                      e.preventDefault();
-                      setTouchDragY(e.clientY);
-                      const cards = touchDragCardRefs.current;
-                      for (let i = 0; i < cards.length; i++) {
-                        if (!cards[i]) continue;
-                        const rect = cards[i].getBoundingClientRect();
-                        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                          if (touchDragOverIdx !== i) setTouchDragOverIdx(i);
-                          break;
-                        }
-                      }
-                    }}
-                    onPointerUp={() => {
-                      clearTimeout(touchDragLongPressTimer.current);
-                      if (!galleryEditMode) return;
-                      if (touchDragIdx === idx && touchDragOverIdx !== null && touchDragOverIdx !== idx) {
-                        const newOrder = [...philoOrder];
-                        const dragged = newOrder.splice(idx, 1)[0];
-                        newOrder.splice(touchDragOverIdx, 0, dragged);
-                        savePhiloOrder(newOrder);
-                      }
-                      setTouchDragIdx(null);
-                      setTouchDragOverIdx(null);
-                      touchDragStartY.current = null;
-                    }}
-                    onPointerCancel={() => {
-                      clearTimeout(touchDragLongPressTimer.current);
-                      setTouchDragIdx(null);
-                      setTouchDragOverIdx(null);
-                      touchDragStartY.current = null;
-                    }}
-                    onPointerLeave={e => {
-                      if (!galleryEditMode) e.currentTarget.style.transform = "scale(1)";
-                    }}
+                    onPointerDown={e => { if (!galleryEditMode && !isLocked) e.currentTarget.style.transform = "scale(0.97)"; }}
+                    onPointerUp={e => { if (!galleryEditMode) e.currentTarget.style.transform = "scale(1)"; }}
+                    onPointerLeave={e => { if (!galleryEditMode) e.currentTarget.style.transform = "scale(1)"; }}
                     role={isLocked ? undefined : "button"}
                     aria-label={isLocked ? undefined : "Read passages by " + ph.name}
                     style={{
                       borderRadius: "20px", overflow: "hidden",
-                      cursor: galleryEditMode ? (touchDragIdx === idx ? "grabbing" : "grab") : isLocked ? "default" : "pointer",
-                      border: "1px solid " + (touchDragOverIdx === idx && touchDragIdx !== null && touchDragIdx !== idx ? t.accent : t.border),
+                      cursor: galleryEditMode ? "default" : isLocked ? "default" : "pointer",
+                      border: "1px solid " + t.border,
                       position: "relative", height: "160px",
                       background: ph.cardBg,
                       WebkitTapHighlightColor: "transparent",
-                      touchAction: galleryEditMode ? "none" : "manipulation",
-                      transition: touchDragIdx === idx ? "none" : "transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease",
-                      transform: touchDragIdx === idx ? "scale(1.03)" : "scale(1)",
-                      opacity: touchDragIdx !== null && touchDragIdx !== idx && touchDragOverIdx === idx ? 0.6 : 1,
-                      zIndex: touchDragIdx === idx ? 10 : 1,
-                      boxShadow: touchDragIdx === idx ? "0 8px 32px rgba(0,0,0,0.35)" : "none",
+                      touchAction: "manipulation",
+                      transition: "transform 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease, box-shadow 0.2s ease",
+                      transform: reorderAnimIdx === idx
+                        ? (reorderAnimDir === "up" ? "translateY(-6px) scale(1.02)" : "translateY(6px) scale(1.02)")
+                        : "translateY(0) scale(1)",
+                      opacity: reorderAnimIdx !== null && reorderAnimIdx !== idx ? 0.7 : 1,
+                      boxShadow: reorderAnimIdx === idx ? "0 12px 40px rgba(0,0,0,0.4)" : "none",
+                      zIndex: reorderAnimIdx === idx ? 10 : 1,
                     }}
                   >
                     {/* Blurred background — uses bgImage if provided, else portrait */}
@@ -3161,45 +3183,118 @@ export default function PhiloApp() {
                         position: "absolute", inset: 0,
                         width: "100%", height: "100%",
                         objectFit: "cover", objectPosition: ph.bgImage ? "center center" : "center top",
-                        filter: "blur(18px) " + (isLocked ? "brightness(0.5)" : "brightness(0.7)"),
-                        transform: "scale(1.1)",
+                        filter: "blur(20px) " + (isLocked ? "brightness(0.4)" : "brightness(0.65)"),
+                        transform: "scale(1.15)",
                       }}
                     />
-                    {/* Scrim — lighter for bgImage (light bg needs dark text), darker for blurred portrait */}
-                    <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)", pointerEvents: "none" }} />
-                    {/* Sharp portrait — pinned right */}
-                    <img
-                      src={ph.image}
-                      alt={ph.name}
-                      loading="lazy"
-                      style={{
-                        position: "absolute", right: 0, top: 0,
-                        height: "100%", width: "auto",
-                        display: "block",
-                        filter: isLocked ? "brightness(0.6)" : "none",
-                      }}
-                      onError={e => { e.target.style.display = "none"; }}
-                    />
-                    {/* Drag handle overlay in edit mode */}
+                    {/* Color scrim — uses cardBg so light-cardBg cards don't show black gaps */}
+                    <div style={{ position: "absolute", inset: 0, background: ph.cardBg, opacity: 0.55, pointerEvents: "none" }} />
+                    {/* Sharp portrait — fixed box pinned right, every image crops identically */}
+                    <div style={{
+                      position: "absolute", right: 0, top: 0,
+                      width: "160px", height: "100%",
+                      overflow: "hidden",
+                    }}>
+                      <img
+                        src={ph.image}
+                        alt={ph.name}
+                        loading="lazy"
+                        style={{
+                          width: "100%", height: "100%",
+                          objectFit: "cover", objectPosition: "center top",
+                          display: "block",
+                          filter: isLocked ? "brightness(0.6)" : "none",
+                        }}
+                        onError={e => { e.target.parentElement.style.display = "none"; }}
+                      />
+                    </div>
+                    {/* Consistent right-to-left gradient fade — fixed pixel stops so every card cuts at the same point */}
+                    <div style={{
+                      position: "absolute", inset: 0, pointerEvents: "none",
+                      background: `linear-gradient(to right, ${ph.cardBg} 130px, ${ph.cardBg}ff 155px, ${ph.cardBg}cc 175px, ${ph.cardBg}55 200px, transparent 225px)`,
+                    }} />
+                    {/* Up / Down reorder buttons in edit mode */}
                     {galleryEditMode && (
                       <div style={{
                         position: "absolute", inset: 0, zIndex: 10,
                         display: "flex", alignItems: "center", justifyContent: "flex-end",
-                        padding: "0 20px", pointerEvents: "none",
+                        padding: "0 16px", gap: "8px",
+                        animation: "fadeUp 0.22s ease both",
                       }}>
-                        <div style={{
-                          display: "flex", flexDirection: "column", gap: "5px",
-                          opacity: touchDragIdx === idx ? 1 : 0.75,
-                          transform: touchDragIdx === idx ? "scale(1.2)" : "scale(1)",
-                          transition: "transform 0.15s ease, opacity 0.15s ease",
-                        }}>
-                          {[0,1,2,3].map(i => (
-                            <div key={i} style={{ display: "flex", gap: "4px" }}>
-                              <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: "rgba(255,255,255,0.85)" }} />
-                              <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: "rgba(255,255,255,0.85)" }} />
-                            </div>
-                          ))}
-                        </div>
+                        {/* UP */}
+                        <button
+                          onClick={e => {
+                            e.stopPropagation();
+                            if (idx === 0) return;
+                            setReorderAnimIdx(idx);
+                            setReorderAnimDir("up");
+                            if (navigator.vibrate) navigator.vibrate(18);
+                            setTimeout(() => {
+                              const newOrder = [...philoOrder];
+                              const [removed] = newOrder.splice(idx, 1);
+                              newOrder.splice(idx - 1, 0, removed);
+                              savePhiloOrder(newOrder);
+                              setReorderAnimIdx(null);
+                              setReorderAnimDir(null);
+                            }, 180);
+                          }}
+                          style={{
+                            width: "36px", height: "36px", borderRadius: "50%",
+                            background: idx === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.15)",
+                            backdropFilter: "blur(8px)",
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            cursor: idx === 0 ? "not-allowed" : "pointer",
+                            opacity: idx === 0 ? 0.3 : 1,
+                            transition: "background 0.15s ease, transform 0.12s ease, opacity 0.15s ease",
+                            flexShrink: 0,
+                          }}
+                          onPointerDown={e => { e.stopPropagation(); if (idx !== 0) e.currentTarget.style.transform = "scale(0.88)"; }}
+                          onPointerUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                          onPointerLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                          aria-label="Move up"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M7 11V3M7 3L3.5 6.5M7 3L10.5 6.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </button>
+                        {/* DOWN */}
+                        <button
+                          onClick={e => {
+                            e.stopPropagation();
+                            if (idx === orderedPhilosophers.length - 1) return;
+                            setReorderAnimIdx(idx);
+                            setReorderAnimDir("down");
+                            if (navigator.vibrate) navigator.vibrate(18);
+                            setTimeout(() => {
+                              const newOrder = [...philoOrder];
+                              const [removed] = newOrder.splice(idx, 1);
+                              newOrder.splice(idx + 1, 0, removed);
+                              savePhiloOrder(newOrder);
+                              setReorderAnimIdx(null);
+                              setReorderAnimDir(null);
+                            }, 180);
+                          }}
+                          style={{
+                            width: "36px", height: "36px", borderRadius: "50%",
+                            background: idx === orderedPhilosophers.length - 1 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.15)",
+                            backdropFilter: "blur(8px)",
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            cursor: idx === orderedPhilosophers.length - 1 ? "not-allowed" : "pointer",
+                            opacity: idx === orderedPhilosophers.length - 1 ? 0.3 : 1,
+                            transition: "background 0.15s ease, transform 0.12s ease, opacity 0.15s ease",
+                            flexShrink: 0,
+                          }}
+                          onPointerDown={e => { e.stopPropagation(); if (idx !== orderedPhilosophers.length - 1) e.currentTarget.style.transform = "scale(0.88)"; }}
+                          onPointerUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                          onPointerLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                          aria-label="Move down"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M7 3V11M7 11L3.5 7.5M7 11L10.5 7.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </button>
                       </div>
                     )}
                     {/* Text */}
@@ -4369,24 +4464,23 @@ export default function PhiloApp() {
                 text: "One passage a day from history's greatest minds.",
                 cardTop: tabCardTop },
 
-              // 1: Surprise Me first — glow on Surprise Me card
+              // 1: Surprise Me — tooltip sits BELOW the Surprise Me card (~80px tall after header)
               { tab: "read", readScreen: "gallery", tabCutout: null, overlay: false,
                 title: "Surprise Me",
                 text: "Not sure who to pick? Tap this for a random passage from any philosopher.",
-                cardTop: 0 },
+                cardTop: safeTop + 220, scrollToTop: true },
 
-              // 2: Choose a Philosopher second
+              // 2: Choose a Philosopher — sits RIGHT ON TOP of the Surprise Me card
               { tab: "read", readScreen: "gallery", tabCutout: null, overlay: false,
                 title: "Choose a Philosopher",
                 text: "Tap any philosopher card to start reading their passages.",
-                cardTop: 0 },
+                cardTop: safeTop + 100, scrollToTop: true },
 
-              // 3: Shuffle — NO overlay, card just below the top reading toolbar
-              // Shuffle is in the toolbar row ~60-95px from top
+              // 3: Shuffle — sits just below the toolbar row so the shuffle button is visible above
               { tab: "read", readScreen: "reading", tabCutout: null, overlay: false,
                 title: "Shuffle",
                 text: "Jump to a random passage from your selected philosopher.",
-                cardTop: safeTop + 100 }, // sits below the toolbar row
+                cardTop: safeTop + 95 },
 
               // 4: Mark as Read — NO overlay, card sits above the button
               // Button is fixed ~90px above tab bar
@@ -4419,6 +4513,9 @@ export default function PhiloApp() {
                 const next = steps[tourStep + 1];
                 setActiveTab(next.tab);
                 if (next.readScreen) setReadScreen(next.readScreen);
+                if (next.scrollToTop && galleryScrollRef.current) {
+                  galleryScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                }
                 setTourStep(tourStep + 1);
               } else dismissTour();
             };
@@ -4428,6 +4525,9 @@ export default function PhiloApp() {
                 const prev = steps[tourStep - 1];
                 setActiveTab(prev.tab);
                 if (prev.readScreen) setReadScreen(prev.readScreen);
+                if (prev.scrollToTop && galleryScrollRef.current) {
+                  galleryScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                }
                 setTourStep(tourStep - 1);
               }
             };
@@ -4461,7 +4561,7 @@ export default function PhiloApp() {
                   pointerEvents: "all",
                   zIndex: 310,
                   // Non-tab steps: slightly more opaque so it's readable over the live UI
-                  background: s.overlay ? "rgba(20,20,20,0.95)" : "rgba(10,10,10,0.97)",
+                  background: s.overlay ? "rgba(20,20,20,0.95)" : "#111111",
                   borderRadius: "18px",
                   padding: "16px 18px 14px",
                   border: "1px solid rgba(255,255,255,0.14)",
@@ -4763,6 +4863,12 @@ const globalCSS = `
     0% { transform: translateY(0) scale(1); }
     40% { transform: translateY(-5px) scale(1.02); }
     100% { transform: translateY(0) scale(1); }
+  }
+  @keyframes arrowButtonPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(0.82); }
+    70%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
