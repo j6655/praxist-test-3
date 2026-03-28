@@ -2457,7 +2457,7 @@ export default function PhiloApp() {
 
   // Journal — per day, Option A resets at midnight, Option B keeps all entries
   const [journalMode, setJournalMode] = useState(() => {
-    try { return localStorage.getItem("praxis_journal_mode") || "A"; } catch { return "A"; }
+    try { return "B"; } catch { return "B"; } // Always saved permanently
   });
 
   const getJournalKey = (day) => `praxis_journal_${day}`;
@@ -3724,28 +3724,11 @@ export default function PhiloApp() {
                     {weekDaysFull[weekDays.indexOf(selectedTaskDay)]}
                   </span>
                 </div>
-                <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
-                  {["A", "B", "C", "D"].map(m => (
-                    <button key={m} onClick={() => {
-                      setJournalMode(m);
-                      try { localStorage.setItem("praxis_journal_mode", m); } catch {}
-                    }} style={{
-                      padding: "4px 10px", fontSize: "10px", fontWeight: 600,
-                      letterSpacing: "1px", cursor: "pointer", border: "none",
-                      background: journalMode === m ? t.accentBg : "transparent",
-                      color: journalMode === m ? t.accentText : t.textMuted,
-                      transition: "all 0.2s ease",
-                      fontFamily: "'DM Sans', sans-serif",
-                    }}>{m}</button>
-                  ))}
-                </div>
+
               </div>
 
-              {/* Mode hint */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "6px 0 10px" }}>
-                <p style={{ fontSize: "11px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
-                  {{ A: "Resets at midnight", B: "Saved permanently", C: "Resets every Sunday", D: "Clears manually only" }[journalMode]}
-                </p>
+              {/* Word count only */}
+              <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", margin: "6px 0 10px" }}>
                 <span style={{ fontSize: "11px", color: t.textMuted, fontWeight: 300 }}>{journalWordCount} {journalWordCount === 1 ? "word" : "words"}</span>
               </div>
 
@@ -4190,25 +4173,7 @@ export default function PhiloApp() {
                   </div>
                 </div>
 
-                {/* Journal mode */}
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                    <span style={{ fontSize: "14px", color: t.text, fontWeight: 400 }}>Journal Mode</span>
-                    <div style={{ display: "flex", borderRadius: "8px", border: `1px solid ${t.borderLight}`, overflow: "hidden" }}>
-                      {["A","B","C","D"].map(m => (
-                        <button key={m} onClick={() => { setJournalMode(m); try { localStorage.setItem("praxis_journal_mode", m); } catch {}; }} style={{
-                          padding: "5px 10px", fontSize: "11px", fontWeight: 600, cursor: "pointer", border: "none",
-                          background: journalMode === m ? t.accentBg : "transparent",
-                          color: journalMode === m ? t.accentText : t.textMuted,
-                          transition: "all 0.2s ease", fontFamily: "'DM Sans', sans-serif",
-                        }}>{m}</button>
-                      ))}
-                    </div>
-                  </div>
-                  <p style={{ fontSize: "11px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
-                    {{ A: "Resets at midnight each day", B: "Saved permanently per day", C: "Resets every Sunday", D: "Never resets, clear manually" }[journalMode]}
-                  </p>
-                </div>
+
               </div>
 
               {/* Reset onboarding */}
