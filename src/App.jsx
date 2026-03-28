@@ -130,7 +130,8 @@ const onboardingQuestions = [
       { label: "Jean-Jacques Rousseau", desc: "Philosopher of freedom and equality. His Social Contract shaped modern democracy and the French Revolution." },
       { label: "Lao Tzu", desc: "Founder of Taoism. Taught simplicity, patience, and living in harmony with nature." },
       { label: "Epictetus", desc: "Born a slave, became a Stoic master. Focused on what you can and cannot control." },
-      { label: "Miyamoto Musashi", desc: "Japan's greatest swordsman. Undefeated in 61 duels. His Book of Five Rings turns mastery of the sword into mastery of the self." },
+      { label: "Miyamoto Musashi", desc: "Japan\'s greatest swordsman. His Book of Five Rings turned combat mastery into life philosophy." },
+      { label: "Miyamoto Musashi", desc: "Japan\'s greatest swordsman. His Book of Five Rings turned combat strategy into life philosophy." },
       { label: "Seneca", desc: "Stoic philosopher and advisor to Nero. Wrote on anger, time, and the shortness of life." },
       { label: "Camus", desc: "Absurdist thinker. Argued life has no inherent meaning — and that's okay." },
     ],
@@ -1563,361 +1564,6 @@ const passages = [
     text: "The enlightened ruler and the good general are able to strike and conquer and achieve things beyond the reach of ordinary men, because they have foreknowledge.",
     reflect: "Foreknowledge — not prophecy, but intelligence, information, and the discipline to understand what others overlook. The advantage of the exceptional isn't talent; it's knowing more about the situation than everyone else. What do you know that others don't?",
   },
-
-  // ── MIYAMOTO MUSASHI — The Book of Five Rings ─────────────────────────────
-  {
-    ref: "The Ground Book",
-    text: "Do not think dishonestly. The Way is in training.",
-    reflect: "Two of Musashi's nine precepts placed side by side. The first is about the inner world — honesty as the foundation of mastery. The second is about the outer: there is no shortcut, only accumulated repetition. Which of the two do you most resist?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "From one thing, know ten thousand things. When you attain the Way of Strategy there will not be one thing you cannot see. You must study hard.",
-    reflect: "Deep mastery of one discipline eventually illuminates all others. The samurai who truly understood the sword began to understand business, leadership, and self. What have you studied deeply enough that it has started to teach you about things far beyond itself?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "The carpenter uses a master plan of the building, and the Way of Strategy is similar in that there is a plan of campaign. If you want to learn the craft of war, ponder over this book. The teacher is as a needle, the disciple is as thread. You must practice constantly.",
-    reflect: "The teacher creates the channel; the student must flow through it with total commitment. You cannot learn from a teacher you only half-follow. Who have you been a half-committed disciple to — and what would full commitment look like?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "Today is victory over yourself of yesterday; tomorrow is your victory over lesser men.",
-    reflect: "Musashi reverses the usual order of ambition. Most people want to beat others first. He insists you beat yourself first — yesterday's version of yourself. Are you measuring yourself against others or against who you were last week?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "You should not have a favourite weapon. To become over-familiar with one weapon is as much a fault as not knowing it sufficiently well.",
-    reflect: "Fixation on one tool — one method, one strategy, one strength — makes you predictable and brittle. Musashi wielded any weapon that served the moment. What tool, approach, or identity are you so attached to that it has become a limitation?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "There is timing in the whole life of the warrior, in his thriving and declining, in his harmony and discord. You must be able to discern this.",
-    reflect: "Not just timing in combat — timing in life. When to push, when to rest, when to build, when to let go. Most failures come not from wrong direction but wrong timing. Where in your life are you fighting the rhythm of the moment instead of reading it?",
-  },
-  {
-    ref: "The Water Book",
-    text: "In strategy your spiritual bearing must not be any different from normal. Both in fighting and in everyday life you should be determined though calm.",
-    reflect: "The person who is calm in crisis and determined in peace is the same person. Musashi is describing consistency of character — the warrior who doesn't need an emergency to access their best self. How much does your inner state depend on external circumstances?",
-  },
-  {
-    ref: "The Water Book",
-    text: "You must cultivate your wisdom and spirit. Polish your wisdom: learn public justice, distinguish between good and evil, study the Ways of different arts one by one. When you cannot be deceived by men you will have realized the wisdom of strategy.",
-    reflect: "The goal of all this study is clarity — the ability to see through illusion, flattery, and manipulation. True wisdom is not impressive knowledge. It is the inability to be deceived. Where are you still easily deceived — by others, by yourself, by appearances?",
-  },
-  {
-    ref: "The Water Book",
-    text: "Generally, I dislike fixedness in both long swords and hands. Fixedness means a dead hand. Pliability is a living hand. You must bear this in mind.",
-    reflect: "Rigidity is death — in a grip, in a plan, in a mind. A fixed hand cannot respond; a pliable one can. This applies to opinions, identities, habits. Where are you holding something so tightly it has stopped being useful?",
-  },
-  {
-    ref: "The Water Book",
-    text: "If you master the principles of sword-fencing, when you freely beat one man, you beat any man in the world. The spirit of defeating a man is the same for ten million men.",
-    reflect: "The principle scales. A single genuine understanding, fully internalized, applies everywhere. This is why Musashi fought 61 duels undefeated — not because he memorized 61 solutions, but because he understood one thing completely. What is the one principle you understand so deeply it could solve most of your problems?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "Any man who wants to master the essence of my strategy must research diligently, training morning and evening. Thus can he polish his skill, become free from self, and realize extraordinary ability. He will come to possess miraculous power.",
-    reflect: "The sequence is precise: diligent research, then polished skill, then freedom from self, then extraordinary ability. The ego is not the vehicle to mastery — it's the obstacle. At what point in your own growth does ego start to get in the way?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Know Collapse: Everything can collapse. Houses, bodies, and enemies collapse when their rhythm becomes deranged. In single combat, the enemy sometimes loses timing and collapses. If you let this opportunity pass, he may recover and not be so negligent thereafter.",
-    reflect: "Every system — a relationship, a business, a habit, a belief — has a rhythm. When that rhythm breaks, collapse becomes possible. Musashi says: recognize it, act immediately, don't hesitate. What rhythm in your own life has recently become deranged — and are you acting on it or waiting for it to self-correct?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To become the enemy means to think yourself in the enemy's position. He who is shut inside is a pheasant. He who enters to arrest is a hawk. You must appreciate this.",
-    reflect: "Before you can outmaneuver any opponent — a competitor, a skeptic, even your own resistance — you must genuinely inhabit their perspective. Not to sympathize, but to see. What challenge are you facing right now that you haven't fully thought through from the other side?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "The Mountain-Sea Change: it is bad to repeat the same thing several times when fighting the enemy. If you once make an attack and fail, there is little chance of success if you use the same approach again. If the enemy thinks of the mountains, attack like the sea.",
-    reflect: "Insanity is trying the same thing and expecting a different result. Musashi demands creative flexibility in the face of failure. What have you tried multiple times without success, and how radically different would a sea-attack look compared to what you've been doing?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "Rat's Head, Ox's Neck: when we are fighting with the enemy and both he and we have become occupied with small points in an entangled spirit, we must always think of the Way of Strategy as being both a rat's head and an ox's neck.",
-    reflect: "When you're lost in the details, deliberately shift to the big picture. When you're floating in abstraction, anchor yourself in the specific. The master alternates between both. Which scale are you currently stuck at — the rat's head or the ox's neck?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "There is no interior nor surface in strategy. When I teach my Way, I first teach by training in techniques which are easy for the pupil to understand. I gradually endeavour to explain the deep principle.",
-    reflect: "Musashi refuses the mystification common to many teachers — the idea that the deepest truths are secret and reserved for the initiated. He insists the surface and the depth are the same teaching, seen more clearly over time. Are you using complexity as a substitute for depth?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "Speed is not part of the true Way of Strategy. Whatever the Way, the master of strategy does not appear fast.",
-    reflect: "The masters look unhurried because they have eliminated wasted motion. Speed is a byproduct of precision, not the other way around. Where are you confusing frantic activity with effective action?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "If you fix the eyes on these places your spirit can become confused and your strategy thwarted. In the Way of Strategy, when you have fought many times you will easily be able to appraise the speed and position of the enemy's sword, and having mastery of the Way you will see the weight of his spirit.",
-    reflect: "True perception is not about where you point your eyes — it's about what your mind can hold. Experienced warriors perceive everything while focusing on nothing in particular. In your own domain of expertise, are you still fixating on details, or have you developed the wide perception of mastery?",
-  },
-  {
-    ref: "The Book of the Void",
-    text: "What is called the spirit of the void is where there is nothing. By knowing things that exist, you can know that which does not exist. That is the void.",
-    reflect: "Musashi's final teaching is about the space between things — the pause, the possibility, the unknown. You understand what is absent by fully knowing what is present. What is conspicuously absent in your life right now that you have been avoiding naming?",
-  },
-  {
-    ref: "The Book of the Void",
-    text: "Polish the twofold spirit heart and mind, and sharpen the twofold gaze perception and sight. When your spirit is not in the least clouded, when the clouds of bewilderment clear away, there is the true void.",
-    reflect: "The Void is not emptiness achieved through avoidance — it is clarity earned through relentless purification of heart and mind. Musashi wrote this on the last day of his life, at sixty years old. What clouds of bewilderment are you still carrying that need to be burned away before you can see clearly?",
-  },
-  {
-    ref: "The Book of the Void",
-    text: "In the void is virtue, and no evil. Wisdom has existence, principle has existence, the Way has existence, spirit is nothingness.",
-    reflect: "Musashi's final words in the Five Rings. Spirit — not the techniques, not the strategies, not even the wisdom — is nothingness. The highest attainment is to become a clear channel, not a container. What are you still trying to contain that might be better expressed through you than stored inside you?",
-  },
-
-  // ── ADDITIONAL GROUND BOOK ───────────────────────────────────────────────────
-  {
-    ref: "The Ground Book",
-    text: "Even if a man has no natural ability he can be a warrior by sticking assiduously to both divisions of the Way. Generally speaking, the Way of the warrior is resolute acceptance of death.",
-    reflect: "Musashi removes talent as an excuse. The only requirement is total commitment — so unwavering that even death becomes acceptable. Most people avoid committing fully precisely because they fear exactly this kind of cost. What are you half-committing to because you haven't yet accepted what full commitment would demand?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "Perceive those things which cannot be seen. Pay attention even to trifles. Do nothing which is of no use.",
-    reflect: "Three of Musashi's nine precepts together. The first demands extraordinary perception. The second demands humility about what matters. The third is ruthless efficiency. Which of these three disciplines do you most consistently violate in your daily life?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "The Way of the warrior is to master the virtue of his weapons. If a gentleman dislikes strategy he will not appreciate the benefit of weaponry, so must he not have a little taste for this?",
-    reflect: "Musashi argues that refusing to study your own domain's tools — out of distaste, laziness, or false modesty — is a form of professional dishonesty. What tool, skill, or discipline in your field have you been avoiding mastering because you find it distasteful?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "Recently there have been people getting on in the world as strategists, but they are usually just sword-fencers. In olden times strategy was listed among the Ten Abilities and Seven Arts as a beneficial practice. The true value of sword-fencing cannot be seen within the confines of sword-fencing technique.",
-    reflect: "Musashi's critique: people mistake technical proficiency for strategic mastery. The technician executes. The strategist understands. In your field, are you developing technique or strategy — and do you know the difference?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "Someone once said 'Immature strategy is the cause of grief.' That was a true saying.",
-    reflect: "Half-formed thinking applied to consequential decisions causes suffering. Musashi spent decades refining his understanding before he wrote anything down. Where in your life are you acting on immature strategy — moving before you've thought deeply enough?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "Become acquainted with every art. Know the Ways of all professions. Distinguish between gain and loss in worldly matters. Develop intuitive judgement and understanding for everything.",
-    reflect: "Musashi's self-education program: breadth first, then intuition. He believed understanding many crafts developed a master pattern-recognition that any single discipline couldn't provide alone. What field completely unlike your own, if studied seriously, would most sharpen your judgement in your actual work?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "The foreman carpenter allots his men work according to their ability. Floor layers, makers of sliding doors, those of poor ability lay the floor joists, and those of lesser ability carve wedges. If the foreman knows and deploys his men well the finished work will be good.",
-    reflect: "Mastery includes the mastery of deploying others. The best foreman doesn't do everything — he understands people well enough to match them precisely to tasks. How carefully do you match effort to person — in your teams, collaborations, or even within yourself across different hours of the day?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "Like a trooper, the carpenter sharpens his own tools. He carries his equipment in his tool box, and works under the direction of his foreman. When the carpenter becomes skilled and understands measures he can become a foreman.",
-    reflect: "The progression is clear: sharpen your tools, work under direction, earn mastery, earn leadership. There are no shortcuts between these stages. Which stage are you in — and are you being honest about whether you've truly completed the previous one?",
-  },
-  {
-    ref: "The Ground Book",
-    text: "If you want to learn this Way, deeply consider the things written in this book one at a time. You must do sufficient research.",
-    reflect: "Musashi insists on slow, singular focus — one thing at a time, with sufficient depth. The opposite of how most people consume ideas: fast, plural, shallow. What idea in your life have you treated as understood when you've actually only skimmed it?",
-  },
-
-  // ── ADDITIONAL WATER BOOK ────────────────────────────────────────────────────
-  {
-    ref: "The Water Book",
-    text: "Language does not extend to explaining the Way in detail, but it can be grasped intuitively. Study this book; read a word then ponder on it. If you interpret the meaning loosely you will mistake the Way.",
-    reflect: "Musashi warns against casual reading of serious ideas. Loose interpretation isn't just incorrect — it actively misdirects. Which ideas in your life have you interpreted loosely enough that your version is now dangerously different from the original?",
-  },
-  {
-    ref: "The Water Book",
-    text: "Spiritual bearing in strategy must not be any different from normal. Meet the situation without tenseness yet not recklessly, your spirit settled yet unbiased. An elevated spirit is weak and a low spirit is weak.",
-    reflect: "Both over-excitement and depression are the same failure of equilibrium. The master operates in the narrow band between these extremes, consistently, regardless of circumstances. What situations reliably knock you out of that band — and what pulls you too high versus too low?",
-  },
-  {
-    ref: "The Water Book",
-    text: "Adopt a stance with the head erect, neither hanging down, nor looking up, nor twisted. With your features composed, keep the line of your nose straight. In all forms of strategy, it is necessary to maintain the combat stance in everyday life and to make your everyday stance your combat stance.",
-    reflect: "Your resting posture is your fighting posture. There is no separate mode for when it matters — your habitual state is the state you'll be in when it counts. What does your habitual physical and mental posture reveal about how you'll actually perform under pressure?",
-  },
-  {
-    ref: "The Water Book",
-    text: "The gaze should be large and broad. This is the twofold gaze 'Perception and Sight'. Perception is strong and sight weak. In strategy it is important to see distant things as if they were close and to take a distanced view of close things.",
-    reflect: "Perception is the deeper reading of a situation; sight is merely optical. Musashi says perception should dominate. When you're too close to a problem — a relationship, a project, a fear — you lose perception and gain only sight. What in your life needs you to step back so you can actually see it?",
-  },
-  {
-    ref: "The Water Book",
-    text: "The long sword should be wielded broadly and the companion sword closely. This is the first thing to realize. When you have cut downwards with the longsword, lift it straight upwards; when you cut sideways, return the sword along a sideways path. Return the sword in a reasonable way, always stretching the elbows broadly.",
-    reflect: "Every action has a correct return path — not just the strike, but the recovery. Most people obsess over the attack and neglect the return. In your own work, what follow-through or recovery after a major move do you consistently neglect?",
-  },
-  {
-    ref: "The Water Book",
-    text: "The primary thing when you take a sword in your hands is your intention to cut the enemy, whatever the means. Whenever you parry, hit, spring, strike or touch the enemy's cutting sword, you must cut the enemy in the same movement.",
-    reflect: "Every defensive action must contain within it the intention to resolve the conflict — not just survive it. Playing defense indefinitely is not strategy. Where in your life are you parrying repeatedly without the embedded intention to actually close the matter?",
-  },
-  {
-    ref: "The Water Book",
-    text: "To hit the enemy 'In One Timing' means, when you have closed with the enemy, to hit him as quickly and directly as possible, without moving your body or settling your spirit, while you see that he is still undecided.",
-    reflect: "The moment of an opponent's indecision is a window. Hesitate and it closes. Act before they've settled and you've already won. In negotiations, conversations, creative decisions — where do you see windows of 'one timing' that you regularly let close through hesitation?",
-  },
-  {
-    ref: "The Water Book",
-    text: "When you attack and the enemy quickly retreats, as you see him tense you must feint a cut. Then, as he relaxes, follow up and hit him. This is the 'Abdomen Timing of Two'.",
-    reflect: "The principle: create tension, wait for the release of tension, then move. This is true in negotiation, in persuasion, in leadership. People can't hold a defensive posture indefinitely. Where are you pressing when you should be waiting — and where are you waiting when you should be pressing?",
-  },
-  {
-    ref: "The Water Book",
-    text: "The 'Flowing Water Cut' is used when you are struggling blade to blade. When he breaks and quickly withdraws, expand your body and spirit and cut him as slowly as possible with your long sword, following your body like stagnant water.",
-    reflect: "Speed is not always the answer. When an opponent retreats, the flowing, deliberate follow-through is more devastating than a rushed strike. What situations in your life call for this quality — measured, expansive, inevitable — rather than urgent?",
-  },
-  {
-    ref: "The Water Book",
-    text: "The 'Red Leaves Cut' means knocking down the enemy's long sword. When you strongly hit the enemy's long sword with the Fire and Stones Cut, if you then beat down the point of his sword with a sticky feeling, he will necessarily drop the sword.",
-    reflect: "Sometimes the goal isn't to strike the person — it's to disarm the mechanism that makes them dangerous. Removing someone's weapon is more complete than wounding them. What is the 'sword' in your most persistent conflicts — the actual capability that, if neutralized, would dissolve the threat?",
-  },
-  {
-    ref: "The Water Book",
-    text: "When you cut several places with one sweep of the long sword, it is the 'Continuous Cut'. You must practice this cut; it is often used.",
-    reflect: "One movement, multiple resolutions. Economy of action applied to maximum effect. In your work, where are you making three separate moves to accomplish what one well-designed move could achieve? What needs to be restructured so one action resolves multiple problems?",
-  },
-  {
-    ref: "The Water Book",
-    text: "The 'Fire and Stones Cut' means that when the enemy's long sword and your long sword clash together you cut as strongly as possible without raising the sword even a little. This means cutting quickly with the hands, body and legs — all three cutting strongly.",
-    reflect: "When contact is made, total commitment — hands, body, legs, all of it. Not a limb, not a technique, but the whole self. Where do you make contact with a challenge using only part of yourself, holding the rest in reserve, and what would total commitment actually look like?",
-  },
-  {
-    ref: "The Water Book",
-    text: "To cut and to slash are two different things. Cutting, whatever form of cutting it is, is decisive, with a resolute spirit. Slashing is nothing more than touching the enemy. Even if you slash strongly, and even if the enemy dies instantly, it is slashing.",
-    reflect: "The difference between a cut and a slash is internal — it's the spirit behind the action, not the result. You can produce an outcome without truly deciding. Where in your life are you slashing — going through the motions, getting results, but without the resolute inner commitment that would make the work genuinely yours?",
-  },
-  {
-    ref: "The Water Book",
-    text: "Step by step walk the thousand-mile road. Study strategy over the years and achieve the spirit of the warrior. Today is victory over yourself of yesterday; tomorrow is your victory over lesser men.",
-    reflect: "The sequence matters: first beat yesterday's self, then and only then do you earn the right to measure yourself against others. Most people reverse this — they compare outward before doing the inner work. Where are you measuring yourself against others when the real contest is still against yourself?",
-  },
-  {
-    ref: "The Water Book",
-    text: "Deliberately, with a patient spirit, absorb the virtue of all this, from time to time raising your hand in combat. Maintain this spirit whenever you cross swords with an enemy.",
-    reflect: "Deliberate and patient — not rushed, not anxious. Musashi describes a quality of absorption that can only happen slowly. What understanding in your life needs more time to be absorbed into your body, not just your mind?",
-  },
-
-  // ── ADDITIONAL FIRE BOOK ─────────────────────────────────────────────────────
-  {
-    ref: "The Fire Book",
-    text: "Examine your environment. Stand in the sun; that is, take up an attitude with the sun behind you. Make sure that your rear is unobstructed, and that there is free space on your left. You must look down on the enemy, and take up your attitude on slightly higher places.",
-    reflect: "Before the engagement, control the environment. Light, space, elevation — these aren't luxuries, they're advantages you either claim or surrender. Before entering any high-stakes situation, what environmental factors do you typically ignore that someone with Musashi's mindset would have already arranged in their favour?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "When the fight comes, always endeavour to chase the enemy around to your left side. Chase him towards awkward places, and try to keep him with his back to awkward places. When the enemy gets into an inconvenient position, do not let him look around, but conscientiously chase him around and pin him down.",
-    reflect: "The strategy: force your opponent into terrain that disadvantages them, then don't let them recover. In competitive situations — negotiations, arguments, projects — where are you allowing your opponent to reset and choose better ground, when you could be maintaining pressure?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "Ken No Sen: When you decide to attack, keep calm and dash in quickly, forestalling the enemy. Or you can advance seemingly strongly but with a reserved spirit, forestalling him with the reserve.",
-    reflect: "The initiative can be taken in different ways — with speed, with apparent strength, with deceptive calm. The key is that YOU dictate when engagement begins. In your work and relationships, how often do you set the terms of engagement versus simply responding to what others initiate?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "Tai No Sen: When the enemy attacks, remain undisturbed but feign weakness. As the enemy reaches you, suddenly move away indicating that you intend to jump aside, then dash in attacking strongly as soon as you see the enemy relax.",
-    reflect: "The counter-initiative: let them commit, absorb their energy, then redirect it. Judo, not boxing. Where in your life are you meeting force with force when you could be absorbing, waiting for the overextension, and then acting from a position of genuine advantage?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Hold Down a Pillow: 'To Hold Down a Pillow' means not allowing the enemy's head to rise. You must always be able to lead the enemy about. In strategy, you must stop the enemy as he attempts to cut; you must push down his thrust, and throw off his hold when he tries to grapple.",
-    reflect: "Suppress momentum before it builds. A threat at its inception is ten times easier to address than one at full force. Where in your life — in projects, relationships, bad habits — do you wait until something is at full force when you could be catching it at the syllable 'at...'?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "Crossing at a Ford: This means setting sail even though your friends stay in harbour, knowing the route, knowing the soundness of your ship and the favour of the day. If the wind changes within a few miles of your destination, you must row across the remaining distance without sail.",
-    reflect: "Musashi's message: there are moments when you must commit to crossing even without perfect conditions, even alone. And when conditions change mid-crossing, you don't turn back — you row. What crossing are you delaying because the wind isn't favourable, when what's actually needed is to launch and row if necessary?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Know the Times: When in a duel, you must forestall the enemy and attack when you have first recognised his school of strategy, perceived his quality and his strong and weak points. Attack in an unsuspecting manner, knowing his metre and modulation and the appropriate timing.",
-    reflect: "Knowledge before action. You cannot attack wisely until you've read the opponent's system, tempo, and weaknesses. In your current biggest challenge, how deeply have you actually studied the opposition — their patterns, their weak points, their timing — versus how much are you acting on assumption?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Tread Down the Sword: We cannot get a decisive victory by cutting, with a 'tee-dum tee-dum' feeling, in the wake of the enemy's attacking long sword. We must defeat him at the start of his attack, in the spirit of treading him down with the feet, so that he cannot rise again to the attack.",
-    reflect: "Don't respond to attacks rhythmically — that just extends the fight. Tread down the attack at its origin so it never fully forms. In your life, where are you responding to problems instead of treading down the root condition that keeps generating them?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Release Four Hands: When you and the enemy are contending with the same spirit and the issue cannot be decided, abandon this spirit and win through an alternative resource.",
-    reflect: "When matched force meets matched force, neither wins — they just exhaust each other. The one who breaks the deadlock by changing the nature of the contest wins. What deadlock in your life needs you to abandon the current mode of engagement entirely and approach from an unexpected direction?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Cause Loss of Balance: Many things can cause a loss of balance. One cause is danger, another is hardship, and another is surprise. In large-scale strategy, attack without warning where the enemy is not expecting it, and while his spirit is undecided follow up your advantage.",
-    reflect: "Imbalance is a moment of maximum vulnerability. Musashi identifies surprise, danger, and hardship as the three destabilizers. When you're genuinely unbalanced — by shock, difficulty, or the unexpected — what is your trained response versus your panic response? Do you even have a trained response?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Pass On: In large-scale strategy, when the enemy is agitated and shows an inclination to rush, do not mind in the least. Make a show of complete calmness, and the enemy will be taken by this and will become relaxed.",
-    reflect: "You can infect an opponent with your emotional state — calm is as contagious as panic. The composed person in a room of anxious people holds disproportionate power. Who in your life has this effect on you — making you calmer just by their presence — and how much work have you done to become that person for others?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Penetrate the Depths: Even when it can be seen that we can win on the surface, if his spirit is not extinguished, he may be beaten superficially yet undefeated in spirit deep inside. With this principle we can destroy the enemy's spirit in its depths, demoralising him by quickly changing our spirit.",
-    reflect: "Surface victory and deep victory are different things. You can win an argument while losing the relationship. Win the negotiation while creating resentment. Win the battle while losing the will of your people. Where have you been winning on the surface while leaving an undefeated spirit in the depths?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Renew: When we are deadlocked with the enemy, means that without changing our circumstance we change our spirit and win through a different technique. It is necessary to consider how 'to renew' also applies in large-scale strategy.",
-    reflect: "Same situation, fresh spirit, new technique. Not retreat, not repetition — renewal. When you're stuck, you don't need new circumstances as often as you need a genuinely new approach from within the same circumstances. What are you currently deadlocked in that needs renewal rather than escape?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "The Commander Knows the Troops: Using the wisdom of strategy, think of the enemy as your own troops. When you think in this way you can move him at will and be able to chase him around. You become the general and the enemy becomes your troops.",
-    reflect: "To truly understand an opponent's behavior is to be able to predict and direct it, as if they were your own. This requires radical empathy combined with strategic intent. Who in your life — an opponent, a difficult person, a resistant institution — have you understood so completely that you could predict their next move?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "There are Many Enemies: Draw both sword and companion sword and assume a wide-stretched left and right attitude. The spirit is to chase the enemies around from side to side. Observe their attacking order, and go to meet first those who attack first.",
-    reflect: "When facing multiple pressures simultaneously, the instinct is to freeze or flail. Musashi's answer: move, set the posture wide, read the order of attacks, meet them sequentially. What situation in your life has you paralyzed by multiple pressures when what's needed is to identify the order and simply address them one by one?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "To Let Go the Hilt: There are various kinds of spirit involved in letting go the hilt. There is the spirit of winning without a sword. There is also the spirit of holding the long sword but not winning.",
-    reflect: "Your primary tool is not your only path to victory. And clinging to your primary tool when it's not working is its own failure. What is the equivalent of your 'sword' — the approach, credential, or method you default to — and where would letting go of it actually open more possibilities than holding it?",
-  },
-  {
-    ref: "The Fire Book",
-    text: "The Body of a Rock: When you have mastered the Way of Strategy you can suddenly make your body like a rock, and ten thousand things cannot touch you. This is the body of a rock. You will not be moved.",
-    reflect: "The final achievement of strategy is not speed or strength but immovability — a settled quality that external events simply cannot reach. Not rigidity, but rootedness. What would it feel like to be genuinely unmoved — not numb, but settled — in the face of what currently most easily disturbs you?",
-  },
-
-  // ── ADDITIONAL WIND BOOK ─────────────────────────────────────────────────────
-  {
-    ref: "The Wind Book",
-    text: "Some schools have a liking for extra-long swords. From the point of view of my strategy these must be seen as weak schools. Their preference is for the extra-long sword, relying on the virtue of its length, and they think to defeat the enemy from a distance.",
-    reflect: "Seeking advantage through reach — physical, social, technological — instead of through skill is a form of weakness that masquerades as strategy. In your own domain, where are you trying to win through an outsized tool rather than through genuine mastery of the fundamentals?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "You should not speak of strong and weak long swords. If you just wield the long sword in a strong spirit your cutting will be coarse, and if you use the sword coarsely you will have difficulty in winning. Be intent solely upon killing the enemy. Do not try to cut strongly and, of course, do not think of cutting weakly.",
-    reflect: "Thinking in terms of force — strong or weak — is already the wrong frame. The right frame is intention: what must be accomplished. Force calibrates itself when intention is clear. Where are you thinking about how hard to push when you should simply be thinking about what needs to be done?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "Using a shorter long sword is not the true Way to win. To aim for the enemy's unguarded moment is completely defensive, and undesirable at close quarters with the enemy.",
-    reflect: "Waiting for the perfect opening rather than creating one is a passive strategy that hands control to your opponent. Patience is a virtue — but patience that is actually passivity disguised is a trap. Where are you waiting for someone else to make a mistake rather than creating the conditions that force one?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "Placing a great deal of importance on the attitudes of the long sword is a mistaken way of thinking. What is known in the world as 'attitude' applies when there is no enemy. Attitude is the spirit of awaiting an attack. You must appreciate this.",
-    reflect: "A posture maintained for its own sake — a brand, a style, an identity position — has value only in peace. The moment real challenge arrives, you must move. What 'attitude' are you maintaining that is actually just a static posture that would need to be abandoned the moment real engagement began?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "Some schools maintain that the eyes should be fixed on the enemy's long sword. Some schools fix the eyes on the hands. Some fix the eyes on the face. If you fix the eyes on these places your spirit can become confused and your strategy thwarted.",
-    reflect: "Narrowing attention to a single indicator blinds you to the whole. Each school's fixation creates a predictable blind spot that a master exploits. What single metric, signal, or data point have you over-indexed on in your own decisions — and what are you systematically missing because of it?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "There are various methods of using the feet: floating foot, jumping foot, springing foot, treading foot. I dislike floating foot because the feet always tend to float during the fight. The Way must be trod firmly. I dislike jumping foot because it encourages the habit of jumping, and a jumpy spirit.",
-    reflect: "Your movement habits reveal your spirit habits. Floating, jumping, springing — each is a form of instability. Musashi walks normally because he thinks normally under pressure. What are your movement patterns under stress — and what do they reveal about where your spirit is unsteady?",
-  },
-  {
-    ref: "The Wind Book",
-    text: "There is no 'interior' nor 'surface' in strategy. In this world, if you go into the mountains and decide to go deeper and yet deeper, instead you will emerge at the gate. Whatever the Way, it has an interior, and it is sometimes a good thing to point out the gate.",
-    reflect: "Esoteric knowledge and beginner knowledge are the same knowledge seen from different depths. The master and the true beginner both arrive at simplicity — by opposite paths. What 'advanced' understanding in your field have you reached only to discover it was the same thing you were told at the start, but which you couldn't hear yet?",
-  },
 ];
 
 // Philosopher gallery data
@@ -2049,9 +1695,8 @@ const philosophers = [
     image: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAIcAUADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD0BA0eMAFfXp+FWIZA+9m4YMO9LE2Nyjox4H9aeUKhj8ucc5FfGWPsbkcgxnIAX9ariEbd4Vcbu1TOvyKCBlsglRkUm0qCATnPO0UrDiGSwUPGMN2PY0PEuzGQcH1qObeqANuKn1H41A9wZQV2MjnpxxmkNRejLEcJZioIC8YIpWt4xHtyN2Og/wAabHPtywQ/L19qkLiQBguDjOAKLA2LHAiRbXPAGce9V3jjZCrr8zcDA56VaRcoWA5Ycr05qrJGQFUIBjnBNUuwIQIkKqsbuuwqMkZLAdqnd0yN5+96jk1VidiqOsZYg/MO/wCVKzSXDCXyMk8d6AtpqWS6gbjliTkADke9K0se0K75PckVUZZSCog+X1JFNlMuE/cMzg4yTxTYktRLq8iiygy3PXmmxXEjrHlwehOM9KjNlJNt/c7QAAzMe9SwWm1eZMAgZIX/ADxSsma2WxajmAO5mbYvv1qRdUS7kFvGrMBjkHHNLDp4WTdHkAkjO7qcU7TLS6nvJlaMC3VRsfHLHvmnGN9DOVhZrl1DME+VT0z3qE34jA5+mORVu50+WMoOBubkY5IpV0yVQ7FpBhsj5gOKGu5DtuZsGoZd+CBgHjv+FXFuldgzZDckcf8A1qSXRWIYgyfPyCG6VMLIRxn5W6YJDc1SXYVtCKW7JlzGWO0bR6c0iy4Kqw3A/wCz1PelS1SNtqRzNznO7jmrB08Z+aNkYHAKHIxR1DQRSuDkDJ+bg9Ka00asSFOB1NOWCVGyrOozxgf1qL7BO+cFQOuCOD7cUWKW+opliwVCsN3PHrSHMhBZwfU96EQQJ++WMHPPJ/z6UwXUIbzEWTb0wBxml6j1EaEjOHQgDPcc1Tlgyv3SQ2Op6VZecvNtEqjI5DKeab5mxcMTvHYj/Gi3YpXKyW8m0gqq5zwOcfnVV7UgBDyR7YFXGMiM25gFOcYGc0zcu1csQepyOwq1oOxXWFgrmPC5GcA4pswcOokIDDqSetTkK6rJ97HQYpbhNqBtpYY+6O1NDVr6leEN5e1piGJzn+lS7Dwqyk/N1I4qGWFXOXTBOCB7+majCOsoKvIAOx6CmV0Jy+3cevzYYgcfWlVmMmSgwAMj0BqLaQWXaeeozzSwzBUD4kQjrleT/Sj0IY5g4jyF4JIAzwKgKSkZWNsAZ7Zqz50Z2qHGCDkHrik3BCTuxjlW604kpu9zbWQGReu0Hp0xSl1BYngMNwyahzLG2DEeu0AjpTUm8/GY8MTgLznA6mufYFTb1Ysl1hULt8q5wAuSR+VKsnnMnzEFh0z2pWiVSCU6jO0U8WudoMS4H+10p8ugWtawkkSh0DSrjHApoFuMsSCVznIqx9njYLtRGyMck5oFjbhSvlJs54yetHK0Pm6FMTRSbVDfvFHT1HTNWBAhhDDIdWwQDxUN6sVv5GyOMMwJZR1Iqt9pMW4bcNkHr1oasJeRejO45JOO7ds+lQ3cMkkeQ27cRkkYIH9agN2A2/7qg4GcY+tL50bxllYso5yPWi2lwTJI8KhRpSrHj5MZ5qW3hdYEiMplkTOWI65/yKpM6j52QZ6k5wabbaihkl2vgrtJAwcfWhjUW2acay4cTsgGOcdQfrSOFjO4tlO2MflWe1wZUJ3FSepXtUckxZBtIXBxtzkGkkO2pobdswdHD5A6DjH0qyyCOMK5Xn+6vQfX1rKhkSNGwGBOSPRs9an+1qyhHZmQrjJ9v5U7CkmaEU5KYBwqkqBjnPrVlWEasVlxzkKD1rGjuS/JYc4K+wqdLvb5jKykqO/SnsZuNy19oMu5gScHGCMHPerCpK0Qk8xSj/MFznZ7Vhz3W5jtkG0Lwc55qaO4cRqpLZIAKnPpVEvyNS3DujKjgIAcAc5puyYzKrALjIPIwayxrdvHObePzbm5jPMMfyhPZ26L+p9qbqFrqmo2kgkvFslxkJap0H+0zcn8MVV4Je8Jcz+FFi61nTdMmUXN/boVPzKWB4/CqL+NNIiGROHLtwF4wO3WuYk8CWDSBpnuZix3EmTP9O9WbT4Z6dcwkg3KyEfKxkzj2rRVMP1b+4mdHExXNyr7zpYfFeh3akJfBWU42E43f/WrTgu4DGsqujKfmGDnNeaat8KNUikaTS5Q6hvlEkn6Gsc6rqPhi6+yXImikjbDKpyrds/Stlh4TV6buc31qcHarGx7DI8ZhIkcNjkZI4H0rNRo3jb955cmSfcVzWm+NbO9zDPuimKjJY4Bz+HFbf2eNoWl85guMlycYx6muaVJxdpHbSrRkvdZJKY/MIEjNj5sAcHP+FQqdyBmIZWPTBzTfsCS7XSeReM5zmq/2GaBm2yFskZ46/r6UrW2N1rqXo3jKMDIOmQp7VGrKQSzdsZUcD2/KojYSxkhnXcemaX7G7YZZUKk4Ck9PaqS1sFuxIszABiRkdcDFSiRJF+8FPYHtVRrZlO8EA9DknkUwplhk4yAMk0vQXLqSMqIzFXwx54Peh2KYMsgGexHSq7xvGCpctk54XGBUW6QHCncD369qodvMtGYROFcAktwD+pp0kiSNgt93BGDx+VUm3qTkOx9SMU0lo2yIGZh0OCfxzRYVrassuIshljBP4Co2XahJYgAcLjiqxiujgrDMAOp2+tOSG9NuCUbOMgkDH5VVgvc67eWyJASSec9BVoxkqu4fLjAI9etIoiDgMq579atPIrqF3jao5AFcqQm9Ss0LFQ0m05H8QpvmEHDAHA/SrEbDG44CZwST0qG4lTf8oQ5Hcc0NWV0xJjHkViuFwF7Upl6ADgetISrdIwMehNNKk5YL8v8qjmZSQBYSQXgSQr0LHOKrSWNtJKZDCoJ7DoKsYPHHWkouxpWKkul27fOlumcjPYYqM2wtwY1C7SAB71eZQwwc0hVeSRnvT5tBNFHyDypYj1AA/WqRsXWZ2WUBMY2EjrmtCSM87VA3c7e+aakYRDujGV7rk5pplpFFLGVVc713c5J705oJBDuikj3DjBHX1rRSJZIuVYgj5fm9aZNbhZCsRJx0+bincZVjglj+Y/KH5JHb16n+VOFhglvMkJzwoOD+FWliYxpGWDqOmTyPzp5ikBAVmJUEj/DNO+uhl5FBNMaQ/O8rN1BJwMA9PrTn02VmKhmTHJ55WtMrJu2+bv2jG08Ee9QzwSOr7ZdjAc5PX/Gndi8zn72xeKcQSTOzqRgKTzj+dZt7quoi/tdLjZ4zMoHm87gndlzxwOPqapeMNRltA8QnC8E8nt35PSr3w002aa0uNUn8x5C4iUuxbauATjP1HT0rrcFTpOpI5HV9pXVJfM7LRrSOEJHDEYl28bR19z6n3racAExO+QygncM59az0D7so7HHCqB0FWdofBUMHx3NeXCZ31Em+yFFlZgZDJu65/8ArVbjtWiAVUHzDOcYxVK1hgSRgWzKedh45q59rmDqiRgDH3mOec1qoJ7mNVy2Tv6iXLr5LRuvUdsjNeN/FKBc+WkbIzKcjBbac9ePavaHhFwjbsmVgQCOBj1rxfx/d28eoS2RaaSaJsGVZDtdW9s/SurBwftbnHipR9i0cHDe3UDYuGlDJEqjK5GABg8dP513HhTxjcXRhtArTxFhn5uRnvjFcZr8AuDJNaKyKWXkMWCKOCMZ6fWrvhm7jt54wSGVgAx9OvTOe9etWgpxPKwtR05pX0PX2M3MfkHjBwT1FQhpvK2tG3BJLDr+lGlMLm2imCYVwArAkjpWntL4XPBHO2vGbs7H0yStoZnnyTK3l75FI+9jkD/GnwTTKoPlsyYORt6c1dFrFFcR7VfZnnH61aaOEwtkPgHnHHSle5WzMh4pMh1b5Tzyc4/OmmGRVTDAseB/tfWtgQW5/d/vMkZYA8Gohbwo+d25j23d6rbcG9DN+zzM+CQCDyw4P+e1LBDICCrLyOPrWmLKFlyiE7l6Fj0pgtIBCN0Chl3YYkkH3p3JvcovHKozncONw60iyuGLdAOOD19qutaQkcbT8uTgkZ5qKWOCEH95gdQGzjFTfoNalWOUltzMUU/KV67aiZljRtsnOcnnnmrAggnXciMwySOCMVCdPh2ZICHI5HBA9KuySE7XOgCsD5sDKEJACuMnPensC6Lkqxz3HIqa2tyLYMzrntjr+NPSJWBBGWJyc1z6k8xXRCV+Y/Nnld36ilePYpYqQAcDPGae9uwwVCj1wajKSgZw2D+IpPTdCQ/ykKlumMcE1Wu5TDHhB85YYz0xUjF+AxYemaaQD1GfrS5l2Ksyr9rnIGWBI9qT7VJ/s/lVrYv91fyoKJg5TjHYc0XQWKv2qTP8P5UhvGGQWT8qmeHcqbVI2+p5qFk8plBUDj73H6U9AV2KLl3Kv8pxnoMA077Yivv8sZI55/WpbZhs83GT6EcU5Qkm35Qc8YXHPsad9CmrDbe7IwCoweQQOv40isY5S3G7OQMfpVgW8UbMyIq4IBXH3gOKf9mG7ecqxPbt9aaJuQKQXPHPXlasZ5cMjEtgbse1EwKox4/A8D/CooJhNKyowXAx97rT0I31JlYg78fdGDx1/GqOtTNbWpRJHGVAOCC361flVsYIKjAwe3+f8ayPEOmvc2jspdnIHyq5AJ+laU4q9mRJ2R474y1Ca6ZyVdwjbdzHJPPFdx4NufENj4fsvsemo8BTe5Zx85J5K9z6fhXFa3p8ttKVbcuSCT1AFdP4b8W61aaNa2djpXn2kBeDzjdqu0g53FQAec+pr0q8HKkoxSfqeLSny13KVz0LR7i91G6mklsJrSNYxjeNuWz29iP5e9ON89pfXUtzHcO42JBDGv31xksOxOSfpioPBniG41oPFd2n2d9hcIH3fxYzyAeff0o8Vz6xYx/atJt4b+WMFfs0oOAp4LAAjJHp6E15Kp2lZqx66qXjddB2oz6vf2yraW6WkxyWZ1DHHbae3XvWde6hrljaMZITcSYVAyHAD8kkrj6CsfS9c8Q6n5ja7qElsVkHlJZnyAU9GDcqc59eKu3CXVwyTNqF20cZ2iOSVispB6nowHTHfjNdTjGl8ViKSnX0gmjofDur3WqWAkmh8uQL05A/WuO8T+D5tTv7m8QRxzuD8g5Vjjjtx/8AWzXW6ZeNGPLNpEkY6nzSxJ9eRk1qSGORQ6IygH86whXdNuUDSphuZKNRHj8Gifa7G90WK2tkvI1ZVkgG3dIOy5+90IOe/uK4vS5HhuXtvLKToNpjOAVz1H5ivXtVay0SC+13yAz27G4Crx5s5yqKP9kc59TXjAkmk1KeVpAZgx3Njg5OTj869LCVZVIt9Dy8dTjScV1/Q9l8NXivZ28TAeYFBJGPpjjuOma35rrZtIj5U7cD09q5TwYZLmyilYlSucED7w9a6RyJAVV+MD6qf/r151VWmz3KFpQiyW3n2ykg8k5+Zv0qyjGVVUlR6DrVCEKNq7wST196uRnIyTuI4GBjNZps0krEhdBEwXADgHocjFKpVwBsVR2HOCKURALuJPHSnhmQZ2YJ469a0T11Rm2kNcgRKqqc5xuB5xSSHYu1FAJGPWnzIyqRxsx1HUf59KqK3ljngj5sjiqtYSbeiFul82Tb8pUAZAHK4qORVYgZGVXdkKemcYyeM0Op3Eu2S2ME8DGeAaqySyMX3hSisO5Ofc1LXU0je25OswihDYALHaQaqTXCYYAqB/dIp0r8bpAffP8AOqczK7kom9m7E4zTRK7nVwSlY9oUMCc7fX86UTYb98rKSNwUjHNVnuI0kChhzjAAqOZ2nBbduYZ2VgmxOJamnaUAccHP0qMMO/6GmiVMAHhsZ5PWiNIhlgAo6nA5qWm3qCHrtJ5z+FGBjOefTFShoABhST33UmIiWJJGeQAOBS5QuRUUpC9jTlTcCQwGOeaVh3GMNvLcDpzUMsQALMQwyDyc7fwqaVA7gOCx4wcU2QFcABcmnyhcS3t/KACuNo6j1NWYbaPzR1OMEDI6VDFblHLNOqucg9wBU0MSqsjbyxQZzirVrikyxKqg5AVQowD6UDEjHcCSOcngVWXa3/LQpjnbjIqEXLShI88KTwOM89qrmJaexblkQjyigOeBk8mpLWwhhkDqMMves8iRGMiwNJg/3snpTkedhjyXCsRjLVaet7CktDRkjXIWQZGR9Mj0pqWySYRkYhyc1VVpgp8xWCqeCeMDNSNOwjJVyu05HHWm5K97E2dtDD8TeDLe6Yy2oGVGQuOSQM9qj0LQtJ0yxghREZ3jEzy55d2ALHI7Dp+FdDbXO1FZ9wJORXM6w1vFb31oU/dom5IwSCVYnKDv1BA9jiqq1JTiku5FOnGM3J9je8PQQW8D36RhFuMMMdQg4Xn35P405NQs9QujEsqs6jdtB5PPXj0rNXxVaW+mxWkUMbahFHHG1s8gWMMQAAXGeK5K4+Idjb61HbagljBe2ckkcq2+4hgeCFJA6Dn3IrF0ZybHGrFe83Y7KbTVkI+ZhIxz8o6c0220wTTEMSMktknj/wDXWjYXVhfiOe0niuIpBnzEOR0/T8atWlnDAg82VX+bI2Ht7jvURg3odf1qyuhLLSUiZRg/L09DU+oahb2FmfNjjjXIU5IAY9avJcQrD5rFY1A5J44FcVqOsRa9q8cFptlhsnZ5TnIztwn45JP0ArrUIwjdHDzyqztI5XxvqWl2egXOn25m+3PMjzpIzMIdhBJGeAMkdPX2rzfTrF5b4kGNmLYAJxu75BPFeleJPCh1B3SG1LtISwGSSS2MEfliuV1zTrnwlFZG7svmu5nSPfkDcg6cetd2HklTvE462HlUrqEjuvCwihgghRflTIYfdwvbNas86o52qnPQjjHOPzrjvDnjfTJkFne28umTsAA0vzwscf3x0+jYrqJERNrgbuMnsPrmvLq35tT26cbLl2a7lhGQXSRs5GMdP8anjl8tmO4Pg8Z6g1mxeYhxgDAxkk4NW4SiKrFVw3DHJPPpSTKlGxcN8u/YQ3K4yOmanWVZR0VsDOQO9U0GZQUG4Z9ORVlVILZVjn09+4qlcykuw90BYjfjI5NU50P3tyvk8L6U+QOuGIAUjHPOcetRyx87wwBZcEd6pt2COjFjlLDcWG7px/hUTyAyEEYx1JAzTFtiNy5Vhng47+9RxxqshJlB28kbe1LzBpX0GyIpZiSx2nBINVJVETMFy+OMAda0N8agDbsP0GRVW6ZXUHedx4+571SDW9mbwWG7YzZVvLBCtHxj8RUiW4RWjC7sqMEHkj3qPw1GhsSxj2gOcKucHH1qw0uxmCoB9etc70Iu9iFU2ZAXnPPFFSGRz8xYZNMAz3rNspAAT0GaCCOx/Kn+XtGRJH/31TSSD9724NHqCdxACegP5U4bxxtPPYjrSCV1OQzDPvTxJI4OZW2jjlqaXYNRSxVMuNqk457+1RNKAwxgKe2Mc1KEPZyCenvVYyESbHG4E8A/w/Wqs+o0SDOwoeec0kbqivhiem4dqbNITu2KxHQEdKjjSQDkvzyRQrj0e5YAjm+QHgnv3pgiZLpZkOAybSpPAAPX60sfBDKc9iG5/KpY9p5V8YHGV96auTImVkkUbV6HtxmpjIIVXO5vYdqqqZQHKK8m5sZAyBSTvFbsHupEgAGP3jqn6k1pG5k7XG315t8tY05fqx6CrAZZVjYHII24HT61zGs+LPDduWW41qzXpxHOHIH/AAHNUD8T/DkKNHbRajdnGf3Ns3PvlsUuSbd7GmjSUTrpWZYnKgso6jGMV5TqL3eo+IZbS7uTHHd/u927GzLEL9Bk/lXQTfFq3EZ2aDqrAHkuY0yPxauM1rxlp94U2+HNQS4ZjkpKjkjsd2enP8q68Lu0zLFYWu4KXK/uep0knw1k8Ko13b6+sY24kNzhVi5yNuAST6d/Ss638G6L4k1Ii91mGONgF2W0TDcxHGXbJzmuu8PeMLXxZpklnPFMt2IgLhGTkr03bl4/+vV/SdC0mznTyLVpJXcsiIjOzHvjAqVWqXbd79LEyoezj7NpJdU9znNK+Ch0+9Q2us3AiEmdoyPlz0PPNei2OjDSYN7Euw6seuB2HpWfH4udtVSzSyYyNMbYK5C+XIoyVfGSvHPTp3rTv4bu+UfabgbWOTHECsePT1P4/lU1JNq9TcwpJQfLT0TOW8S+Lk1G5vdHsraWcwRq7MCACM4bscY4q94P8OnTLJ2RfKNzhmUnk4//AF1sWmk2Nkzz+Qiu+SzY5ORSjVYBfRWEYZ5s5CqQSq4+8fQUp1eaPKi4ws3Lsa/h60iOvrCyqyizZmUjr86gZ/I15j8XLdJfhVZ3MkTfadP1fyY3b7ygTPHyf93A/KvWfByGXUtVumIOzybYe21S5/8AQx+VeW/Fa6aX4MGeVcNfasJl+jXDEH8hXs0YKNCKseUqkpYu9+qPMdNjQTCNy4z98Adqgk17Vhc3MVlqlza/ZZTEqbt0bL1GQc4pbSSVcOwGWwN3U/lWZCzS6hfyqpIediDnAOOM14dJ2Updj9PxuFhXrwpS2d9vT/M1ovEHih8FtaUAjJ8u3Tj8xQ2u68/L+Ir/AASD8oRcfkKqFifvsV/GhY5FCjGQTwRVOtK19EVDJMJHRxb9W/8AMsf2zr4OTr2qKR/trz+lL/a+uyZH/CRasTntKvA/KqeVDHzHK+i9c1YiXYgJKKCMn3pe1la9ynlGDUrcn5lyHWfEsLArr91sGMebGj5/SrsXijxfGgdbyymAIH7y22kj8GrPQkspDgjvzU5gEsQYfIB/EgyRU+3dtfyOStk+Gv7qa+bNGLx7rsJLXVhaXSq2SYZmj3fgwP8AOrFv8RrZy5vNPvbP/bUCRQPfb/hWJbwlXKjMgz1eqes6ha6VZmeYAgcKh6u3oBVQnzaKN2zir5dSo3k5NJeh6Ppeq2etQebYahFcluGC9vqO1WSjI6qcuV5yCcHiuC+E/wBovb/Vb+9SOESLHEsUa8JyWyT64xXos6lMNFIp9scn3rarDkdjwqVTnuzZ0j93YgBzku2cfhVmc+WvmSOrAnHHGB0rFsr+4iRY0tvMhDHMm7GM9eKtvd/Oh2ZBOAM4AxXHbuWl0LifvDhQT6Y5zTgAOqn86ZZq8UAjZQ7A434wW96laaQknJHt2rN2FqMYc8AgUlPaV2+8xNMqRhRRS4I5waBjlD/KVzknrnpSQyiUMNkfy9RTaPu9hVxkkJD18yYkKNikcqOgxVe4e+t4ZZoklnMcRZYIwoaQjspPGaswnK+Yh6fw9KebkxEMpwTgcdquNr3ZElpZHmMvxivL6byND0C/vGT5Wa6dYlVuhztzz+NEPiPxbexGS4vrTSlJHyWcIdx7b3z/ACrI17Sm8HeN7O7tyV0/Vw/mRjhUnHJ49+D+Jq5NeMvKjauckjr+Vdddxp25Fo0dOVYSNe/tm7p7bL8P8yWeS+utwuda1iZM42tdlVP/AAFMVmNp1qpJazSRj0Lr5hI9ycmpo71wR8vJJPI61C98UK71HIOG/GuJVJvqfSwy2lCWkENaIKdqxrk4AAXgUR7U8xWiJcZqeKSGZNwBVcAsfXmq9yw2MiSEAH64NQm+p2xpe8lFFK7m3FgAR0796z40kWeSXcDtjKj8T/n86mlcjLO2R1wp/nUVvIPsERADNI7MRntnjNdFJe62vQ1xkU6lOk/X7tvxZvfDb+0B4k1FrK4MQi0yZnZQeDtyuPfcBXvOrXyz+G9B8QBGVoLq0umwSSFchHH0w5rz34E6RK+ma5q5Xi6f7PEAP4UU5/U13ekW02t/CeKDdvnfT2VSeTvUnb+qivbw8bRSPyvOKvtsVUmurZleJdLudJ8fX95bQy4lWO5VooxJtDL5bkpxkfIM4ORWja6kZJI4pWhniZ9nmRI0ZjY9AytyAfWtbXtQS70TQ/EgjBjlWMTseqRyKOfwfb+tUpEin8q725kViCAOSnYH6HmufGRSqa9dQwcnOmvLQytWe4Mn2O2EnmnDOy8iBCfvE9uM4Hc0tvb22ksXgRR5nMkpOXPuxPJ/OrQC2RuJNzASszHP0AH4ACse4sptXuINKtZCst8/lEgAbI+sjj6Ln8xXmqPPNU4dT0rpQc57I6vSbuXQ/htqGtSbjPOk94oxgjdkRj8tteafHyP+xvAXg7w6rEs91GGyMEiOPJz+LCvWvEbLLqOieF7RykZIubhV5xbxYwp9mbaPwNeLftG6qt7460XSVXcLGze5fno0jYH6LX0dW0Kb8keFl1N1sXBPrL9TibGILulYfcXJJNYOluzW28ruMjMxOcdWJrUubgR6fdvu4WE4x64rPs4xFZRx72DBQDt6CvnU37N36s/XIRUsXdfZj+dv8i2rBQA3LE+vFSsxcFPunHGO1VcgnbnePrUscvlhQSV5wcHrUSVjtg7Cyfu9oZN3IwQOalhiyE2DgngnNIA+RtQbangUfKxy2OaTehhN+8PwEICgFup5PFX48rbHLHGcjHf2qqhklyq845yBwKq6nqA05dykyu3Kwqfmb39AOmT2pRi5NRjuedXq8j55O1h2o6tb6ZA0jEtLIwEaDq59vT69q55Lee/uftt+3mzD/Vxr92HnoP8AGpNst3etd3pVp3PRTkRjsq5q7Ccu0YOC3Ax1ruhFU1aO/c8ipF1PfqL0X6vzOw+GyPBa3o+5uuTu564ArrZJUc7ZWXGP4e3t9a5rwdEINMUkEF2ZznvuY4/QVuTyKnzMVB4G0dAKKrvI8SnHqXmRElj8t0DZ4PrWksbsqhyAwGWx/PNUriCEXiAEqPlI3DJPNXvImIUM5ZT6/wD1q4ZdzayNGNbny8bSSDnPYVKUcQguSATnk1XaTew2bgBwc9KUt8oDGob7EMmS2dj93IzxtYVL9hOCS+PrVXdxuzx600SqwJDEgcHGaXyFZln7G5GQVI+tJ5Mn9+oUbfwhJPoKFLN0zSt2GidVABDFSexquwjZyomIOfyp8e375yUGd3HpTVSNTyFUE87euKpIasNijQIV3np0p8QBjIO0uv3QeOaJsLKeMqRwfQ0iMuFLKcjOcn0qwtfc87+MMT/2PbPFtEsN2ssZB53bCfyODWJYXA1TS4bhSnlyKHGSPy/Ouv8Ail5X/COmVYVkSKeGTceo+bBH615v4Zvkt57nTGhVtjG4gySPlJ5H4H+ddLjz0bLdHdlr9lV5+j0fr0/VF65uPKCguA4JIyOMZ6VTL7c9OfwPNWtQuFdl/dKQOpJ4qik0ayBxGOSeudvPtXLFWR9rTgm+ZDZtQOneVI27yzKqSDGSAeM/gcVq3cYERDHGcngZJrmtdkeaw8pFG6WVIww/3h2rorueFEAZdvHQtVzjaEZddTkTbxsoLZJffqYN4h8t2WRxuwqj3JxVm8RILQIeREm0BetJ50EuoWcZhzEX3yDd1A/+vip/JF9qNvZBXVLq6ijUY6gvjNa0435YvqYY2soTr1l9mNvwb/yPoz4X6Cuj+CNKtlG3zIBM/qWfnJ9+RVr4cwMPCsds0rb7O5uLd/YrK3+NbthbGGOOBMBEXYoHoBgCsrwZC1nq/iOwJI23wuVJ7iRAT+oNe7Tifk1WTvcs+H9Pgu9N1bw3ex7ored41XP/ACwl+dCPTG4j6rXFE3Wj3k9hcysstq+xwRjep+6/0Yc/XI7V3F88mkeKtP1E4FrfJ/Z9wewfO6Fj+JZf+BCofiF4ft7yzTWRdW1jcWA+ea44jkh/iRj191PY/U0sXhvbU7LdF4HF+wq+98LOHv71ba1NzO5WJMsPX6Ad/pXU+E9LTw9p934t18G2meDKxydbaDqF/wB5uM++BWf4H8ISaxdQ+JNZieK0jIk0+0kGCeP9dIPX+6Ow5NaTXK/EDWflG7w9pk4ZWzxfXC5/ONT+ZrDAYP2K55/E/wADfMccq79lS+FfiXvDNjdzvdeI9SRkvdSC7IW/5dYB9yP687j7n2r5j8caz/wknxF8RaiMyRxzizt89NkY2n8zk19SeMvEKeHPDOqaxNkR2dq8ox1yBx+uK+PNFRxZRmRcyOTLIT3Ykk5ozCbVOy6nr8J4VTxfPLaKb/REurP/AKGlrj55nVfXA6n+VIysowrjbnoKr3Myz6ukYjGyGLcef4mqwwDkEx4Ix904GK8uSskj77BtSlUmu9vkv+CNjlw/zxEpnqlWkIkT5F4B6dz+FRxLwSxHUHnrWgiICpZcjjBFZTd9Eac/LdsbHGQ4wACD+A/CriwAAkbc/Tg/SmpAjkM3K5+4eP51dsNL1LxHfDS9FtAZwAZZicx2aer+rei9T9KcKcqj5Io8zE46OHi6k3Zf1sRWcF/qepRaNpNqLm+nXOCcJCp/jkYfdUfr2rsvGnwmn0j4Z3UejRnVNcM0NzcTgASTBCSVUdlHZPbua77wL4H07wrYiG2WRrmR99xcTD95cN6sfT0HQV15hEUbMkfLctXtYWhGlsj4TMMyqYqd27Lov66nxlBqDTMfNhaOaNsSxMnKt3GKv2hlmm2xhSSAFG0de364r0742fDwoX8Y6VDmWIAXsSKf3sQ43gf3l6+4z6VxPgqyOo6r50aCWOBRKT2J/hx/P8K569HkldbHs0My9vQ9741o/wBGdxZQfZbaOFQBsVU4XrtGKLiMbtxUBwCOegoWdtrKW+fOc0slxlW6tuJyuODXI1qZRN3UYpBqEbx/NgLhc5ORVmO6vHUFY2Ge5Xp7VFcoy6hGQrNH8uW5PB5Nai4CgKuAB0B61xS2B2sRb5GBYIQTjhj0qQFv7oA9jTS7bsBCBjJJp8fzfPjB64b/AAqWiFYUuzLgtkU2MgA7CffFOX5QQvT0xTRgHj9KSYx8O4noygZAB4qTLsqgx4KYwQeP/wBdRq3zDGB168ikSVogSVLEEnCng1omiJIlYkKdwDZ+Y5PQio45TkF1VgTgFR0oLCQLyVY+gpoRoXA4bngYqtyoWsUbm7EczAbicAY61Gl8dgDwnrnpzmrMtuk1wSw5YYIzgCnR6ejOerZH3QBgH60kjS6OZ8Ys2p6De2oQlnhJC+45HH4V46VucQ3kEbLPEd64BGeOVPsa+grzR4nyGLZOAQcZI74rxZtH+y3F3ZSMQbadogD6A5B/LFdNGXLE6sJNc7h0a/IUzvqVnFdJAxD/AHlPBQ+h+lQfZ5DgqSo/22GP511GjfDvVtT0BvEOkWjlkkYNaHg3sPaRM/xjkf7WKwZreN2eSMPuRijxOpRkYdVYHkH2NTWoSpu/Q93J84hifcb95fj5mTcW7y6np8SlfkdpWO8c7Rxx9TV25Q5wJYyTwQxxx9KfpVlG+rXE4J/cwqit/dZiSf0Ap10wYkDk5xz396zqyfuxR34WKnXq1X3/AC0MyK336gzGSNVji4+Y9Sfp7VveDbV73xzoUIuIR/pPmJwTyoJA6c9OlZti4W6updpO0Km306nmuj+F0IuPiRoisq5QzSA57iNsGumhrVin0PFzKTWCr1I7N2/FI+m9OEhiRnCsSBnAxk1lrG1j8QudoTUdO+7nkvE/b/gL10djFiJTxjFY/jBDZnTddRcnTbgNKf8Apg42SfkCD/wGvfhCyPzGpO8tC3rWl/2zp1zYS5RZoyoYdUPZh7g4I9xXH+GdJv8Axbq9xP4uvYbp9IlWFNLiP7lJABidxj5i33gDkDNeigAjI5z39a4DxJC0/jJLfw3LJDq9zb+TqE8b/JDB/C7D/noMnb35q7WIvfQu65eTeM7y48N6TO8VlFhdSvYj0H/PFD/ePc9hW/baRBpdrFaWirBbwoEjjQcKB2p2i6PaeH9Pi0+0TbGuSWPLOx5LMe5J5qxcM23qOPWlNqw4XT0PHP2lda+yeC7bRY5MTatdpEwzyY0+dv12ivFbWDaEB+6q4/DH8q6346auus/Em3sVYSRaPaANzx5kh3H9NtcXqlybXS5nQEPgIuO+eOPzrxca3OpGCP0PhynHD4GpiZbvb5f8Ez9Pj8x57ogfv5CV5/hHAxV3jI8wkc8YqK0UxQxQ4yqAA/Lj8at4aQ5OFU8HjP6VxVZc07n1eDpuhhop79f1CCFiQqHOSMY71owW+AFyc5496IIkiVMR5wMk561s6Jok3ii9a0tHa0srVd9/egf6lQM7F9ZCPXoOT2FZ04Sqz5YnHjsfTwlLnn/TLPh3wtqPiu9js9OY21rFg3V8oB8r/YX1k/QDk17l4a8Mad4atLex06BYYE+9jkyMerMTyzHuak8NaZp2maLZ2ukwpHYrEpi2HqCM5z3J6575rYEWGyBz7V7tCgoKyPzjHY6eJm5S+S7FhIQhzjmpGhBU8du1NifeCcZz0qQMVXG4iu2KVjyZNmFqtkl1FJExBBXJDDPB614T4X0iPQ7TVdItnPm2WoywtuXDFeGj/AIRzX0Ndg5zjJPp3rx3Urcw+OPEcYZVjmtbScjvuG9CffoK58RFSg0dmGqcs4+Zgi0nlkZwcDJBH+etTCyJU5lGP7uOlaRBQ4IIA43BenaqlxmOSRx1bjHoK8c+itfVHWT28uQls+P7oIOPepIon8wqx2+27OQPepLXzZ5FZwGPXg4FSzxvGNmdyjv71wruTe2hXUSeYA/APenkLjIJz6YpD7Z/GkqbgOzgH5jzSbuMUD64pduf4lqQI2jViWIOScnBxTjkjrikLYOMH8qTeCSFBYjqBTSuApYrj5u+MEcUx3XAZz82cDBzgCnAuSQybQDzk9R61mN52/I4DE8elXFNFR1ZrQgEeYCC5PfmpImcFihHTB71DYwE2il1dmZjkmp1Dj5QpyB6da0SZLaYzzmfcsgQgnrxXn/ibwXc3HjHTHtoQtpq5W2duoWRTk5+sefyrvgvlqQAQ4wW45AqxooTVfGLyjLQ6HEIASMfv5Ruc/goUfia7cHG89TkxtRwh7u7Oy03TIbW1SCJBHGgCqq8BQOgrmPHPw10/wAXRy3MDiw1ULtjvI1yHx0WVf41/UdjXbPlrZyi4YIQPUnHFcl8PfEFzrvhWOe5+a4tpWt5pZDkuyHknpk479M16riraniU604y5ouzPnt9FudGvtRtrqaFp4rl4ZDCxKbkwDjIBI69qz50VnLFcEdMelaNxqKXpuLtmZpLi4nm9MlpGb+RrOuyfNz865GdmRwfrXztZ3qO2iP1vK044eMp6yau/mRaZITFelsf63I9cYrqPhFA1x8S9PYDiGKaU5/3CP61yelSItrdSYILScjP8q7r4GLG/wAQZJCCXi0+Vgc9MsortoL/AGj+ux4GZzf9kyfeX6s+mrNgIlHAqDXdOGr6Pe6du2G5geIN/dJGAams2BjB4rM8U+JovD1ipRDcX1y3lWlsv3ppD7egzzX0Edj82mveMSbxJqOleHtL0uO33eIriNbdbdznay/KZGx0XjIPet/w34ej8P6f5O/z7qU+Zc3LD5p5D1Y/09qo+FPDE2myTatqrxz6xegGeQDiP/YX26Z9cV0uKollaYyKwHy7cde4P+Fc54y8Tjw9psrsEErKTESwxtC5eQjsqgZ/Id639Vv7bSrKW7u5AsaDp1LHsoHck8AV4b8cdQudP8LxreBk1fxFKtrHCT/x52qne6DHc/KGPcn2rGo7K51YWm6k1BbtnjMV5LrOoXus3DO8l9M0zPJ94jPGai1ed557ayHTf5pwMfKBxn8c1fWExoqYxGAOg6CszeLrULickbARFGcdlr59T55yqvofrE8MqVOjgo+V/Rav7ywp+TCtg+lWrSNmwNpznjjIFVVhxzksMgda29GsLrUr+202xXddXLFYgF4T+87f7Kjk/gO9c6i5uyO3HYmFGDlPRIu6Bouo+KNQTStPUxsoBubxk+W2T192I6D8a7/xtcad8PvBa+GtGV/tl8v2eCNRucqSBJI2OSxzjPUk+1dbp2j6X8PPDMkpcrFboZJZTy9w/dj6sxwAPoBUHhvwfE058YeJlD6tIpmEcrfu9PiGSqKPUDkn1zXtYagqcT8xzPHzxVRyenZdkdJ4GsLzTvCekWOofLdw20ccqjnaQOAfcDA/CujEXHv71Ws9rpG68qwBBxjIPetAR9QATiu2Ebo8mb5dCttK9CPWpVyQPahlAcBQOn40ebg//Xq0ktybtle6ULyQQecYNeS6sEXxxr06jIjsbOLIY9S8jdP1r1K+uwintjk15ALufUtc8R3UEflxTXyW5lYcAQxKDgdzljXNXklF2OrDxvOKK5uWMzLv+8MjngVDcyKBuQqFx3z1qy1iodneQs3Yk4FVbpIkQr/D3P8AhXjH0q12O5tZgFJAVlHTHQdqJLhtxx8oPPSo0uIxbbEYqWbdzQJnKFQ3ynjAribM7CNIX4Lbs9qbQAB0GKTYhOSoz61AyQBARnefyFPxCWADOB70wKmPvN+VJhcdT+VCC1xhLGRguNo6Huab5TSuG5ABIGDj8alwue+O1KrhQOOQc9apNIRWkjcQPIm5wvPzDnI7UkUZOCUIJGeDVqR1eJ0ddytyc0iZByqjdtxgdqu99UVC5MoZISikgZ6LzmlEjKDvPIxgkVCZUjTlNuOpI6+nFPilLf3Qp5HNWmKwsL5bzZSDGmZXz2Ucn+VXvhfalvDr6pKHeXU7qW7JY9VLELxnj5QKyNYnEOh6ncfxQ2czKA2M/Ia6/wABxJbeDdEj2BNtlDlR67Qa9bAxXK2ePmU/fSOiUqIxlcV5r4cum0K08a2bMFisLyeVB32vHvH4cV2PiDxNp+h2zxyXEf210zb2ikNLM54UKnU5P4V5PLql9eeF9b1/UIYoLjXNFlLJDwjTQM0ZYDsdjLkZ7V3VNrnnUI3qKPmeWWiqbS2xt2+Wh4/iOOf1pk7fMuATgEdec0jt5LW1vGACeGBPYLn/AAom+aU4BBPYHJb1OK+XknzX7n7VQlHlUF0/yKGnzKLW4DBA3m9M4OK9A+BBCePrmMIcvp74yfRl6V5xYv8AvrgbSyK+fp1rtfhNr2neF/Fmo6xqMu23h01wACN0jllwijuT2r1KK/fnyGaSiso/7e/Vn0vqmvWHhXQ5tS1GQRwwjG1fvO3ZVHcmsjwXpN7q99J4u1xALm4GLG3I/wCPWHt+J9ff3rF0nwbqHju8svEPjAvarBIJ7PRkOY4Ux/y0/vOeM+g4716dgIvyjoOAK95KysfnMm22wOeeenpVS/1K30qzku7uQRxJ+JJ7ADuT2FQaprlto1os14WLu2yKGIbpJn/uqvc/yqjY6XPqNzHqutRxi4jz9mtgcpbA9z2MmOp7dBSYJEVlp15q2pLq+rjYkXzWVjn5YePvv6yf+g/Wvnf40662v/Eq5tgd0GkQrbKCePNb5nx+aj8K+kfEWrQaDot9qtyQIbSB529woJx+mK+NoZp9Sknvrvc1zfSvcysT/Exz/WvPzCpy07dz6vhTBe2xiqPaGv8AkWNTuVt9MaULhgvynIwSelULCIJaqjcnaC31Jp+r7Zbm1sgpIU+bJ2z2AqQOu/aoAbpXjP3aaiuup9/hnz4idaWy91fmy5bQKzqueM7jnuK9h+C3hUizm8Tzxfvb4bLUEcpAD1H++cn6AV5NZ6e98Us4Qwmu5EtUP+052/yyfwr6P1Njo+iWuj6TiO7uQthZKv8AyzwuC/0RAW/AV1YClzXkz5birGJSjQhtu/0KVtIPFniRX3M2k6LIUUfw3N2Ore6xgkem4+1Z/wARPEf2rWNK8EaWxa51GZDeFCf3VuDkg49QDn2HvWnrWsQeDrKz8M+HLL7brEkXl2dqvJQf89pT2XPJJ6mn+A/h1F4Vkk1jVbqTUdevATcXLchCTkqvHAz37168IHxM5PZHbwsi4UcY6e1WS3HX9OtV0XLDgY7VMc9sYHUHvW8VpczkJIpJHqagnJQcjk8VYJzyT0qpdS5TJxwe4pTihwTuc/4p1e30PTLvU7v5YbWF527ZCgkD8Tx+Neb6HbSWvhfS/tnF5LG13cAnnzZSXJ/8eA/CtL4qXb61qOi+EEcBb6cXV8QM4tojuIPpuOBUd/IZHbcDgt8ucYA7Ae1edi5WjY9TAQ5ql30M2WVX3Fd2cZH+e9U7gfIA2T9eRVpQi5bdnac/40ycmPGxVBbvmvM1PcVrnVz2iXEhU4TdgcNzT44fLYlmJVifmwOMdBio7MNHEHChTnqO9SVwt20MxxjAGdy/nTSMc5BoNJUgLuPoPypdx44X8qbRTuMdu5BwPpinRbtxKru5zjGaaXJGDjH0p0c0kWQh2564FUn3Jdx3l+YQrDaxGdo/iFTqEZSpJQ4HUdPaoVmypWRc4X73QgU5XLE9Dt/iB459a1WuwtepTuriNHxn5Sc9BkcUsBVnPCZB5yadNCJAVKhjgdf8agVTCcBhzxgDqe1JbmiatZEPiZBF4S1xiwUiyk+ZfpXofh7amgafHhfktYgNp/2B3rib63F14d1SPYX821mCr0ydhrq/BNzFqHhLSLmHlZbOI9c/wgY/SvZwV1A8PH61NTI8RWMGm/ELw94lnTdbuGsHbHEMrA+WxPYHJH1rnvHGiPZfDzWbOKTL6Vd3DRjv9nmOdp/4DJ/47Xpmo6HBremXGnXRJiuE2sV6qeoYe4IBHuK5m1hfVtFv7O/Vnvkhk069LY/eOg+STH+0rbh9a7ne1mcFJpVE0fMdpIbnUkyA2yDdgnOdxA/pVm7/ANGnaNQAR94nkk9xVfw+vkTXcr4aQOLck9F2Lg/qTTrpiJSVVlYjknvXzdVWny9j9gwE/ar23dtr8v0KFoMXN0oABJB5HXk13XwZ0ex1b4iJ/aFuk628DXESsMqJFK4OPbrXE2ixte3CZ5Kb8nuc9vzrvPgXP5fxIMbdJLSUDn2U/wBK9Gj/ABvkfKZqn/Z0o9pv82fTsLAEyMRwetVtZ15NMjjjjja4vJztgt05aRv6KO5NZ3iTxVZ+FNGl1C6jeQjCQwJ9+eQ/dRfem+DNMvIbZtU1pg2sX/7y4AOVgH8MKeiqOPc5r2o7HwU1qWtJ0SSG4Gp6m63WpODmQ8pAp/gjHYe/U1rO52k9PSnuGGScAYqCWVRGBuGab0Q4q549+0Z4he18KW2ixSFJdWuRE4HUxL8z/h90fjXiNrGCu0Dpxzxiut+M+uN4h+IdxDExa30iIWqenmn5pD+HA/CuQvC9npMsxCjI2gdyTwOa+ex0+eqqZ+l5BS+qZfLEPRy1+SKNuReXM91yY5XIQg8hV6c1cjj3OnTBxxnJFV7USPaRNB5aRqNgaR9ocjg7cZJ/KtS0EttOFubJomdd67gQsq9CVPfmsa0ZJt20O3BY/DuKoxneXX13f4nWfDayS68Z6b5ke42vmXRBz1Vdq/q1enz+IZv7Zmk063S71Rg1jpkLn5V5Bmnf0RTtX32YHWuA+Ht8LC81O/jt2a9NnHbWVun3priR3KqB6fJknsATXsPgfwePDOmrJdlZ9UnRftM3UDHOxfRQST7kknrXq4CFqSPhM+rOeMnF9NB/hrw9b6Ak0rFrrUrk+ZeXj8vO/wDRfRRwK3hcZ6ocD0qUKWIwFGacY8Ek13xizyLrYi+0KeQ5HsakWdTnJ9OtKdqDoCaHbaM4FXytdSG0yGeVQCAwDEZ96zL29hhj3PJtjXJYk8DHqe1aEsEUpEjxruQEAkcjPWvL/inqsFlYLoUbNAt6rSXko3N9mtEP7xzjnJHyj3NZSuaJpI5/Sr7+2NT1Txe25vt7/ZLEEY22kZI3e29sn6CrPmsynJDDkAjkdanvbJUWJLQbbZIkWBEGF8sD5cfQVW+zeUgCyFMZ7gZNeNiJuU7s+hwdL2cEuu4wTkoRhSSfQdqZJIE25j4yQKVrTY+5WG88duntS3VuRCJA4Ug/d2gisEzqeh1duTFEFY84G7Azk+tLLOoAB2jHTHU1X+2RYU/NhuhxTRcwSTIu5gzHaDtrh1ZKsSfboTgYwf8Adp3nIGGTjPTI4qMRIyYdgjnpn+IinCCFXV+dzcNjkClyjTXQkZ1UEkjjrjtUa3EbHHOfpmluAgiyjEhjyKFQLGCGfd+WarkQaDGnfcCiqU9SeTTllcq3yEMB0HWpo41EbAZ7ckYpzQovyKSF28MuM5FUoohhDNvwWPXjp/Oo9/zuysR7ZxnH8xUpCKU3A4x8w71TaOZg2NoJ9+tHP0ZULFiF2wS7ZLdccYpypAOWcgZJDen0qK2Z/LBcYbOCParIcEKJAcZyM1cHcbJbSVSQh3MrAKQWGNp4q38Mozp2mXegyAmTS7l4lJGN8THfGw9sEj8Khto4tvEY/EVzdpqV1oXxV1K9dJDpItbS3u3zxFv/ANW+PQNkE9ga9XBaOx42YtWTPYo0YoSPyrldTnTSvFcsjkpDfaa0rnPAeBs5+ux/yWurDnbgYB6da8y+O5ktPA1zrMcz21xYLJHH38wTIYSuQePvA/8AAa9KWx5Ub30PnvQrg3Fp9rwN9y8s7ZHJLuTmnybnl3k/n3pun24tbCGPByiBeTx09KZIzMd2Q2epHb8K+XrPmnJn7TlFJU6EIvokQW6j+1SEU4aJvl689f6V2PwolFv8TtJckATJIuegGUauNhZl1i2bAyTt3exFbej3X9keLNGvWVtkd2iN3yjHa36E120pWqQb6o+bzSF8Piaa6Sv+R7z4Yuf+FheNJddysuhaITBpxHImuD9+X8BgD8K9GMWxhg8HtWZ4U0Kx8NaZFplguLaItsz1JJJJPqa2GwDk9McACveVmj83d09SC4hc8xsQ2Op6flXHeLvHun+EYWW+k82+CGWO2ixuZBxvYnhUB4LE/rxXaiYScpkjp0rxj9oK8tdLg0i4htLF9ZkuTHBPcQrJsiUbnBDDDLyvB9cjmoq6K50YaE6klTirt7HjVlFqF7Df6xcRi4tjI9xc3iFgm5mydpYDeMn+HpVXW5FmlsLOPBUt5z85DAdP51X8Qa/r2tqyajeTSLCPN8lECRoB/EqIAMe/aqkWmahp9hZ61dorWN4XjgUvl0CkFjjHTntmvKnh0/3sXrqfUYTN6kXHA4rRJrysk+vkdBp3iXW9MkGl6TIirOWaBY7SOR/MP3gCVJ98fWqXlazPfy6zqup/amtJEtriKWbdKgdtv3R8qgNjjioLve9ubm1mMckeJoZYzhkIGQQatfDPw7deN/GlvZys8kdw7T3kj8nYDlyfrnGferwtqsLP0OTP4/UcdGpS2fvLtc96+DfgxY1fxRcoTNcJ5FqGH3YgTl/+BHOD6D3r1UrgYIpbSCG3tooIo1jiiUIqqOAo6D8qXO1mAXFepCkoxSj0PAq1pVakqkt3qNRSpBBIApZFOeDgUucgCmO2SNuce9baRM9bjiqg8nFRyYPQ5FKz5HQ5HPNVywDbsHJ60nKxSi2N1C/t9NsJ726lEUEEbSyO3RVAyTXnFjoD+J9P1LWtYhkEviGExpCx5trT/lmnsTnefc1peIGk8b+IB4bhP/Ep050m1R8ZErjlLf8AQM3tgd66m6jZAvHQ5xjjgVnNlRV2eNeFZbzTJJ/B2sz7r/TU3Ws//P1bdFb6r0P/ANatSW0O1VJycntx+VSfFuI6bc+GvESKqT2mpJBIwHJjk4ZfpVu/hRJXI2tyeQeleXi6aT5l1PWwFZv932Md0OFGCf6VFcQ4GwFipwWHXntzVuYoqZTc+eMDAH61XkkiUqAT0yTjvXEepzdDY8o52ccZ5/rSwxAsjKzFh93B4q3KAExtU545qusT+apUhlU+nQelcHMVFFhoI2Iy77znNRrZNkusgGBt2tyM561MqNIodVIOORmrcFsPKbzCq49OtUkS7RKq2+E2jIfOMN1H/wBanR2vGHHzk4+8eRVqJQCc5LnHzU4KVJ3MACe3arSJbKhKRKyttAGOGNSKsZTO0Lxk5P61Hc2b3EmIpBjOTgVcjgaO3VJTufB+lNRbJbRUlJLnIxUaAM/B/PpUtxH5cmeMc7R6UxeBhQOufxrJ2Ui1sJhIzgcgds4wKmAXg+Yc9QO1NADSZc/X6UhZAWVTk7umegraC1uPyLsbBR0codowB37VDYJBceO7mzuIVaDVNGVHRhxJ5chBB/B6iW5DSFegGDUF9cR2mueGdU34Md69lKcc+XNGQM/8DVa9DCzSlY8zH024XOs8L3X2K4uPDF9dPLcacivDJIfnntmyEYnuVIKk+wPeua/aCgEvwz1DBJSKe2kbH90SrnP511N8miS39rqF/cWkF5ZB1jkedUZVcYZTk8g8HHqAaz/H9raeIPAWu2kN3bmOWxlHmqwdUIXcCSM9CBXp3ujyYLllc+cJUYx+YigKT0xkc1nyKu8hlKnjPNLoOvW2qafahpo0uEUCUdMkdT71Nqb27XExtslA2AfX3r5qdOUJOLP2HLcZGtCM4apoyr1/s7wTAY2PwQPxrT1uIyWKzpnchBBI5HvWTqOWhZcnPUAA9q07a6S80tUALM0ZU8c7sY610R0hGa6M83HwviatLpOP5af5H1b4Q1tda8O6XqEJD+fbxuxz0OMN+oNdIJQRnCnHf1rxP4CeKbVPCS6NfXMUNzb3EiRpLIoMgb5vl55xk9K9esr6C4QvHIskfQFPmH5ivepVNNz8vq03fVFxpCOuFPtXzN8ddW/tj4iixU5j0qzVMZ4Esh3t+O0LX0o1wgXcQSo618Y6prMmq6zqmt3TJE+o3csxV2BKru2qv4BQPwrDHSfsmo9T2+G6UHjYzqOyjrqOd5jazpBM8DyRPGXQ4yrDBU+oPeuQiurhiIZZpnSNSkSu5YRrndhR2HPauil1y1RfkeSXoPkQnJ/lXNSqjTsoDwqXH3lwcD2+h/SuPL4zimpKyNuLq2HniIVaE1J7OxJbaytnvtZRugfcAF/hJH8q+kPgB4FGiaOmvXyuL68DNEmcCOE46juTtB+mK8S8E6Jpep+IbG31DEdq0gaeeRSBtXkoB6twOOxNfWNr4s0GKIRrqEMQjAUbo2RQPTkCvRUYrWOlz5/2tSqo+0d1HRHTB8pjJpeetZ9pqtlf5Fpe29ww/hilVj+QNXFnXbzkY4rZSfUlx7EuQWHBzSZAOMctTN0ZfdxUgTdjHY1pF32JdluN2KjlsDfjGT6VzPi3WbjT0gsNMVZdUv2MdsrHIjH8Urf7KDn3OB3rW1vVLTRbCS+uncImAFVdzyOeFRR3YnAA9ax/D3h25WWXV9WUNql4MSJuyttEDlIFPoM5J7tk+lKV30GtrFvw54etvDemRWVrvk2kvLNIcvPI3LSMe7E1O6PIm1sbvZuAa0WhVVUYOF6cmqS26tlg3YjpUyiy4WR518bYlbwHdTBeYGilUjoGWQc4pl1L52xyuAVDHjjJAP5daPjXh/CC2IUB7u9toAOnWQE/yqW+URvIqJjovA9OOn0rgxWx6GA/iNoyLhhEh2LxjBz396oXEgQKdpJ68d/rWhNPbC4W2DEysu4IvzED1PoO1Vry3hbaCmSACM9q85I9hSS0Z0wDDdl8ZPGB0prOQ5MfzM2OO1SedCvyLKFHXGeSDRHNGpCpIDnkjOTxmvPSGPDzMB+7bJHzEjNWfMkRVRgO3BFVGklZCyMXTsCeafNIGfccD5eAOtUS1dj/ADtrAzo6q38OKbJdvJH0UAdCT0qhNdCeNmUklQTGp45xxmpYry0VE8x2DDAYFd2eOlVcHHqWYbsRIB5qO2ecnkVOdR3E52shOBjrVQS2WRI8aHdzgLyfrTmvdPROQeD3XOD6U1J9xSWuw6aTdIoOOp57AVTM0hbb8gGcEt6Vae4Vi0aIeRjGOlV4ZCnHVjwcDOfep3dzSLS0HLLKXwNhwM5ApAjyOP8AZPJUdc1NBnzBgYIPUrz+dSA5UAIyn727HWmrkNu5XjDDkbXA9Bj8KzfFFm1/4d1GyjaVZ2j82Fl6iRDuG0jnORjj1rYuZNsDZHDnpjBHvUTzwQ2kt1crmG2RpX55IAzgZ+grejJqSsZ1LSg1I4nwjqcuoWVrCgVrwRkyswdPJIwAGCbPmOTySxOCeM4rTukuNPvoGuXSxSdxF9qilbZkg8NIqhlz/wBNBIhxgletauhCeG2e6uAn2u6k8+dgP4j2z6AYUewrm/jFqssGg22l2eFuNSl2I2cbEAy7e3Bx+NdUcZOdWy2OGWAjGnZ/EeFHSZbVpJIXlliLMqusfmRSAEjcMDP8qhfUri2DJHcK7Z+ZU3rj65yBWjLqUtnapplpI8dvDlPPCcysT0U9hnjNW4tEgtkMl66zOPm2D7qeuR3Pua6J1lFXqq/YeCy+pVrKGDm4tfE72S+7c5yTWbpP+WzlcchfmCn6kD+tVJL+4yB9pYbT90EgZ9McZP4Vq3xtbksljZxSOSQp28H1wBwaZo2kw3MgeeEbAgbaDzuzxk9+lbQqU4w55RsZ18Niq+KjhIYjnvpe7sijA8JhtkkRwRKQ+eueR/hWnpniXWdHsbjTrDVb+3tp3Ilhifg7TwR/dP061q6R4a0zVPFOnaXdSXVtb3smxjaoGYEcjr93pyecda7vxN+z4mmWVxd6dq11fXSnzIonjCbgO2Rn5sd+BkCtqdSM4qS6nmYzL62Dryoyd2ux5Y+u6xfAw3Wr6jOp6GaV27YPRun4VVE00KKrNEFBOZAM9+461ZXbZaihv7YbXJWXfHgo3YkHofWrWrXOnOsK2YhZ1JD+WuF2n1984xUSqtTUOXcqGBjPDSxHtEmuj3KGZpv45mZ1DHyx1z3pbiKS1jWS4jkAIwDI2Sxz9TjrVrw62+afeGZYgEUN/Dk5OPbNX9U0281S7sLOxt5JZJC21U6k8Y+n1rCeIareya0PSWSU3lf11NuT2Xzsej6Fp0Y8IaLcaVNDFd3Nusrud226nEzpIHAIL7AEwucDOcV2VrZT/PJDqySMv+sLWkeM++0gj86y/BPw8/sjQorPVtQmaOMtL5MTFYlZ8bgSOWJwB15xXTxRWWkb7O1t4IkQZMca4Ukj+dctfFNtezehWDwiULVI3ZWkvpYGQahZpMikf6XaMZMDPB8uQ7x9Y5AfbtXRab4kmtkhmWeW/s5C2UJMjYX73lsQHLqOWikG/AJBOKm8B6Hb61d3d/fhJhY3HkRQbTs3ABt7A9SNwAHQYJ69JfH2lwaRqNtqNtMLdtWnS0lQMAftIBMFwo/vqyhWx1VuelephozlTvUep5uKlTjU5aeljrLSeK6t0uLZ0mjcBkdTwwPcHvS3t9DpVpNe306x28QLuxH3R6D1Oenc5xXHeGfE9tawXTzJ5VvJBa6hBDCC5zcISyIg5P7xXwPetqys7rWLuPUNZi8hIW32thuDeWe0khHBk9AOF9zzXRHTcwb5lch0zS7vWNSj1zWEMZiJNhYvyLVSMb3HeVh1P8I4Hcnp41GSBkikCAHjPPXipQpXJyorREtpEUmMEFutQbPkPenylQdy5/rUUrrBCcHbx1PXNKTNFseUfEOVdU8e+F9FbcY7eSTUph22xjC5/wCBZqzcO7yySA7gTnOOxH61jaTd/wBteLfEniHdut9yabaEnjZH99vxb+tXzIygjemPUjoK8jFzTlynsZdS0cu5Eroz5MTNn8DVW5OQUIzx684qeRo1lHPBJYYNVpSCuT82OhzXFc9LkNPYX27V6LwTmpLeEpOsnyEjjAHTNTzpGqEcgt3FQwSlJlZiVUAjg1wblx0RYeCX7wkQtt4APT2pqxT/ADM2XjOAMHB96d5g3ZV15xjnpVyOIyW+8dBz1zzRqS9EUZbfexKrweDnvULYjd8rgjpnGTV4jBweCRkVWe3B2hip3ZXdnJ/+tSTbGrdSZGCQZABDAfeHSnpHHM/KblzkjjH1qEPHCfLYkpgDA7VLb3lrG+5lc5zyQP6U0mxNofHCqY2Ip3E/JjGD61Itusbgj06Hoaa2pW/mF1JBPotNbUrbP3Hb3xVpC1HzsIgpPIHXNNs5TOpcMMZ+7uzUc1/bzja8LY9e9Ot72ztQ3lxuCwwenNO12Q72JZUEp2yAjJ4zkg/Sqes2zJ4ev1VCSF34xncoYM36A1ce7t5CrJKA46FhyM9axPFPjKPwd4euNUaMTSKwjhiPAdznbn27n2FdVBXlZGdWXLByeyNC2uh5OcoUIH3ADx1ryTx3qMmq+MrlUwYtPjWzTI4DEbnP15A/CuNj8f8Ajm8djp91dxQod5isIfkhXkgYAOF69TWnZXE72UdxfSvLc3ebiaUjku3Of5U6uFlh48ze+h1ZHXhjcTaMdtTltv2W9gWZWZYCwk+XOGzkdPepbi+uNUuBbiJmXP8AqwcZ7Zf29q3Luyt7hnYs8cj4y6HG761XtrO309HMQJHViTzWrxdNpTt7x1UOHMZGUqDmlSbu2t2uxlx2UliZygUeRCzzN0ByCAo/Hml0FdomBABAi6dR8ua2LJNtufNAIuPnkU9CD0H5YqS3jstPaRbSLyw/3h1H4ZqJ4lSjKEtztw+UOliqeIhpGN9PXY779nzSIdS+I93eTc/2fp/7sYyA8jYz+QP519LzRRrCcgYA4rwf9mWx33fiTUDtyZYLcEgHIClvr/EK97vI91u+DzjBO0HNezhIJUYryPh85quePqyf8zPh74l+dqHjPWZXmdwL24jjBxkKpyo+lZlj4aju7WOVb5wsqDKCMcZ64NbnxV02ez8c6zHBFI4S+d2VQpPzID06Y5pNA064s9NtY5lCSbMkE9Oa8/FV5U4e49bnt5ZlVCviG61O8eVO+tr6EFlpEejztBDGTE0SuWbJLHkGvXfhz4atra2TUJk8y6nXKbl4RPT+tcLaeHX1TXLcvdQwQrERcO5x8oIPHuelb2sfGKw8N31rZ6VDHdWyOPPmAIGzuE6ZPvXDGE6suZatno5li6VCh9VhpFP/AIax61efZkhkUKxRFBZewrmLWbztQ8yPp0wx+6Af16VeHi7TdU0YXtlew3VrIyJvQcpnHDDqDyODzXLT+KtKjmvvNurOFoo5uNwBZgdoAHuc4FE4NtJI87DTjGDbe5ueGb7T/ESyLYG1ub8yyTSp5ojlGXOOCVLKAF5BI+lbcng7UJ381bS2jcHAaSYBgP8AeRTJj6OK+doLy90bW7G+tNsdxBtuIH7BlI3KfY/1r6k8FeMdP8ZaZ9qtCUlTAmt3PzwtjuO49D0Nexhq948qPMzHAOjUcre69n59UZvmal4E1KPUNReO/wBFuY4reaWGDYdOZflQBcn9zyeTkgnkmu7QeZGrrgK3zAj0qG4hhu4JLW4jSWGZDG6MMh1IwQfY1z6358Fqlpqk7tooIS2v2Ofsw6CKY9gOiyenDYPJ7Ezyrcr8jrVYBcZ5pWfJG7061XjcMiujhkYDDA53A+hpsztG6bQGXOCc9B6+9Vz+Qct2SSkAHAB9/euI+KHidvDvhW7nh5vZQLe1QdWlf5VwPbr+FbniHxLp3h3T5by/uVgiQZ55Zj6KvUmvJIrrUfG3iG28TapbSWml2O46baTcNIx/5asPp0z7VhVqpLmZvSpuT5UtWaGiaH/YWg2WmoqZhjAkbP3pTy7fmasYROBuUdySaSW7DO2CA2OOeBVaa6Z0GHyWzk14VSpzSufR0aXJFRXQkZfMb5VwACc+lZ80Du3mMN23oWzxVhJ3GC2GbofyqLco3BxtY5IPGKm5s1ZnTYMiDzI1z6E1XlhRCfvEk8AdcVaLRsoAdTnjcTzTdqmPYpVXP8Y+nSuOKZmQNa/NtWRW75xilNlOh+UjnHINMzcf3n/OlLXHUyHJ7760SYhpt593+rYke1Rkt90k/SneZIOjt+BpDIx+9hvqKdkAmPejj1pxZf7oppK+mPxoASiijj0pAFTLbFgCTjPbFQgkHIOKu2906oArAEe3Wrik9wdxhsGRd7kqvY461geOvBzeM/DkumWk3l3Uciz25f7rMMjaT2yCefpXQTXb87gzEcYJxT4r4WVnNeMVAhX5N3QueF59M8/QVvh/4i5dzDEWdJ82x414P8Naj4LtNal1K2RLpbeV5V+0KTaJGGCswB53uQqkVVv7XyrS1Rc58lV2kYOQOa3vEUl1p/hPy5Aq3XiV01C7LfehtN4jtIvq3zyEezVzWpTs0QdMDY3GRx+db5lFKS7s7+Dr2nJbIzN7QtySGX1qtfXSMmJZFjEh8ssxwAOpP5Zp8r5OScnGeTVeRVZ4pPKilMbbgsg4J/z3rjpxXMnI+xxc6nsJqluXrS8ttQYx29wkzKMDYcHFJtJlAbrnoTius+E/gvSPHd1qtxfW8bi0EcSwS5XYXJJYFcHPGAfrXSn4T6dqD6vbaDqrpPpeRJbzkuobaSAGYZKnGM5IzXU8HzaxPmYcRRoycKivbS6/yf8AmdR+zNaRvpevSsrhxfqNwbj/AFS17cVBG05xXlv7P+k6fp/hOafT72S7+2XHnzmQqGil2KChUdMYH1zXoh1C6a5eGO0BVTjf5nX3xXuUY8sFFnwOLqKtXnUjs2397Pl/4w6cNO+JuqAAoLmOC5XPOcqVP6rXPW6FI96jc4IGCeGr2n43/DnUtceHxPpNnJeX1tD9nms4j800e4kFf9oEnjuK8+k+H2u6bBFc61p7afFKRHDG0ySTTyH7sSRoSSx/TkngGvIxmDqyq80FdM+5yjPMLTwUadaVpK5wug6LceKry5E0rLcIoZRKvyBskbMH6dB9ayPFmh3GkSCO9hEZJKrKnKbhg4I9cEH6V7QL6w+HkV+ur2EV7qEsPkkwkmKJgQRbwjHz7M7pJRzuwo9B5LrDyeKLhZL/AF6d7cMWCmBgF4xxxjoMc10tujNXenY+Zjhp4uEpQje70ba2+Z0Fh4xsR4Fs9E0mC4hdWzPM5AIfOTtI6kkcHjArkNRsZj83zFCcgscn3BqTSPIjgMEBGEcggHOeeD+Na/l+YhQg7SMEHpXnzrunVb6H2EOHqOKwEIP4rbrv/kYVvqgjSFJCWMT/ACsepU8EH9PyroNM1290m5F3pl5JbTryssRwf/rj2PHtWPe6AZVBtZSr/wB1uQfpWPBNeWEkkbq+Y2IIAytauEavv0nZnm0sVicvi8LmNPnp91r/AF+Z794Z/aEnghjj16yS4YYUzW5Ebj6qflP4EfSvQdO+LXgjXIGgn1W3h8xSrw3i7MqRyDnKkfjXyBLfSSv8235uTgnmq0crpMJC6sR2XrXo03JK73Pkq1Wl7Rxpv3b9T64u7LwCiGbS/F7aE3UDT9WCRjt/q2JX8gK8o8X+PbiDUhpegePvEt9NJIsRmldIoI88ZLEZP4AD3ryG4tpnlHmQtHuGcEEAj+dXbF4/mjnO7zhgsfT0oq1Xy8y1LwmGVasqU3yLu/66m54smvND8c24uNSu74wvBIZryTzHbJGevGOvFe5RXDzW6tuaRj1LHIxXzn4u1J9TvILiZT58UCRyMejMucMPqMGvevD86XumW86EsrRIfoSK8/FNuEZM9LAQ9nWq0uxfkiWJVbBcA9W6EVC6BgAF7Yq3IpKfOd3QY/z1pGZSGHXAxlVHFcTPXjcqtCiKeMHPP9Kj8uMBWJVupIC5qWWX5FQJ05yp9arPei2ILK4YYGAMkD1PoKdriTNaOXA/hLHnPQYqQzKnVvfis9b2HI+U8g896aL2NxjDOwPGOfpUcplfuaJuAVJXJPp0pTI23cw7ZNUGuSSpaM+1K9wx52MFA6ClyDbLnmn+7+tKZGAyUIFVXuURQWGOQMZzSfaRvKEYPY9jRYC35o7g0vmp61USUuRhlPA4z1+lPaZVxk9fQUrFKxY8xaPMX1qHcM4wfypaVh2Jty/3hTTMVPyEEY5yKjp0YUyKG6d6YkgVbqaULtLDORxjtwP0pmqRpf6xYeGJ5MWiI17qTlsCGFRuckjp8uFH++fSuhsPs9nb3F9MN0Nshdg3ViOg+pPFcHoWNZY3DMWv/FNx5rEdRpsLnGc9BLLlunKLivVwFFL95I8bM8Re1KJznxJuL660208SS2TRyanqO6KFgNsMaRkRRkjoFXt676m8F+ALvxrosl/J4gFuzSGJolsAyhuCMHd6EV6D8S4LO48KXcEkLTKiKlv8w3ecSAjD3LH9TXc+CfC8fh/w1p1gkYRoIl80r0aTGXb8WzW7gq7u0hQrzwkFCnJp7uzPBNT+EcthrNhpVz4lt1lv2KxM1ocBhjg4fjOcCt+2/Z6gsw02r69PPEil3FpCIuAMn5mz+ldtY6Tb+LfiVq19cwxXFlo8aWkQdcj7RkMW+o5/Suj+IFyuneB9YmL7XFpIqnHQkbR+pprCxtexpLOMXL3XUdjj/g7P4XHh530OwWxfzSLhGLSSMezMx5bK9PxrD8AXFqsfiTWFFu11d3U6ebJLsITrjB9z+ld74S8B6Z4Z8KRslqoujaLJcygkPK4XdyfbJA9KzvAPhUTfDy0uFuZM3UMk7Dy1yWcse4z6flWqps8x1Lmx8HtHt7HwNpTxP81xD5zlG+VmJJ3fXoK7VLMCRn82UgnON3H0rlPhrL9n8DaKEgkcLaIOevv+taXiHxda+HbA3d5FIinAUdyc+npXVBaI5ZJ3JfF3inTvB+kS6jfvgAhUQDc0jk4VVXqSTwAOprh9Ene71BdZ16SCLWZ3EcVtNnbpsUg2hMj5TM2AGwcj7o6Enn1k1bxz47kkiEN5LYvtViGFvp0RHPHBNywJ/wCua9OTU/xo05tC8Lada6cNkhv4jF5cQzvUMQeOacrxVwpq7KHxu8It/Yen3Wg2Ukv9lyMZ441LO0TLyw7naQDjnjNeKxWDahGJTcedG3zYj4X/AB/OvoX4ganrGn6DpqWNzJHqd9PCsUSqFIkADEZ56njHvUeqfBzQ/EUX9oQJeaRqT4kmaAbQ7Ec7kPyk+/BrzsRRdT3o7n0uV5ssNanWjeH5f5ngaWYRSIVUBP4emDTovMjO8p1/h9K9MvvgV4sEmbS50+7QfdeQPE34jDD9aIfgD4skUmS70mJs4OXkbH/jorzXga3VH1seJMEl8f4M82YbgP3RUjI46ms25i8iYXBX5ZMLIT2PY16b4p+CGu6D4fudTi1B7ue2Ake3gt8bl/i28kk45968hmlTUCYkuF29DJO/zfgnb8apYScPi0QlndCvpR1d9Llu/s4ZbZgkQEn3g2O4rBjj2Mc/d7nFdBAbe0jWOOeP5Bj7/UetZt/bmKZxn5DmRSeAwJ7HvzmunAyabg9jxeKsNTkoYmFlLZpF+22ajY7JGy8fy7z1BxwfyrFmhltpjHJxzkMOjCrugmWa/it4oWnaf5FiiOWZu2B3NddefD3xDJFH9q0traKV1RZrlwuxmIA6Z6k96a56NVpK8Wck1hsfgoznNRqx09bd/wDM86mneY7XYMFGM+2e9e5fDO/kuPD9iWC7AvlsR2Kkj/CvIvFXhfUPDN8tpdRKzlcrJFysi+o/kQeldH8KvGcOlXDaTesI4JHLJI3/ACzJ6g+2e/arxMOeneHQ8TBVpUsU1We+mp7UxZ5CT+neklHGAcccZ7fjSfa1LF1+cEjjNDkSBm28rzjoTXkn0qIhF5kRILbgevYmq6RS7iZAQzcBx1Ve3FSAjcpWTBHQZpgmYJuyc54+amMblI8AYyATkng09Xht1UFcnqTu4PvVtEjzlY9xHY8mnkRIrblAJGTxyfUYpXOdIhMkasrKoAYZG7mpESJoowE4XpuOcfnUTRtKMxlU7ZA7Ux4JQVKOpBBwcnntQFiaRoihOCCewxgVWluFRMpB5h+6DnrTzbycLlExgdTT/KZkUs0e5Ryc5zQh77ETXXkoGMeTnAH61XS5d5Qq8rjHNaMKKwG4Icf3sD8aY0RGeEBB9Ov6UdRppaCq8oAO1cHrnjFPjlLY3bf+A9BVSa3kkVkZmBI6qcHFNMDOghQ8nnO7060WEm1oXzJtkVCD83QjtVu2tftAJIY/SqNrvCKjsHcDt1/GtrTxGEa6uT5dvbRlpDgjgc4/lSjFykkgqTUY3MXxlI94NP8ACUF29r9tBnv5/wDn2tlBLuT2wmcZ7staPgqNb6K68SNbfZftyrbWEOM/Z7OMbI1+uBz7k1y+n3g8XBLcB1u/ENxLLIzdRp8TYCj0V5F/FYz616CiCJlhjUiG3iWNFB6Y4r2p/uaagup4NGPt6zqdEZ2p2/8Abfirw/oaliiynUbgL2ji4UH6uR+VerMBb2jNkAKuTn0FeWeC1S58caxrM+4pAyabbn5toCjdJgjg/McfhXe+Nr06d4P1S6V3Qx2shDDGQSMDr3ya6cOkoHLiZOVQwfhfZtH4XhvCz+bfzS3ch25LF3bGfbGKj+KdtLd6Ta2Q+ZL+9trVlQHLKZAzDr3CmpfDUr6RpNhZMrRLBAkY6qMAAdsg81D4n1ISap4c3OJUGphwA2R8sUh7DNaRacbEtWdzc16eGPRrtVimiP2eT+Fh/AfT8KpeAyR4G0i0USKfscIJ3jPKj8RV7WdciOiXyyRhE+zy7n81cKNh5+lc54W+IGlaV8O9J1LUYpbc/YYvlKli5C4UAjqWxwPetuX3kYc2hk+FfiDZ+FPAVt/aSu72rS242OrNIyyuowOvYDpXHDUfFHj3xQxieW0vdvlGQ/6rSoG6naOGmI6DkLn16s07Q77xF4hngsIGtrtp3lfeN0OirIckdw1w27kchAfXr7N4c8FWHhzTVsLJyQDuklYBmlfuzHqT35p8vLsKLcn5DvCWiaV4T06LS7BTsX5mkbJklc9Xc9yeua5X4gEat8QfC+mhHkjtjLeuFyQMYCkgdBkV6Jb6UkBd/v55GVAxXA6ELO++IPiPWLqYf6Js06FZOSoVdzMPTJP86znqrGkGuhDdbvEvxQ0S0VWEOj28l3McYG5uFH8vzr0SNDbyqMNg9xzXmXw8EGq6v4l8SRsR9quzbQPGSv7qPpj25FegQpfKkYivA2wnJmXcW/Gog1satSs30NzemDkgY60iiMnIIOfQ1nLPfbMSQRNkcsj9/oaljd24+zSYx97AFbcpzcpekiWVCrDIP4VzWqfDjw3qzh7rS7WXBJIeJWzn1JGa3ftIjAXy5eeAdppn9owhtreaM/7BwKlx7jjKUdjDT4deHrWMpbaXbRjGF8uNV2/kK8o/aL8Bxt4Th12xhPn6U377AyXhbAP/AHy20/nXvIuY5UyA+P8AdINYPiWxstV0+6sru2mlhuY2idQpJIIwaTgkr2NYzlLSTPgyy1GbT7mK5tvknhcSRt02spyD+Yr6r1fxHp/iv4YS6nbuFmnsTciNQSY5k+bBx0wy18ueJtDufC/iG/0i4VlktJjGC3Ur/Cx+oINehfCzU3k8MeI9GuJvLxZTXlvuBxIAhDgHpwdpP41hOPUdGTU7HoeuaRp3inT7eSaPdFdxLNHICMqSoIwex5rx3xB4ZvfC90Umijkjkz5Uoj+WQens3tXtWlyiXw3pIdQW+yQ7lHGDsGfaq9/Z2up2LWVzEs0D5BRgflP94HsR615Ua3JK3Q+ilhvbU1LrY5bwD4ghk02C3ur2J33MpgLFpYVBOGx1K+o6jr0rtXjMaq8ZLqy5zjII7HNeQ654E1PSrlpdPu4ZIkLSQtkpIQo3df7/ALDr2rpPA3jkanaLazMTNEAZIzzvB43xj/0JR9R3FFWipe/B3M8PiZU37KrodhscqRje/c44qBhKucqqoOMY5FWI7jzDujxKG5DIc7qbJlgWVhjHqDmuU9RWaJPtMy7UOeAeMYNDXEz+WOBuGMjsOlKxkOcbCw9COKekU6gt5bcgDIIINQYcrIjC6lCCDzyQeKTZI4EYk+bPc/5xUyW8zb90bL35IpVtZVYo7YOMHABoJsLFaZDE4LLydx7fWnRWu9lCkEHO7nBH09aYkBiYuGJBBz8oxmkUtGwHXAzjNCY+V2JktSrE7kyDj5ec+lMaJ/mDsRuHO44wfSmC+3uExtK9gO31qDzZZhlE3e2f50DS0LIAQhDKGwOg5z+NSPc+WvLZbGGwRke1V4bPhpgqhyRkE89PrTJNNZ9xzyeflOR9KBpdy/pZa4LNG4AIDEtkkVH4zmlura08J2dw8Et+vn39ztz9ntVBLufTgEj321b0S3FhHNcXJVLeJDNM3Taq8knNc1oi3via4uNQlHlXPiqYRxKGO6LTIycE+m9h+KqfWu/BU9ednl5jVVlTj1Ol8F6dapb3euw25gF6iQWcTAjyLWMbUQemAMH33HvWvPf/ANn6bfahMmFtYnlOf4sDOP5VNes9uI7O0ULbwqIkQdgBisXxJOJbGDSnGRqV3FANo/gB3vk/7qHiqlJ1auoqcfY0PM6TwLpN7pXh2yIu5Y7idPtVwjoGRpJPmbjqOuOvarPjy41DUfDc2nzxae8N3NBAxy4yGlQdCP61o2F4s37yNJsEYUMvAXtjFUfFM4S204OhKvqdqij1O/P9K7oy6I86UE1dkNj4ZTSJGXSLu5sUd9xgwJIQe5CtyPoDVPxGl3BdaHNq09tPbrqKoBa2zpIS8cg7Mc/hXVeYzqCIz8rDqQMVz/jrVNN0yz0661Azedb30U9nbWq757yVcgRInUkhiM9utXCN3ZBUso3JNZ8V+H9F0K5v7i/u5o0Ai8jaTLI7cCNVdckmvJtFtdQvZUghH2aS2XygVQzJokXTAYAiS62nBbBEYPrwd1bLXfiJr8c1zIFktpWW4miffDpCjgwQnpJcEcPLyE5Vecmuk02FfCXjqDw9psSwaTcaV5yQg4VJI3O5h3JIYZ/OuuUuTfc4lHnlpsU9FktdC8XaNofh2/M9hLYztcRqCC0ikHe27ktyck8nJzkmvWbF1dAShR/7pryvxfcPB4w8JXMYlR5Jbi2Zo3wxVo8nt04zXYQfbpYsQ6vewtwT8sbY/NOlYqpfVm7pbxXQ3/EWoDSNDvr9mwLaB5e3YZ715dptrdeGfhFfa1dOyXFzbyXZ3O3Dyn5cj8RxV74mHUW8Mmwk1a9l/tG5gsvKKRgOruN3Rc9Aaq/EXw/YWvhu1toITE1zeW1oirK4Urv5G3O3oPSjm6kqDii/8NtKisPCFjbxXIafyhJMgbcQ78kkHkf/AFq7IPLDGCqI5A6EkVE+mWk5CyQKwjAVTt2lR2wRzUR0yeMhoNQvUA5CsVkU/wDfQJ/WktDZbWNSK6ypLRumODxT4byPzNucEjPII4qjJDdbnaFodrY+WRTke/B/pUW/UHbcotX54xIw/oa15n1IcUzVfUYARiccjI7VHHeQsxxMo655qjm6GB9kjcdSBMP6ioXe8t2Pl6VIx4wVuYxQmxKKWhuLcIzAAhmAFQahMDEwEW8qN2AeaxPtt+gbOlTAHJP+kRc/rUX9rX7KUbR5VIODuu4+n4Ucy6jVOzuj57/aL0NLzVbHxDbxlS4+y3XykDIyUYkjrjcPwFeQW93dWz5tpzEVjeIYbOEYEMPoQTX1J4/0G/8AEujXdl/ZVlE1zGds0t20hjkBypAC4zwPzr5XkR45CjJtIYhweqnOCPzzWF7iqxafMfT1oq/2fagMjKIkCkcggKOmO1QF1D4Em0+nauU+FOu/2n4XFnKczae/kkdTsPKn+Y/Cuu8hXRpHVcggE45rxKsGpNM+owk1OmmiKeG1uUeK4AZX65OOfUehB79a47VfDFzplnLFoxggd8/NFEEkuMj7pl6h+vAwGzxg8V1flojvnOM5yTwKljWN4nhlWNopPvBuQwpQm47DrUlUV+p534K8aN9p/sy9iCHooxguR1wOz9cr3x69e9ZormBJreZXjflTk4YeoNctrXgOC71ZL9vOG1w7SRDJbBBG/jOf9ode/PNdDZ6bLGZ5gHgjfBKEj5mycvjtkY468ZNFZxcvdRnhOemuWbOiwkm0Mm4+vHy/jRmNF5LNjIw1VvPiCkhsEYPPf3phuYSysZA7HqACcmuZI1J1n+ZdqPgY46Clnk2jdtZeeDwf/wBdRC6QvnLAcYHpQbhZXAckqTwMZNFroasgLmRVTOCrZGe9QOqREKAJCxxyatvIpYY6sO+Af/rVAGicEptP07H1pJBe+xUlQq3QqnIqZYlaMEMRtIB46VI9u0qKMZ5xkEcj3qUMsGEG1ucA9h9apIpy00C2Td/CHAz25zViC3edgExgHGD2Pr71DbsYpGC5bnPp+Vaul7LaCa/unVbW1jMkhPQKBn86unBylZGdSfLHmkc/4+u1+z2PhJbhYft6m61OfODb2MfLt9SOnqcVq+CLJjaXXiSe3SFrgfZdPgXgW1mvCIPwAz6kH1rjdIsbnxtrZvpY2c65MJZTjIh06Jv3aeweQbsdxGPWvTtTlWExWtqiLDCoRFXooHavVqtUqfKjwqCeIrub2RSupA8bMcgkdelZHkzXnivSYI8MLS1nu29NxIjX/wBmNay2qfaGld33yYJDNlQR6Anj+tO8M2wufGGszbg8dtBbWQz/AHsGRv8A0IVy0IXlzHdimlFR7nW6bA0MKK6gnHVj1Pt7Vl+MDKo0MAgZ1e1G3Gc8tW/ypUk4ABzt71xnj3xFDFpmLGOGeW0uY5FvJ5CLeCZT8nTJkbJ+4oJP6j1KVNtnlVZ2RveI/EY8NwqkVr9v1OVWa2sldULADl3Y/cjHdjwK8uupJNRs77xfrOoXNzalRa3OqWK7Q6M+029grYKQ8/PN95+duBzWxoHge+8VXBu/EJlXSmYSNBM2JtRfrumwTiPP3Ygdo77jzXU/EnTIp/h3rVpAEjjhtTIihePkIbAH4YrovGnotzmalU1lsdLpVrp+l6bbWumww29jHGvkxxKAu3GRgCuO8bbbfxX4P1RRsi+2yWMhI+8sqcD81ro/C32afw7pclsPLtzaQ7EJOVXaOMmsP4r24/4RVbxPvWF5b3anPI2yAHH4E1k5Nu7NmkoaDviBZrBDo+pbShstTt5OB1DNsI/Jq7GC3QRkcnBxlu9c78Q0F14O1KRWGYoluVJ/2HV/6V0trIs0EUoHEqB+e2QDTUQvrc5PxKGvfGHhnS2PmLHPNqDfLjaiJhfr8zU7xqDPrvhOzC7kk1Eyt7BEJ6d+tTQJ9q+IGp3Sgn7Dp8NsncBpGLn9AKZq7ib4g+HYPKDLb2tzc7h/CcBR/OmtNCXdpnVOQykBvwqLPkqSR0/u0ssuMHoPX1pBNuG0k5IIC45ps1s7FyBlaPJOfTigxovXP5UyAARjIAxTmffg9PYVqtjFrXQTCgg5/wDr1HJtznOSfSmt91TkkZ7mo8LtABOB0J5qZPoWkNkKIPmbr61TuoEl+b+JR8p6VPMVC4xknpURORzgA8VhKxujJlt/MhZCzFlBAzzk9s18tfGnwyfDPi+a5jjK2uqA3UYAOFk6SL+fP/Aq+sLoDaeV5ryP486O/iHSbS2tQJp7UT3oCj+GNRuX6kN+lRHRk1VzQ0PHPhfrw07xNHbyuBBfL9nbJ4D9UPtzx+Ne4K7kMVcBegwK+YAwSVZEJVlO9Wz0IPBr6G8M6sNd0G0v0f5p48OOu2QcMPzzXHjaeqmjtyqto6b9TTcMyuAM4bkf/Xpse8ghtyn9KaUlGckuBzwcE+xppMi4zJhQOnv6VwNHtIf5zAPuJ68EGhZ3Ykgg9AAeBVdwJpsuSQOijvTDJuJycHpgrmgN0XjGpyFBOcDNTwJbxuFDNg9yuMf41XVD8zFgec8HmkKrhGIxuI68kVl5GVr6lwrHlkLODx8/cfhUzRQ7twLbR78ZqgLhWYbCGPdqkE+Ry7MoHal0DZ3JpIowd25c+oHT2qB54FcKFdmc9Owx/wDrolZTk4BwMY96recwO4njGOTQuw35FuW7ji+U8M3fHAqKC782VmKE7cH2x70oi81Vz94cE44IqOwTbKfnfqPcD6UJFdDXgjSZtxTGWUFRzk1S8eSJJa2vhSC9Fr5+bvUrjI/cWiDc5x3OBwO5K1r6d5NhBPqd0wW1tlMrue4Hb61wugw3HivUnur0M934jn85lGf3GnRtlR7b2X8QnvXo4On9to8fMK+1NdTvPB1oLHRbjXJYBbT6mQ8UCniCBflijHoAoXj1FNl8h5CVcgnnnnmrmqSxiQpbuPLQbVjB4XHHSsYOkcplYscn6EVliKvPI6MJR9nA1rS0EsiKSGY42leT71f8Eiz0+21e+lbc91qk4UKuXkKkIAoHXhaxoPEwsZ/sVnYT3N3jmV4iI0PrngH8OKXwto2u6hA93JqlpZ2MrviOxiPmMxclz5jfMAeflAA/nXdhKVlzM8/G1+aSjE6e+1B8S2d3BJLczKRFpVu2XKnjMrjhc/pXN614YuNLtY9TuJY1uhc2sVvZx4a2slaVQ21cYJOSCe+e9dppml6doiGKxgEbEYZ8ZZvqaz/HKj+wBJI3ypdWshx3AnSuznWnKcjg7NyKPhie9uPGPjO3nlLWtnqca26lvu7oVLAeg6cfWt7xLGknhzV1Cg4sph7f6s1kaHEIPH3jWPADSXVpNweoMAH9DXSX1tHe2k9q7fLcQvG2PQqR1/Gpe44XcDG+HMgufAugybWQ/Y4xtY5IwP8A61N+IVsLvwLr8bK4C2j4zxuxg5HtxUPwyn/4oXSdoH7iIwH6oxU/yrY12Jr/AEa/tGAHnWsic9MlTinpfUIpuJHHEmreCUjdQ/2jTArAH1hFTeFbtdQ8NaTcqGAltYzk9R8oH9KofD3UBqXgzR5W27TaIjDOeVG0j8waXwNGbXRG0xuG026mtORj5Q5K8f7rLWmhMeg3QYd+u+I7hiSz30cYz3CRLwPzqKdPM+JFspkZBFpLkBe+6UZz+QpfCAaf+1btn3GXVbnofu7W24/JRUQkEnxSZecR6OMn6y/5/OlddB30Ook27huyR1AxUq4KEnOaife5Crge59KRQQh5IP1qLmjLURDKMg8d880wSL93j61Asx4CnHc00S7d27HsOtWqlhcjJd4ZMDAGcmow4L7RjFQvhc87SR2/wpuW8tC2cewpOdylG24+ZwxwuMA1ULK+AOCDzk5qu8lwPtXnJHHGsg8kxuSzpgfeBHBznpnildU3hhjP51k3qWh8u3aDzzxjPWuJ1m5huPG8duSGa30yRyp5HzyKOR6YWuykCqS24E9h6V5bpd+NT8U+KNYDB4lnj06Eg9VjXLf+PGs5u0WzWmvfjE8G8beHYvDnia/sACIA3mwYPHltyPy5H4V2Hwb1WJZ7zRJ23rKv2iH0DAYYfiMH8Kt/GDw/9o06PWIYwzWrbJAowRGx/o38zXlui6zPoOq2l/GcPbSBsZ+8vQqfqCRQrVqZjP8A2avdbfofSsiRRsWHyjHIP88UhFvhSXUg8kj9KqW2oC+tori3w8MqiRDnquOKQShY/mIAboT29q8p72Po1Zq6Jj5O/KvuxximFY/M3OmSBlh2qBnyVY7B34pPOUNknbkcjqPzoKNCQjIyuADk47VGWG8kZwOvPFMMh80gMu7GOlBlBKpuUOW4JHUYrmYo6u4oQS7iAwGAecUpjC7I2Z8H5sijzFQZlxnHf+VOPlyKdoALDo3yg/j2ouiWPEClQFZj6E1G1uu4ovrlip61OFNuyI7Bg43bkOePp3FNneFZT5CPtBBAJx27UJBd7jdzAr1CnjI9quWVl59wFGSzHnHrVOJJCcKn4Zz+ldBpbw6VaT6rffLDbRl2Le3p+PH41pTjzSSM60+SNzH8eXULiy8JCYwJP/pV7ID/AKuFBvbPttz9SVFWvCKi30668TTQLBJqe1LSEDH2e0QbY0A7cDNc3a28vim4VLkKt34gb7XOV+9HpytlVz23sAcdworrdYlAuVih2CNECRqD9wAYxjp2r0a81Shyo8fDRdarzy2K0sga5aQIW3jk1XQNuO5c8+nWpfP2sxSMEg4+90OKfHPviXCYbPODmvLPaTsXv7TvYtMuPs0nmskDEKzEjgEkflV74VRzf8IFpO/70kAlLHrliTz+dYOrXRs/D+qXKRbfKtJWU987Dz+ddl4JtvsfhTSIsYC2UI4PBygr1MLfl1PJxdvaKxtxEKDuxnOKxvHTZ8MXhBXO6HA6/wDLVK1o5SXIKYI4ye4rJ8W4OizRFQVeSFDngDMyV1xOSS0dyU26wfEXxAOc3NlZTgAehlQ/yFa6Sk8AHaCOfes3V5DB8SrUFBi70iVc57xzKen0c1qCLaGGBgnv/jWk9zKi/dOe8Al4LLVrJkKJb6pdJGFAwqF9wx/31W+6iUMoI+YbeD26Vz+hxJB4m8SW6E7JZYJ9oJ4ZoxnH/fIro0VVOQgJAoSuaR0RyvwnXyfCS2bAZsrqe3PPdZD/AI1r6XMtt4u1uyJwZVt75R9VMbY/FB+dZnhMGw8R+KLBQFQXiXUagcYkQE/qDVnW7n+z/FGl3vA+0W1xauT/ALK+av8A6C1XcxSdhvw9kjfwzG6EZnubqVmAxnM71BDgfE29ZcDfpUQBI7bznmm/DQMvgnR2z/rITIxbgncxbOPxqxHCo+IlzN8pJ0mJcZ5/1rVJSSsjpCdpXJJ9TUmA0Ryc544HWoC+/nGQP50F2RAc/hmlc0exKFALfL7VDKQM84OOKRJWeNSylXxyM5AqOTcvIA/P0pXQLcduz1JyOeahEowWVjtNI8jnnbx9aq+a/IwcHsKhs0VupZ3rJ94Ek9eKgk2tISCRjr/SkJZgVU4wOpHSoshUCOxd8AO+Mbj64pNjWjKOv6iukaLeahIWUW8LSHnHABOP5V5x4NsxZeD7IvHse833bY6lnbI/TFbXxgvDJodhocWDJq15HbhT/FHnL9OfT86huXS1VIEUrFEixp6gAYAHrwK58Q0o2OnCQcql+xTvrGK/tJbS4G6OaMo6YHKkEEV87avo8mjapPYz4/cybN2Oq9m/Ec19GySu5X5+OPlA/SvOfiZ4XutUktbzTghnZzbyBsLnPKc/XgfUVnhqqjLlfU1x9BzgprdHQ+GltLa1j0+xuRPZRxiS2kD79ydGG72b/wBCrUeIqAFwoJ6noK8s+G+sT6bdTaXdpJBMubqFHUqTgYlXn1Xn6pXqu/C7htYPyrZ6jtWVam4M3wdZVIaaW6EQjOACck1C+9dx2jpkVOgMY3Z+Y9j1FQtN8rKxxn2wB7ZrNrQ6r66l2HO8lgyjrzjmpZlWW2ZCThuGwcH8D2pvy7F2szHhemMUOAZCgywI7dzXLuPbUA2yPKLuY9M9xVXzL7fkKoTJHzdam2b0B3NwRwpxQhLsR/EMY9qAi7sWeecDkblwMEdvb+dCF5CSNxXP5CnCNWcsCcY4x3qWCF1XKnH44ppiv2LthbSTSrGBuLAcDiqfxDvIZIbXww0jR2yL9s1Fg2CsKjJ6dzkADuzrW5o4XStPn1e6YLHCuADn5iTwPxNcDptnL4q8RK0sjvJqRF7duORHaoSYh9XbMmPQR16ODp2XMzyMxrNtU4nVeDVntdNuvEGoxBL3UtojiHPkwLxHGvsAB+VU7ywur93+0Xs4VpDJiL5CAegyPT9a1dZ1CB7iOKLakcShVA6YHQVVLRyJtPIHYPXLXquc2zuw1BUoKPUgtoXtIDA0pmXaMFzlj9T/AFq1bSbflK7gvGMZzmoUkjAfZjKjB5zQoBdHU7cZBBbsawOh6aFnxC6x+D9YmIOPsUgAx0yMf1r0HQ1EGjaeMFQtrGPphBXmPiqTyPBmporu7SRiJccfeYCvSdFkmn0u3WW3kglhQIQ+MHAAyPUGvUwvwHjYvSqaNuuAAzMec4xWF43cDT7OFQcTalaIRnqPMBP8q3YwHbkZ6HNc/wCNxuOgRqB++1m3UjPUDJ/HpXZFHNN+6zT8Wq0Pi3wnfZ8tWubi0b3EkJIH5xity6VJE2nd2PBway/iSi2mh2mpOxH9n6la3JfrgeYFb/x1zWrJACPvgn3rapuc9KXY52CE2HjSXklL2wVgeMlo5CMfk4rofMVMsc8A9O1YuvxtDqOg3SdRfeQxHPyyRsPyyF/KtzyCVBPXHX1qUmzTmRy4c6f8QycL5Wp6aCPeSJ//AIl/0pnj2TGg/bkB/wBFnV92MEAhkJ5/36PFkTWev+GtQypVbuS0YnsJYzj9VFauv2Ed/oV/azfMklvIhDdPunn88UXCK1Zk/D8keCtBzlm+xxHJ9xUxynj1yFJ36SvTtiY8fr+lN+HwEvgjQXCqN1lEQF6A7e1TTI0XjOKR1z5mmMFbP92UZ4+hFILLlXyNeVcAkNtzUb4bhjx3FMm4XcOnamKzPxtOR/Oouak6phe7D19Ka5BxxUqKSvJ9McdaDDhhkZ59KdieaxVjR3LbsMRxwPSgxbGJJIq4YwDkMSR0GKRoACegAwQMdaOQOcrMo4AHJNRyooA3ZKgVZmVg2eBjpjtWL4p1aLQNDvtRnI228Lyc8AkDgficCk1YpM801a9PiL4lyrvY2nh2D5QDx58mQfy/9lq7MWYDDbv4iw7GqHgvSZtK0AXV0N99qTm9nIPPz8qD+B/WtIpCMhF24ycDj/J5rzsTK8vI9XAxtC/VlVyRtJGVx1JrP1oNc2M0UESPI2By2NvcHPsQDWhODtbacDp61nvEZCBhs4/A1zptHby3ujzDxpDrepeL9O1bT4ZJ7qKGNHB4WGSMkMjE8YPX3Bru9D1FLjTBA4IeFtoCtuG09MN3wcrkelc18Q9BWfT7yeOPEwAnVhyWKcOv4od31SsX4c6rPPp81nHIgntWzHu6GJzg/gGx9NxrtknUpqXY8iDVGu4vqelSAvg5dGxn0OM1HLKQvynkHv8AyqK2tJgg89z5nVth/wA8Ul1A6EMeM9yc1x3Z63W7NwOsRBOSwPA9ajErDLsVVyee2PpULkZyGG3GDnrn8acuEX5XBzzwelcqLAGV0yrkFTyal3TP8oIU9N2M/hRbMoR/3gYnOOetSiWNo9vmIT6UyeoiGUEL/dxkjvVq0huLmUIhByeMDPNQxmMofusG6lefxrWN/a+F9DutcuiFWGM7FIxvbsB/noDWlOHNKxnWqKEbswfiFqiP9m8NRvIYrRRc6gY/7n936kkKPdz6Vq+GdMfRdLm1K9WKO/1MiRlXgRx4+VB/sgYA9gK5rwZoc3iHVDcX8zN+8+2amTx8+cxwf8BB5x/Ex/u12eq3qXU8rbwyA/KCOAMdvavQry5IciPIwkPbVHVexl7V/wCWmZNx4py2wYfKwHOOOcmmEoRkYyR6mpFdgy/MwAzjA615vqe3oQeSyuTlU6cL0qSHKADCuBuyaiuBKGYwqTkDd82OasWquVw2Bu45p3B+YeI4TL4XEKqGknuraJAD1JkBA9hXrFvB/CANuMZrzS9jEmp+F9M3FhNqP2hgR/DEhb+eK9TgQlWOe2MV7GGj7iPAxMr1GyEJtfaVGentXKeL3CeKPBiPyv8AaTNs7ZEfH866/wC6xLNk9MYrifHfnv4s8Hx25Xf9rlJYjoNldGxhKV1Y7jxzp41vwZrNgCd09nIqEDndtJH6gVV8PX6az4f06+Vji7to5Tng5KDP61u2au1rtkbecYORjNcN8MJzH4efTZc79LvbmxbIwQEkJX/x1hW8kc8Gk7Gp4tgkGgTXEbESWjxXa+3luGPT/ZDVtBgQCpBB5BFRXgjvLC5tWwBPG8XT+8CP61S8PXK3mgaY7Mxf7OgcjjLKMH9QaEuxd7O7MzxrbvN4fmulc77KWO9TA6GNgxH/AHzmr2tSxHRL24WQFPs0jhu2NhIq/NbxXFtNBIvyyqyHvwRg/wA65EXXm/DS4eZiZIbCaCQ4x80ash/9BqbFX1D4T3TXHw/0dT96CHyTn/ZPB/IitTVQYvEmhzblHmLc2598orf+yVlfDe0Nt4X091OUuLO3lB7bvLAP06CrXi2VoH0a42riLUogzH+EOGU/nuxUPcS+BM3Zk4zxnPGKiO5F6ZPqBUjnJC5689KFOJMALtI5PfNTbU3vZEkLnaDtOfQ44pzuwA+ucClgQ5Y7+Oy46UrID8oz75rTl0MWyNJwZORx0+lOLhgMHHPeoEwrk4OM46d6cH+ct2A7etKOw3voMmYt3ODXmvxVkbVjpPhWNznUJhJNg9IIzuYn69Pwr0lyOSASeK8P1/Xpbfx5N4heTzdPF0uiIGH3ARl3Q+ofr7ZrOV9S77XOlvJPLYIEIUcDHTb0ArNnuGKZ3Fe2cc1Yv0kWRur5+UFT0HrUJi8uNyxPHPtivIk9T6GmkoqxU87b2G3PLVGZCXBXjd057VLLtjdQPmU98dRVK4cmXAwzHpxUG3Qh1OzF3ayRoFLD5kHow7fjyPxrxa3aTwZ4tjYo32RjjnjfA4wfxAOPqte0JLtwQMMffpWNqmhabqFyYdQtI7iKRjLDuz8rfxAY5HPOPc1tTr+zT5ldHn4rDOs04uzRsQXHnW5UMhlH7vaejYxz9COaSRZMFXwOcfL0qigifVY1Uq+yPcxUHKY4GfTPIxWhJjDMCRg5IHAHvWEZcyvY7LW0ZZEId1JUFu4H6VJJbgTFWjIwOMiroKbg3ygD5jgcfSmSHzJmG88nIJPSsC0rlSNVByA3pzxgfSpoQCBhM57nGabLhVzyMcEnnipYFUYcPvHcnoM0LUUvMuaXZPeXIj5AJ9McVyfxE17+09bTSLRBc2ukspKEZSW6P3EPqMgsR/djPrXX65rS+B/C8uoArLf3ZEFnFnLSSNwMD2z/ACrlfh14VS8Ml3qUplt7VmlMin/X3DY3uD3HAVf9lc/xV6mEpqEXOR4mOqurNUYHb6bpg8M+H4rHMjXc4MszPyWdjkk++SfzNZ3kgyMckluo7D2q5qF0s0okLHg7Rz+VVVukUtuVQvTJ7fhXHUqc8rs9KhS9lDkQ9LPKLyFPYDpU62zMCJGwB6VELxWBIlB44wuBUonjBVhJlT1BBrOy6m7bQ5YAz7VPIPOBVmK0O0EoAexANQi4SQH58E9QOM1atLmIOBvJzxknv6VcVqZSuQoHufiPoVuiMostPuLlyTx8xCrXpsLhYsdyK878PBrj4k6tMCR9m063g6/3iW6fhXoMkgSIscFR3x0r2qatFHhTu5v1JEfknBz9K5TX1834g+FVYrhPtMhHcnYB09PeuigkDEMyMCpJGTXP6qM+PtAkYcC2uuemD8tXciStc9ChkCxDIxxXAaHcCz8d+K9NYnZK0GpRqRx86bXx/wACT9a7TafLT5zjPI7VxHiGL+yviHo98owNRs57KTJPJTEif+zV0TVldHPBa6HVxzBt3ykEd/SorGBdOiaBWIjMjOvH3dxyR+ZNV0nCpzwc9j0qYsTjcQayUjdwJgx+YKOPXPWuH1qQ2Ok+M7Nfu+RJeRZHAEsR3f8Aj6t+ddnuwhbOa4vxlbmGe/kBJF5otxDlum6P5v5MaGxNHQ+EUS28M6RDgBUsoRx/uCo/Flmt1od1tzvhC3CEdmjYOP8A0GpfDg36FpvBx9liIPtsFaG0GMowDAgg5os2CSURkDpOiTqMo6hl57GiLPnnlQmeOKdY24tbeKElW8pAnHTA6fpSuwLZ3BcY60W6oady3GSn/wCuoZ5GLDdkdqYJgvBOCKhacuTiqlLSyEo66Cjnlc44PSlGMZAwSeeahDFiBnoelPRxu2lSahFtWRneJNTGj6Ff6gx/49oGkUDqWA4H54FeVeM/Dv8AY/gXQFusSz2t7bXNzu/jeR/3hP4t+leheOov7QOjaLyV1HUIxID08qPMj/8AoIqj8VLFbzwZrKgF3+yO6AdcqQ3H5U2iGtWY+oR+U8gOOWOM96pOyBGAPLevarCTR6haWl5HIrLNbpJ1znKj+tVyDnYSOuAfT6V4s1q0fQ0nzQTKkroeMYH9RUDRq+11Xk8delWZAAzJx0zn0qBwqhRyd3AGcVDR0XRnvJngZJQ5ye1V5ZI5XVJIlI4yGHGfWrV1jAUuQQwYkrn8BVSWLzGGCCPfPJpPQmTYRMkDsYI8LzuCjgmle6MoyE2gelMWPacMF56g5GKRy2SQFOTj6+1UiDoi4kjOU8ts980xQX+4oBXg8daoEEsCCyZ6/NSKjgsd7ZHfdiuY0Td9C7GhPBY9PSrekacZZt8uwJGN77uAFHU56VjRrPKyxh3kJOAATik8S395Da/2Fp4BlKiS9kJyETrj645x34HetKVNzlYwxFf2cLnP+INUu/HHi63+yB0gXfaWCjBIA4llAPcBtoP95j/dr0hooND0m30ezXasQG9lH3mx/LjH0FcX4Jt5NLjuNfuLWNZpv3NpETnyIh0Ue/Uk92Zq03vLqaQyGMLnrXViqyVqcTz8BRk26092X5ORn5WAbHIpot15Mi4wR05qo93cqCcJk9cLwajh1K8eWZRtUKQMbMdq4k7nqtWNlLT90Se3AIFTiExMNuWzyQelZi3t8y5LrkfxAf0px1K82lfMQkjqRmnuF7M0okRpGLsx44GKvafb+ZKiFAMHPY81hi+uEjB+Tr/dq7YX83mgl9o5fcFAIxzWkdWiJ6RdjY+HqLca34n1QrtEl8LdGzncsa7f5mu3kmC4I5GQPmNea/CW6mXw3HIyvK97NNcplcAgyHjJ6etd1K0jNGm5WwCTu7+hFeyn0PBjqrlyCeVkPyICcnnsK5++umm+IWlxiEl10+ZgyngAuoNbNvG8cYAJ6d6xbKOV/iTLMUytvpSL+Lytn/0Gq6ik9LnoMDboyAfm78/rXMfEqEW2k2eseXvbSbyK7bb18vOyT8Nrk/hXSW/zLwCO+fWq2uWkeqaZd2E+5YrqB4WI7bgR/Wu1r3Tkt7xkvcqOECuueq96mjfcmQAp9T2rlvDutNdeG9PkwpulQW8yE4PmJ8jZ/Fa6G3uCYg0i7WI5XP8AWuJNXsda2uWfOlQ8j5fXNYHjaKafQrm4h+UwQzbiT/A0TBv6H8K3g+5Q3Ib09azvEpK+HdVcKsm2zlIBPX5DxVJ2E1psJ4Wllbw9pZClM2kWQf8AcFXtrojIsrsSSfnbnk5/KqHhltnhzTFc8i1i+73OwVembgbDhs9CaOoRasSxM4bHJHc5pkqs0hUMRx1PU0imQltwG3AxjrnvmkDDKjHPTOc0XHuRvuiVcMXIxkk1RSUo8iieRssWAb+Eegx2q+2G3kZAH6Vmy2+xzgtuIwOOtS0GxYjuHPRmYDj8Ktxy8DB5PUd6pRwgKBlgx7HvVkxgJuIxgZIppA2c/c3H274h2MXzMNN06W45/haRgg/RWq94jCXGmyxSE7JVMbAnswI/rWT4eLyeM/Es0g+79ltVJ5yBGXP6vW3qdqs8LKWO7HTHoOKp7krVNnkPhjUTF4ZtLZgrSWXmWjHPdHIH6YqydSkU4CqUAPBJqpFHJba3q9nL0lCX0asAM7htfH/Al/WjYApJYfnXlVo2m7ns4Sd6asPbVJ1+YpHgAHk9ar3F+biNM5BGfuHGKbcxkKT8ue+KqmFhhWQqoA5xxXPJ2OnVaEkmouxYqg75JPb6VEL6VxkADHp6VFypIIHbOKaFcjIUYHTipJux5u33Y5cj3/Kmm8lJPDBvSoijeYCdwye5601gRkgsTnjPGPai7IZ1wjPlkLGW46HjPtUn2JtoZgSfTtSozNCjsp3kcg9B7Vr6Xa20qPe3s6RQW6eY7E9AKhRcnZGjmoq7Zm3slr4R0aXWLvEk74W1gPUueAPfk/yrE0bTtR8v+zLySF9QvZGur2VcFrdTj90W7465/vHA4qHVr268W61Bf6PaT3DofKtZpY8W9l6tGp/10pH8Z+RM98Vtm2t/D9k1lbvuuXA+0Pu3MT6Zxz3/ADruklRp2e55MebEVfJFbULhWnS3hUGGLCRrnAA9adAq5AXqe2R/Os15F2/vMsM8kVatJFVAV3HHOSOtcF7u57EVyqyNNox5Qxg5b15qAIN2UIJY8+lOWdWKg4xzggVH55VS2QSp6dOKcUNsnbakLKowQM5zVJN8XIXIJ5+bNSpK0kvlBCVIznHAP1qZdObCh23Z5xnj86tEtXYmTJEp3KBt4Aqvqsj22j38+QD9mZFLcAMflH6mtIWxEe1AFxxz61V8QWway0/TynmNqN/FAQR94A7jV0VzTRliZclJs7XwZZf2T4dsLTacxWyJ0xztyf1NbcbiYNtJDDhgen0qS2t1tbcIoz3IznGahSc4OVKheBkjJOa9XU8ZKyRbQkbeQPXmqHhuBpfGetzvghIbWHg9PlZv61OJFQjnLdTUfg6Rp9V164X5g14Ivf5I1H8ya0hrJXJnsdyrIkYy2B61BcSxvGygFs96fES8eWJX69qguJFGRu4x1Nd72OFbnmyRto/ibUtPEREVyf7Rtzt4BPyyr/30A2P9utqMlY0VRgY4UDjNV/HcIWGx1iP5ZNMnEjtjGYT8sgPtg5/4DVqIhgqL0zkEcivPkvesjtiWYboo5Xy3ZMZZsjCnjj196r63cu+hakqJ1tZeDwT8hqysSCTG35SOSpqG6gE9pOikENG6Y+qkf1qkwd+gzQL5f7C04+WxAtYzx3O0VZa8ijfAHzdORWR4Y3T6BpshyM2kS8j0GCf0rQa0w29gCc53ZqpPUmPwl+OYEbjtyRUSyI1yApBXHQ+tUolmF0670FuVGwbckN3/AAqbyEiuVZlwdualFFlSFJIAOSARnpUkag5UYpqBGAKjGTzUUm+KTGML97cMflVWJbZb2Ih3HH+e9Rs6FW8shscHioDccbgdoxmo45j5RKkFm6UJ2G9Uc14Omkk1/wAX71UFdTXkLzjyVxXQ3Ee6Mlgfw44/OuA0rXF02/8AH13IMi2uY3C9Mt5IwPzAH413ttLK0KmT720bwP72OcfjQyabPN/GltHpesabqjNiLzmtJs945hgfk4Wsya3zIQQV/hyRmur+I2ky6toF0kBQTBC6Z4IdSGX9RWCL631GxtdQiYbbiJXIx0JGSM9uc1xYqN9T0MDN8zgZpt3LkKysB6io5CVyWjbc2FyDwTV1pg7k5wp4FQyAcbud3bPT6Vw21PVvdGcYiQRKFDd8dqYsCqc7sk85zU05Vcg8jPQd6ZMdgU5OMjtx+VJxJ0uRsgZQxPKjHHJppUKvQD1GKlyXUjack8cc0IrLkMQw9xTUUyWzoATsQYYEdgetPmWG5h8i/iWW2yHMO7AYjpmotpiXOSxUYwB1P1okACrzuGPTrWKdndA0pK0i5L4j8u1jtbOBLKIEr8grEeYgM5LEnk571LKrKGHLAnjmqkhfB3gnscc1TblqxwSjoiRtjhVYHaemQakVM/Iu5e3AqAMxQY6joc/pVlA275ipz+FQlrctu60J0gyuQM7R0z+tOjtiTjglutOALRbg3ynjHTNSxBvvADIOOQeatE76ksFvGo2hizE4ww6GrRj8ttqhzx34GKrqjRoCmA2ep7U5jKRgPjPANIb8yTb86/M5z/CBjrTVtZL7xfolmh3LbQzXb5HAJwimkthIud2CCfritPwlCbjxHq95gkQJDaIT/sjc36sK68KryucGOb5VHudtJb5j+dgAOc9s1WZVO7Ycrnhh1qaRwhSNmxu4B9eOlUVUW3yQRbI+WOP4u5JPrXe/I4GTxqoKZLYqP4a3Q/sN7xkJ+1XVxP0AwplYL+gFVbyW7a2nWIFZNrKhfAG7acE+2cVwXhQ6h4u02Oy+13NnothGLVY7d9jXrrw7Mw5C5zwOtOk7amdVdD1PW/iV4a0Zzb3erWy3IOBAh8x8/wC6uTXPXHxM1G/U/wBkeGdTvOySXIW1jz65Y5x+FO0jQbDSUNvp9hbWoVcMUQbh7k9Sfqa010/cFLgFhxuJ5rZ1ZSMo0zgNa8QfE3UYJbeHR9IhjmVkIWQScHtljjP4V2fhtbq30fT7bUpgbyG3SOYJ0Y4Azn2rSFjEFLBRuA6Zp0LoZiHUhgOCOeKhJtlJW1uXY1TGR82OM0qL8ifIQD29KjU7EwxCEDhfSlSYLGobPQVTViua5k+E1VvD1lGGwIw6/k7VqEhBjrz+QrF8Mz+Vpxtjz5E8sZPQ8SN2/GtacggoCT3HNDQ1ZKwk00MEYeaZYkBwS5AHPbJqcAOUcgMAMj2GKqfZo5YwsyJIuQdrgEE/jVhmx9wgFRjFFgbLGQcAYJHvTZm8xNvGf61As20qSAPTHWiR28w8D3PpV76EPQiliAjOAWIGSM4zTkxsC4Axxk0wTZ3K5yR1OaAp2bwxOfbpUWLvZHi/iGSaD4g33hxInUa7f2UzOOhjX5mB+pX9DXsEbFN2cnuQTnFMmsYXu4rmSGOSePOyUqMpnrj602SYibIBw3fHWhkwVm2VdSUyQMGwPUf0rzjScWlleaWcIdPu3VfeNjvX/wBCI/CvSpkDqcsMY79K4DxBYm11+G4B2x30ZtnPq65aM/luH5VjVjzRsb0Zcs1IpTFScqSCOAfWoTcDy/mQKx4B7CnTBozh1ycY4HSq5RemcjPQ15rVj2lIZvz8w29eCOlRNMSu1vw96JGfcVAACnjHIpmQJRGRhiM7exFKTvsSnYbI7KqY3klgo2jO3Pf6U2VpN+AxxjBFSSrxuA79KRcqd3U9gKlbA227m8ZXRVYFSzDLY4pVlLHdnO3oCKiM2Rt+U9Og5pm88/Mv4CsfUtPuTlhImSQB6io2fkH5j3+7xUKMuSSegxTnkUHg89KoLiSfMdpKgAY6Dmp0cbcBcg8bu9Q/uyeQBjrxzTxIoPPpxnpQDZYj3ISOMc9fWpRcOrFMgsCOCajjAZMoFwOfUmpNqoxkPDEgdKLBcljmBGCPbnpT2lId327doAGD2+tMZhJgJhjjPUCokjJkfcSN2AB25poNL6Fy2nwMsf3Y+Y8Yre8FxNFpUcr/ACS3DG4kBHdzn+RA/CubkQ+QIY/LWSRxGGxnliMnH0zXa6aFht9qxqu0BR2HHFdeG2uedi3eSRoGTe4U/MFzng/pSW3yqTISzE4UY4A7VG9zbWcP2q5uYYFHVpHCjHfrWVceP/DdpkNqtq/rsy//AKCDXakzhlNLdm1MAYZFcH5hjgDNea/DbUofDtxe+EtQXyrq3uJHtg3SaNjkFT3rqY/iF4aupNkOq2zPjOCSCPzFQa34e0Xxta7JVBki+eG5gbDxH1Vh/KrSaM5tSfuvVG7azBHdm29c7ia0ReLjcwAA+7muBttK8XeH4liiktPEMC5KtM/kXA6fLnlW/Gp08a6lbJtv/BeuRMOC0SrKPwwelUlfYlza3O7IVznO4j26fWo45SZnViVAIU+tcevxEto8F9E1+DODg2MhyfwqC4+JdmJ1gTSddaeVSRGbKQMB6gEdKvkD2ke51etXSwqgFwBuIUD0pkd9mJVY5LYGccHmuNm8XXhtRPN4d1tIIwWd3tNoAA6ksRiq/g/xuPFN/PGtrc26Q4kQTJt8wZ4YHpiixHtFc6rQZBDea1G5IKXxdQBkkMisP61seYXRRgc8c9q5yxnSHxPqKsMfaIoJgQfmOAyn+QrcjeIuHjbGegbnmo2Nop2sXULAD5BgfxY6VLvEhxypx1qmHOMSSAA8Yz0+lTCUWyDAVl9hkk/WmtWNWWpIGPTYvXDN0xSPIFGVYjsCRwTUK3SuxYDaBnrzkU0TeYxKg9O6+tDF8SHlA77to6Y5HX2qaNyDgAccYzVR0WSVdx+Ygjk9BTXmVGDZbONo9aQ2ti086py2CKoPdArnHQ5wo6Y60koEiNgsw28HPeq6lmQhwyn+IZpgid3ZgC23bjAx3rm/F9hJqOnOkB2SoBJCT/z0U7lOPqMfia3/ACSI8YYkHIyaW5t1MKAh+nJ6n/8AXUtXC9kecNdfbrSK6RfL86MOFx0z1B+hyKpPIqMoHTH3e1XTYCwu9Q01Sy+Wwuoc9fLkJyPwfd+dUZoivTBPfHQV5taNnoevhp80EyB5C2SeoPTPNN3hWBwQe5NIRyS5wRzx0Ip2FlAwN2MY461lY2uJJMoOMbs8cjpUJmVT0IOeRU3kBvm6Z9abIiqCB3PBIokrkp9zRMhVSgfaTwD0z9KrzXccK+UiEsMfM3GKtTXMSgsyIoA/u1Umh81GaVTkkbccYrBp7F3SQy2mkl3DaSAeKsqoJOCWx69alhSOJSFjGB3pMnO0LjJyP/1URQN6aDSuRnJz3pyQhmxgkDvUyM6AkgZByBip/OKSZ2DnpjvVWC1yI2pVdwyCR0HFQuZFO9g49ATU32iVxtdfu98VPbskk212TYRwMcU0J6kSgqoY5wOme1BJMgfcSp4bmlE0qttWKNVB4OacrlQD5ak0tSrFO/k1dZYJNLitJWiVjtncrhj0PHU47Gr1leXU88MPiDWNSslZQwW2jEUJPvICT+oqeFQ0bmVAeePeplvRD5cZUkY+Yn+VdFOs46HJWwym+a52ul6F4aMKSw2trO74xPKfOZv+BMTXRWml2qQkLHCVAxtVAMD6V5VabHmaa1Mtu/8AehbaSfcdD+VbkHi280ZCj32n3BQAlJ2EUn5g4/SvSo1ovRo82rRcdje8QeCdH1qB47iwhV3BHmRLscfiP5GvKLjw94i+FurHUrYT6ho7cSkZyq/7Q7Edj0r0ZPiTbNEJpf7PRUGW23qkEdfSqF58Wxf28qadpRK7SBLOcISfRepGK0nUpw1crGcaFSppFal/QfEFr4htY7uykR42A5zyCR0x2NbiIGjwQDgc141IblNSfU9JlTTbuQbpFhGYnP8AtIePyrZsfiPrUAEeo6YkzDjzLKQHdj/ZbH5ZrmhiaU3ozplhK1NXlG/oehEZKbWIBbgehwea5/xnq7eHtEbXba0+23Fo394/IjcMTjkgdapW/wASdEeVFuriSzcEkJdRNH29Tx+RrQh8W6JcBgmp2RBzlTMucehGa3XdHP5HP201l40ijudW1n+1IQQ0domEt199gOWP+8T9K6hY4gAImUIF6Zx+Ax0rkdQ8LeAb6aSZfs9rK6nc9pd+V174BwPyqi2k+GraMBPFGqDADBF1FcN+lVzLczUWdt5MK3iXocBlQxNk53AkEfkafea3p2l2zT3VzDbIvWRzgCuTittFx8uo67d5OeJpGBPTsorP1rw1o2rSwvNp2oyBCD+9ncKRnuCf1AqeaNzVRl0NlvizoH2jy7Z7m6IYL+5t2cZ+tX7X4o+HZ5HWS8+ylu1yjRc+mSMVnW8tto1obmIWthbWyHesIA+UdjkdffvXPXGr3niO7D3GyPS1XEdtKQ0k7Z4dzjjjsOnes54iEFdmlPC1ajsj0qx1qyvl860uI54uMNGwYH8RV1JY5GBBIHqD0NeLy6RY2V35umGWwlx9+2fbn2I6GtnSvF+t6VNCt6keo25BEkifJIo7HaOCfpWdPGUpO2zNKmCrwV2rryPU0IDYChgOhPapGgjZQWCrnrmuB0n4maJcTvHd36W77vkhnVomHHQ7uD+BrrrbWtP1GJfJu4JzwRscN9K67N6o5HJXsy61p8w284GBx1qhNaospHmYL4Gc/nUw1aMPsZwuO3fHtWVc3+nR3ZJYtIy5Ubvu96Vg5rmz8sIU+cMggHuapXMhd2/eFVPOEPpVVr+2Zw5bCcEYPWmSSQySYhuV55zuAP0pITdjl/GQNndafqhZvLSXyLgj/nlJxk/Rtp/Ose7DwyNGAwIyMjnOK6vXUsLuxuLK6uYgksbK+5hxnjrXG2NxPNpsS3gIuoMwSsf4yvAcezDB/GubEQ0ud+EqWfL3IA5mZx5uWQgOB2PUZqAy3OQsblEHGMc1ZLghgeCOcgdag+dX3KcjpXDKOt0d3MyRDKzY3sfTNSMzKCDgjv8AWo97phhgfWq93qE1uFKxiUFwHwwG0epzVCvY6ZgCVM8RXI3AEfe+lQTMTjsfXFJqmuR3EaRrCXxgZLcD6VlPeTyE4UIPbk1z3SG5GxE52AMevOenenq67N6bjzyf51gF5ieXceoLGnoZDGcM4BPqeaSdwUjdT7nUpk5x1yKkdm2EdSD27Vhx7yAPOfGOMmlIOeHfge9O43PQ1tzDart1HJPOadFmMbiQvOD71jBXc5Zzx6saQqSBhieeCSeKdxNnQK2QDs3E8jBzS4LhRsPJ646+1c/Ek6kFZpF55wcVJuukYEXEmc5wD0o9B850amRUBKnPYe1OnZYLWS7uz5UMfzO7DgenTrWAl1dpyZS3u3OayfEF3ql1cLC97JBbp5ZiUbURwBknJGC24dyMCtIJN6mVWq0vdRevPFb30z2+npH5UhZFuEMiyqqnnBA6tyPUVz50y5vXEsrzXV65cyRSbiRngeY3GMKB71bhkh0zTZpbi4mJ3cCBizIp6gsowMnk9K09E8RWFxp6Q2sCRwqMqxGAefzJ9zTnUaWmxlSpqUvf3GWGiiCATTlZ5U4SFgdkfH8K9v1rdiYNaiIphyQ24jnGOhNUotWtUJQMJC2fkjTzGP0A/rUkF1clCPLS2V+AXG6QD6dB+ZrmUJz1Z6HtqdNtRLS26hG5KK6lfc9KmtFhty2wEtyM4zisxzHIAGnupGHbftH6CpYo7Fefs8pI5y8zkZ9+a0WHt1Ili7rYZqE1vY3CX08gcwqwhiKZUsR2HVieBWrbaei6TZpeW1p56RDzA0SkhiM4yR7/AKVTiltIFeSOwjjcHh0UFh9D1pxvRLgAO3cbh1ren7isc017R3aEn0rT49jJploHxgkQrg81PZmKzk+SGOJiDwoAH5YqBbzdOdyMGXH3hx+FSsx5Izlv4ia05hKCRbS9eQhN7nGDgknFTCZc5DY/hOehFVI1Ykbgc457c1l6z4itrZBZwXMQurhvKQZyUJ6tjtgdPehdxyskRa5PHrd4tvHFm1tX+XDYSeYcEn2XoPf6UttBDNLGGUpIowzL0+mKl020jtrVPLUfIQADzmr8KrbSrcFVAyC6Edq4Zyc3zPY9CEVSjZblF7NBAr+aRvJGD2+lVo4rmCV+flxtz/jWjdeXJExGzALNjJ79sVTa4UERRF2kfARF+9IfYf1pKGtkOVSyuyKWCIoq3EUUw25JZQ2R71j6lp/hpbNzaWrxX3IWO2Y5ZuwwD3rqxp8cyq+piOZ8ZEMZ+Rfr/eP149qabVLdT5RSMDBARQM12UqTh1OCrVVXaP3lQ+H7JRC0d3q0DeWu9EvXIRscjn0quunWUabpNS1aSQZAzck5/StI4dwpkVflJ9zVeSAK5QYc7c59a3dWT6nP9XgtkVRaW0e3y7zU344V7lsCpFg0wryksh7mSeQn+dNlRi3C4wBxmoVmEZAwVIPUip9tLuWqMF0LKpaWzHyrK1XoATEGb8ScmoLuXzmLMSfftUZkUhEUBUUcKO2KapYjG/K5z1qZSbKjCKIgGccKV59etRkMAMnjrzTuEwf4j3x0prSKRhhweOah3sMa1wdgcJlc8e1VbhUvIXjmUlXGGA6/nU0gSMZQEkd/6VHuiLDkgHng81DbuM1fs7ZHyjNONsRg4HqKeG2spYDjvnrS+YCyg/U5NYWRSK5ilklZW4K9TjrU32VkQYz8wwM1I6K0quCy4HTdTgM8liPxp2CzRCsL/eZVwOABTskbsrk+tSsAjHax2jHfvVeTJGR1zjriiw2SLyC/ysPSkELFXwgxn/IpUjUscnAxzz1qBiV/1Z6nO05o2BlmG3kVgzjqPWlaOSDBOBuPGabCJDg9c+lSghV+du/X1qkF+iI/nLjAXPXHSpoFm3MsZDA889PpUJkDnIA9uaeivgk4B3dD/SqT1Fyt6E7NMgZeQcYbngCoxa2lud7WVvuYfeMQJ6Um94/mKj6560hb5jk4wO9aJmbVtCVpJEwLaFUQj+EBR+QqBfPcEFgP9kdfzqQEhAw6E4+nvUR3M2I2KgDJ+v8AhTuxWJTahU53HPfOOaWOFV7cnpk0uSEAUDI7nkVJEQ0hYo5GOMdPrQPQkSMICTgj0NQyMUIYfMfpVhZW3f6s46cDNQyq5y/Tbz6D60mjREBmJdQVI5IHHU1ZiL/KTj6ZzVMyssgYncQew6VPHcorEMOefY8043Jb6mZr/iO8gNzp+l2krzptWecDiANzuAHLHHHFU4ZoLLT7dZljtZpcuW2/6pQcbiD3OR17muhb7JK6PcWyGQfKsocq230OMVmQ+G9Ne4mlEjhJmOV2gso64BPYH1qpw5rERm46pXKDSxym4g+03bW1szSBN58yVhjktj7oJAwKYdQka4MbapsmlCzTOzAqoBOFRTwOhyetatv4Ss4INkN9L5itnLxghuc84IPXnrUS+D7KDUBcm6eRQQzKEUbm9M9h7deTzzS9n0uEa0r6Ih/4SC51bYmj6fPdoCVeRE2qoHAJJwBk/oK2dJsHs1a5uGV7uUeW5X7saj+Ffx6nvVtrySSIOE2juo4C+1VnkbBzuGeM59acYRi7rcblKS95lx5SoCKOcZHqajkkEqqWVl28H5sVXe4J2qoYDHU1FJIgOTuIH61dkDfcnfY4JQZGOWzUSkCQbjwMc5pRbOV3BHQEjvVSW3IDAyOpzwKQ3dE8jneNoDLjk+lQzgbtx/HFU3aVWABDY644zTy42AHJboeaQXuLIQWwRioyiqN2QB06UrtH8vDls4xjOKhkZgwDIcY7CpAf1XJXtxUUh2nOMgEc+tKbnbnAG3PFNnwYwAeR3odgIJHILbSMDkUxY9pBCDJ9O9OkymNxGG5NV5J2VsKhJxnAPBrOSC9zoh5W3g5z1GOntSZTOCu7OO1MiJdcsSTuoYnOM/d5FZlc2iLEZ3KMBS3OBTcqx+6eOOaYnCF8AsBjJphYlsZ4zSuK7bJ8qoYFdq8VFI6NxwfwppY+W3fAFUp2KR5B/iouO/UtfakTKBfz606IxNu+VvXnmqGf4u+aVp3SNwD1IHPvST6iTuakcrSYcIyp2yal8xC2GQkDpn1qG2Y+Sg7belTr1Y4HArS+g9SJ3GTtiIOcnnipBIHXOAOeeKAoRuOeQOamdFER4/iAqooWr1IWHltkbug4NJvC4BO4+p9TSuvIGT83B5qPqzNnkDiqehFw8zMhXbjPTnrUhwMquVIGAf8A69Vw22cjAIGTzVgKHiBORuPODQmVsOOdoXcckdcVIgZVyM5AzkHtUKfOOfrUN9M8AJRjnbnk0w2di208gkj8uWUAnnmpDcyGExMFcse/WsrTpXngFxId0gHB9KmE77s8c8dKL3HZomJZcKFGDzgd6RTuORuGAM885qJp2XdgKOfSiORhk8Ejpmqt0M1uWCXYnJJx0zxxUDSS24O0gnOAQcVOCfIHJ+tEihxyBxgimn0KeiuKiSMobzNuRjbjj/69CRtGdquW29OKfC7bhznjvUtxGoOefmGTTC3UrziQnBY/Nwc9qhDvGSsbZUDd065qxMBIG3DPNRyAvkljnJ9KaYmupELiTGHVgAPwpXlDc8twDjNTLgBVwCCDnI60iRq6hioz04oGl0K4uhyo80MTnPUCoTdlndUJUrjOQcH2B71YkA8sYAGWxSxxLKAGHHtTRLKrSBiDwAB0zwT9KiJKg8AtnBx61baGMy7doxiqhiUO55yBnrUvVhfQZcT+VGZUBOB2prs25WZ3zjHJpYo1mVw4yAKjuLiRZUj3ZXOOR2rN7aDi9R6lmcq2Wzxx1H1qFnkIJz35FNiZmfOcZlC8elDD5yQzDBwOaSfUqSFO0IASASahRkAIA+7jgDAFBGRtzx1qHYFBIznr1pOQuW2p/9k=",
     color: "#c0503a",
     works: "The Book of Five Rings",
-    // Filter matches all Five Rings passage refs (Ground, Water, Fire, Wind, Void books)
-    filter: (p) => ["Ground Book", "Water Book", "Fire Book", "Wind Book", "Void"].some(k => p.ref.includes(k)),
-    comingSoon: false,
+    filter: () => false,
+    comingSoon: true,
   },
 ];
 
@@ -2140,7 +1785,12 @@ export default function PhiloApp() {
   const [btnPressed, setBtnPressed] = useState(false);
   const [btnBounce, setBtnBounce] = useState(false);
   const [readingIndex, setReadingIndex] = useState(() => {
-    try { const s = localStorage.getItem("praxis_reading_index"); return s ? parseInt(s) : 0; } catch { return 0; }
+    try {
+      const s = localStorage.getItem("praxis_reading_index");
+      const i = s ? parseInt(s) : 0;
+      // Clamp to valid range — passages array may have grown since index was saved
+      return (i >= 0 && i < passages.length) ? i : 0;
+    } catch { return 0; }
   });
   const [readDone, setReadDone] = useState(() => {
     try { const s = localStorage.getItem("praxis_read_done"); return s ? new Set(JSON.parse(s)) : new Set(); } catch { return new Set(); }
@@ -2151,6 +1801,22 @@ export default function PhiloApp() {
   const [lastReadDate, setLastReadDate] = useState(() => {
     try { return localStorage.getItem("praxis_last_read_date") || ""; } catch { return ""; }
   });
+
+  // Reflect capture — stores user's written thoughts per passage index
+  const [reflectNotes, setReflectNotes] = useState(() => {
+    try {
+      const s = localStorage.getItem("praxis_reflect_notes");
+      return s ? JSON.parse(s) : {};
+    } catch { return {}; }
+  });
+
+  const saveReflectNote = (passageIdx, text) => {
+    setReflectNotes(prev => {
+      const updated = { ...prev, [passageIdx]: text };
+      try { localStorage.setItem("praxis_reflect_notes", JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+  };
 
   useEffect(() => {
     try { localStorage.setItem("praxis_reading_index", String(readingIndex)); } catch {}
@@ -2230,62 +1896,8 @@ export default function PhiloApp() {
     } catch {}
     return philosophers.map(p => p.id);
   });
-
-  // ── Pointer-based drag-to-reorder (works on iOS/Android; HTML5 drag events don't fire on touch) ──
-  // dragPhiloRef  = index being dragged
-  // dragOverPhiloRef = index currently hovered over
-  // pointerDragging = true while a drag gesture is live
   const dragPhiloRef = React.useRef(null);
   const dragOverPhiloRef = React.useRef(null);
-  const [pointerDragging, setPointerDragging] = React.useState(false);
-  const [dragCardIndex, setDragCardIndex] = React.useState(null); // which card is visually "lifted"
-
-  // Called on pointerdown when galleryEditMode is on
-  const handleDragPointerDown = (e, idx) => {
-    if (!galleryEditMode) return;
-    e.currentTarget.setPointerCapture(e.pointerId);
-    dragPhiloRef.current = idx;
-    dragOverPhiloRef.current = idx;
-    setPointerDragging(true);
-    setDragCardIndex(idx);
-  };
-
-  // Called on pointermove — find which card the pointer is over using elementFromPoint
-  const handleDragPointerMove = (e) => {
-    if (!pointerDragging || dragPhiloRef.current === null) return;
-    // Walk up from the element under the pointer to find a card with data-drag-idx
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    let target = el;
-    while (target && target !== document.body) {
-      const idx = target.getAttribute && target.getAttribute("data-drag-idx");
-      if (idx !== null) {
-        const i = parseInt(idx, 10);
-        if (!isNaN(i) && i !== dragOverPhiloRef.current) {
-          dragOverPhiloRef.current = i;
-          setDragCardIndex(dragPhiloRef.current); // keep visual on source
-        }
-        break;
-      }
-      target = target.parentElement;
-    }
-  };
-
-  // Called on pointerup — commit the reorder
-  const handleDragPointerUp = () => {
-    if (!pointerDragging) return;
-    const from = dragPhiloRef.current;
-    const to = dragOverPhiloRef.current;
-    if (from !== null && to !== null && from !== to) {
-      const newOrder = [...philoOrder];
-      const dragged = newOrder.splice(from, 1)[0];
-      newOrder.splice(to, 0, dragged);
-      savePhiloOrder(newOrder);
-    }
-    dragPhiloRef.current = null;
-    dragOverPhiloRef.current = null;
-    setPointerDragging(false);
-    setDragCardIndex(null);
-  };
 
   const savePhiloOrder = (newOrder) => {
     setPhiloOrder(newOrder);
@@ -2474,116 +2086,20 @@ export default function PhiloApp() {
     }
   };
 
-  // ============================================================
-  // SECURITY — OWASP-aligned input sanitization & validation
-  // ============================================================
-
-  /**
-   * sanitize(str, maxLen?)
-   * Strips HTML tags, JS event handlers, protocol injections, and null bytes.
-   * Does NOT impose a global cap — callers supply their own field-level maxLen.
-   * OWASP: Input Validation (ASVS 5.1), XSS Prevention (ASVS 5.3)
-   */
-  const sanitize = (str, maxLen = 500) => {
+  // Sanitize user input — strips HTML tags and script-like patterns
+  const sanitize = (str) => {
     if (typeof str !== "string") return "";
     return str
-      .replace(/\0/g, "")                          // strip null bytes
-      .replace(/<[^>]*>/g, "")                     // strip HTML tags
-      .replace(/javascript\s*:/gi, "")             // block JS protocol
-      .replace(/data\s*:/gi, "")                   // block data: URIs
-      .replace(/vbscript\s*:/gi, "")               // block vbscript:
-      .replace(/on\w+\s*=/gi, "")                  // strip inline handlers
-      .replace(/<!--[\s\S]*?-->/g, "")             // strip HTML comments
-      .trim()
-      .slice(0, maxLen);
-  };
-
-  /**
-   * validateAge(val) → { ok: boolean, value: number }
-   * Accepts string or number; returns integer in [1, 120] or ok:false.
-   * OWASP: Type coercion, boundary validation (ASVS 5.1.3)
-   */
-  const validateAge = (val) => {
-    const n = parseInt(String(val), 10);
-    if (isNaN(n) || n < 1 || n > 120) return { ok: false, value: 0 };
-    return { ok: true, value: n };
-  };
-
-  /**
-   * validateTaskText(str) → sanitized string or null if invalid
-   * Max 200 chars per task, must contain at least one non-whitespace char.
-   */
-  const validateTaskText = (str) => {
-    const clean = sanitize(str, 200);
-    return clean; // empty string is valid (placeholder/blank task)
-  };
-
-  /**
-   * validateJournal(str) → sanitized string
-   * Journal entries: max 10 000 chars (generous but bounded).
-   */
-  const validateJournal = (str) => sanitize(str, 10000);
-
-  /**
-   * validateProfileName(str) → sanitized string
-   * Display name: max 60 chars, printable only.
-   */
-  const validateProfileName = (str) => {
-    const clean = sanitize(str, 60);
-    // Reject if it contains only whitespace
-    return clean.replace(/[^\x20-\x7E\u00C0-\u024F]/g, ""); // printable ASCII + Latin extended
-  };
-
-  /**
-   * validateCheckin(str) → sanitized string
-   * Daily intention: max 150 chars.
-   */
-  const validateCheckin = (str) => sanitize(str, 150);
-
-  /**
-   * validateRecurringTask(str) → sanitized string
-   * Recurring task labels: max 150 chars.
-   */
-  const validateRecurringTask = (str) => sanitize(str, 150);
-
-  // ============================================================
-  // SECURITY — In-memory rate limiter (OWASP ASVS 11.1)
-  // Prevents UI/API abuse without a server. Buckets are keyed by
-  // action name; each bucket is a sliding-window counter.
-  // ============================================================
-  const rateLimitBuckets = useRef({});
-
-  /**
-   * checkRateLimit(action, limitPerMinute) → boolean
-   * Returns true if the action is allowed, false if it should be
-   * blocked. Emits a console.warn when throttling (no alert spam).
-   */
-  const checkRateLimit = (action, limitPerMinute = 30) => {
-    const now = Date.now();
-    const windowMs = 60 * 1000;
-    if (!rateLimitBuckets.current[action]) {
-      rateLimitBuckets.current[action] = [];
-    }
-    // Slide the window: remove timestamps older than 1 minute
-    rateLimitBuckets.current[action] = rateLimitBuckets.current[action].filter(
-      (ts) => now - ts < windowMs
-    );
-    if (rateLimitBuckets.current[action].length >= limitPerMinute) {
-      // OWASP: graceful 429-equivalent — block and log, do not throw
-      console.warn(`[PRAXIS] Rate limit hit for action: ${action}. Limit: ${limitPerMinute}/min.`);
-      return false; // blocked
-    }
-    rateLimitBuckets.current[action].push(now);
-    return true; // allowed
+      .replace(/<[^>]*>/g, "")
+      .replace(/javascript:/gi, "")
+      .replace(/on\w+\s*=/gi, "")
+      .slice(0, 500);
   };
 
   const updateTaskText = (day, taskId, text) => {
-    // Rate-limit: max 120 task edits/min (fast typers fine; abuse blocked)
-    if (!checkRateLimit("updateTaskText", 120)) return;
-    const clean = validateTaskText(text);
     setWeekTasks({
       ...weekTasks,
-      [day]: weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, text: clean } : tk)),
+      [day]: weekTasks[day].map((tk) => (tk.id === taskId ? { ...tk, text: sanitize(text) } : tk)),
     });
   };
 
@@ -2608,11 +2124,9 @@ export default function PhiloApp() {
   const [checkinInput, setCheckinInput] = useState("");
 
   const dismissCheckin = () => {
-    // Rate-limit: max 10 check-ins/min (one per natural interaction)
-    if (!checkRateLimit("dismissCheckin", 10)) return;
     try { localStorage.setItem("praxis_checkin_date", new Date().toDateString()); } catch {}
     if (checkinInput.trim()) {
-      const intention = validateCheckin(checkinInput.trim());
+      const intention = sanitize(checkinInput.trim());
       // Add intention as first task of today
       const todayDay = weekDays[new Date().getDay()];
       setWeekTasks(prev => {
@@ -2670,9 +2184,7 @@ export default function PhiloApp() {
   });
 
   const saveJournal = (day, text) => {
-    // Rate-limit: max 200 keystrokes/min before throttle
-    if (!checkRateLimit("saveJournal", 200)) return;
-    const clean = text === "" ? "" : validateJournal(text);
+    const clean = text === "" ? "" : sanitize(text.slice(0, 5000));
     setJournalEntries(prev => ({ ...prev, [day]: clean }));
     try {
       localStorage.setItem(getJournalKey(day), JSON.stringify({
@@ -2698,6 +2210,7 @@ export default function PhiloApp() {
 
   const [editingJournalId, setEditingJournalId] = useState(null);
   const [editingJournalText, setEditingJournalText] = useState("");
+  const [showJournalHistory, setShowJournalHistory] = useState(false);
 
   const persistJournalHistory = (updated) => {
     setJournalHistory(updated);
@@ -2751,6 +2264,9 @@ export default function PhiloApp() {
 
   // INTRO SLIDES
   if (screen === "onboarding" && !onboardingDone && showIntro) {
+    // Helper to pull a philosopher's portrait from the gallery data
+    const philoImg = (id) => { const ph = philosophers.find(p => p.id === id); return ph ? ph.image : null; };
+
     const philoSlides = [
       {
         label: "DAILY READING",
@@ -2758,6 +2274,7 @@ export default function PhiloApp() {
         author: "Marcus Aurelius",
         bg: "radial-gradient(ellipse at 30% 60%, #1a1208 0%, #0A0A0A 70%)",
         accent: "#c9a96e",
+        image: philoImg("marcus"),
       },
       {
         label: "DAILY TASKS",
@@ -2765,6 +2282,7 @@ export default function PhiloApp() {
         author: "Epictetus",
         bg: "radial-gradient(ellipse at 70% 40%, #0d1a0d 0%, #0A0A0A 70%)",
         accent: "#6db86d",
+        image: philoImg("epictetus"),
       },
       {
         label: "SCREEN TIME",
@@ -2772,6 +2290,7 @@ export default function PhiloApp() {
         author: "Seneca",
         bg: "radial-gradient(ellipse at 50% 70%, #0d0d1a 0%, #0A0A0A 70%)",
         accent: "#7b7bd4",
+        image: philoImg("seneca"),
       },
       {
         label: "YOUR LIFE IN YEARS",
@@ -2779,6 +2298,7 @@ export default function PhiloApp() {
         author: "Jean-Jacques Rousseau",
         bg: "radial-gradient(ellipse at 60% 30%, #1a0d0d 0%, #0A0A0A 70%)",
         accent: "#d46b6b",
+        image: philoImg("rousseau"),
       },
       {
         label: "THE WAY OF STRATEGY",
@@ -3139,7 +2659,9 @@ export default function PhiloApp() {
   const filteredPassages = _readPh ? passages.filter(_readPh.filter) : passages;
   let filteredIndex = _readPh ? filteredPassages.indexOf(passages[readingIndex]) : readingIndex;
   if (filteredIndex === -1 && filteredPassages.length > 0) filteredIndex = 0;
-  const safeReadingIndex = filteredIndex >= 0 ? passages.indexOf(filteredPassages[filteredIndex]) : readingIndex;
+  // Clamp safeReadingIndex to valid bounds — localStorage can hold a stale index from an old session
+  const rawSafeIndex = filteredIndex >= 0 ? passages.indexOf(filteredPassages[filteredIndex]) : readingIndex;
+  const safeReadingIndex = (rawSafeIndex >= 0 && rawSafeIndex < passages.length) ? rawSafeIndex : 0;
 
   return (
     <div className="theme-transition" style={{ minHeight: "100vh", background: t.bg, color: t.text, fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", maxWidth: "520px", margin: "0 auto", transition: "background 0.15s ease, color 0.15s ease" }}>
@@ -3203,9 +2725,10 @@ export default function PhiloApp() {
               </p>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px", borderRadius: "20px" }}>
 
-              {/* Random card */}
+              {/* Random / Surprise Me card */}
+              <div className={tourStep === 1 ? "tour-glow" : ""} style={{ borderRadius: "20px" }}>
               <div
                 onClick={() => {
                   const idx = Math.floor(Math.random() * passages.length);
@@ -3235,70 +2758,41 @@ export default function PhiloApp() {
                 </div>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg>
               </div>
+              </div>
+              <div className={tourStep === 2 ? "tour-glow" : ""} style={{ display: "flex", flexDirection: "column", gap: "14px", borderRadius: "20px" }}>
               {orderedPhilosophers.map((ph, idx) => {
                 const count = passages.filter(ph.filter).length;
                 const isLocked = ph.comingSoon;
-                // Visual state for drag: the card being dragged lifts up; target slot shows a landing indicator
-                const isBeingDragged = pointerDragging && dragPhiloRef.current === idx;
-                const isDropTarget = pointerDragging && dragOverPhiloRef.current === idx && dragPhiloRef.current !== idx;
                 return (
                   <div
                     key={ph.id}
-                    data-drag-idx={idx}
-                    onClick={() => {
-                      if (galleryEditMode) return;
-                      if (!isLocked) {
-                        setSelectedPhilosopher(ph.id);
-                        const firstIdx = passages.indexOf(passages.filter(ph.filter)[0]);
-                        setReadingIndex(firstIdx);
-                        setReadScreen("reading");
-                        if (tourStep === 1) { setTourStep(2); }
-                      }
+                    draggable={galleryEditMode}
+                    onDragStart={() => { dragPhiloRef.current = idx; }}
+                    onDragEnter={() => { dragOverPhiloRef.current = idx; }}
+                    onDragEnd={() => {
+                      if (dragPhiloRef.current === null || dragOverPhiloRef.current === null) return;
+                      if (dragPhiloRef.current === dragOverPhiloRef.current) return;
+                      const newOrder = [...philoOrder];
+                      const dragged = newOrder.splice(dragPhiloRef.current, 1)[0];
+                      newOrder.splice(dragOverPhiloRef.current, 0, dragged);
+                      savePhiloOrder(newOrder);
+                      dragPhiloRef.current = null;
+                      dragOverPhiloRef.current = null;
                     }}
-                    // Pointer-based drag — works on iOS, Android, and desktop (HTML5 drag events don't fire on touch)
-                    onPointerDown={(e) => {
-                      if (galleryEditMode) {
-                        handleDragPointerDown(e, idx);
-                      } else if (!isLocked) {
-                        e.currentTarget.style.transform = "scale(0.97)";
-                      }
-                    }}
-                    onPointerMove={galleryEditMode ? handleDragPointerMove : undefined}
-                    onPointerUp={(e) => {
-                      if (galleryEditMode) {
-                        handleDragPointerUp();
-                      } else {
-                        e.currentTarget.style.transform = "scale(1)";
-                      }
-                    }}
-                    onPointerCancel={() => {
-                      if (galleryEditMode) handleDragPointerUp();
-                    }}
-                    onPointerLeave={(e) => {
-                      if (!galleryEditMode) e.currentTarget.style.transform = "scale(1)";
-                    }}
+                    onDragOver={e => e.preventDefault()}
+                    onClick={() => { if (galleryEditMode) return; if (!isLocked) { setSelectedPhilosopher(ph.id); const firstIdx = passages.indexOf(passages.filter(ph.filter)[0]); setReadingIndex(firstIdx); setReadScreen("reading"); if (tourStep === 2) { setTourStep(3); } } }}
                     style={{
                       borderRadius: "20px", overflow: "hidden",
-                      cursor: galleryEditMode ? (isBeingDragged ? "grabbing" : "grab") : isLocked ? "default" : "pointer",
-                      border: isDropTarget
-                        ? `2px dashed ${t.accent}`
-                        : "1px solid " + t.border,
+                      cursor: galleryEditMode ? "grab" : isLocked ? "default" : "pointer",
+                      border: "1px solid " + t.border,
                       position: "relative", height: "160px",
                       background: ph.cardBg,
                       WebkitTapHighlightColor: "transparent",
-                      // Smooth lift when dragging: scale up slightly, add shadow, don't snap immediately
-                      transform: isBeingDragged ? "scale(1.03) translateY(-4px)" : "scale(1) translateY(0)",
-                      boxShadow: isBeingDragged
-                        ? "0 16px 40px rgba(0,0,0,0.45)"
-                        : "none",
-                      opacity: isBeingDragged ? 0.92 : 1,
-                      zIndex: isBeingDragged ? 10 : 1,
-                      transition: isBeingDragged
-                        ? "box-shadow 0.15s ease, opacity 0.1s ease"   // fast on pickup
-                        : "transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, opacity 0.15s ease, border 0.15s ease", // springy on release
-                      touchAction: galleryEditMode ? "none" : "manipulation", // prevent scroll-cancel during drag
-                      userSelect: "none",
+                      transition: "transform 0.15s ease",
                     }}
+                    onPointerDown={e => { if (!isLocked) e.currentTarget.style.transform = "scale(0.97)"; }}
+                    onPointerUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                    onPointerLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
                     role={isLocked ? undefined : "button"}
                     aria-label={isLocked ? undefined : "Read passages by " + ph.name}
                   >
@@ -3330,28 +2824,16 @@ export default function PhiloApp() {
                       }}
                       onError={e => { e.target.style.display = "none"; }}
                     />
-                    {/* Drag handle overlay in edit mode — pulses when this card is being dragged */}
+                    {/* Drag handle overlay in edit mode */}
                     {galleryEditMode && (
                       <div style={{
                         position: "absolute", inset: 0, zIndex: 10,
                         display: "flex", alignItems: "center", justifyContent: "flex-end",
                         padding: "0 20px", pointerEvents: "none",
-                        // Dim the whole card slightly when another card is being dragged over this one
-                        background: isDropTarget ? "rgba(255,255,255,0.08)" : "transparent",
-                        transition: "background 0.15s ease",
                       }}>
-                        <div style={{
-                          display: "flex", flexDirection: "column", gap: "4px",
-                          opacity: isBeingDragged ? 1 : 0.7,
-                          transform: isBeingDragged ? "scale(1.15)" : "scale(1)",
-                          transition: "opacity 0.15s ease, transform 0.15s ease",
-                        }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "4px", opacity: 0.7 }}>
                           {[0,1,2].map(i => (
-                            <div key={i} style={{
-                              width: "20px", height: "2px", borderRadius: "1px",
-                              background: isBeingDragged ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.8)",
-                              transition: "background 0.15s ease",
-                            }} />
+                            <div key={i} style={{ width: "20px", height: "2px", borderRadius: "1px", background: "rgba(255,255,255,0.8)" }} />
                           ))}
                         </div>
                       </div>
@@ -3376,6 +2858,7 @@ export default function PhiloApp() {
                   </div>
                 );
               })}
+              </div>{/* end philosopher cards glow wrapper */}
             </div>
           </div>
         )}
@@ -3383,7 +2866,8 @@ export default function PhiloApp() {
         {/* READING VIEW */}
         {activeTab === "read" && readScreen === "reading" && (() => {
           const ph = _readPh;
-          const p = passages[safeReadingIndex] || passages[readingIndex];
+          const p = passages[safeReadingIndex] || passages[readingIndex] || passages[0];
+          if (!p) return null;
           return (
           <div style={{ animation: "slideUpIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both" }}>
             <div style={{ margin: "16px 0 20px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -3417,10 +2901,14 @@ export default function PhiloApp() {
                   fontSize: "13px", cursor: "pointer", fontWeight: 600,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>A+</button>
-                <button onClick={() => goToReading(filteredPassages[Math.floor(Math.random() * filteredPassages.length)].ref ? passages.indexOf(filteredPassages[Math.floor(Math.random() * filteredPassages.length)]) : 0)} style={{
-                  background: tourStep === 2 ? (mode === "dark" ? "#FFFFFF" : "#0A0A0A") : "transparent",
-                  border: tourStep === 2 ? "none" : `1px solid ${t.borderLight}`,
-                  color: tourStep === 2 ? (mode === "dark" ? "#0A0A0A" : "#FFFFFF") : t.textMuted,
+                <button className={tourStep === 3 ? "tour-glow" : ""} onClick={() => {
+                  if (!filteredPassages.length) return;
+                  const pick = filteredPassages[Math.floor(Math.random() * filteredPassages.length)];
+                  if (pick) goToReading(passages.indexOf(pick), null);
+                }} style={{
+                  background: tourStep === 3 ? (mode === "dark" ? "#FFFFFF" : "#0A0A0A") : "transparent",
+                  border: tourStep === 3 ? "none" : `1px solid ${t.borderLight}`,
+                  color: tourStep === 3 ? (mode === "dark" ? "#0A0A0A" : "#FFFFFF") : t.textMuted,
                   width: "32px", height: "32px", borderRadius: "8px",
                   fontSize: "14px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
@@ -3481,9 +2969,13 @@ export default function PhiloApp() {
               onPointerUp={() => {
                 if (rafRef.current) cancelAnimationFrame(rafRef.current);
                 const delta = dragDeltaX.current;
-                if (delta < -40) { const next = filteredPassages[filteredIndex === filteredPassages.length - 1 ? 0 : filteredIndex + 1]; goToReading(passages.indexOf(next), "left"); }
-                else if (delta > 40) { const prev = filteredPassages[filteredIndex === 0 ? filteredPassages.length - 1 : filteredIndex - 1]; goToReading(passages.indexOf(prev), "right"); }
-                else setSwipeOffset(0);
+                if (delta < -40) {
+                  const next = filteredPassages[filteredIndex === filteredPassages.length - 1 ? 0 : filteredIndex + 1];
+                  if (next) goToReading(passages.indexOf(next), "left");
+                } else if (delta > 40) {
+                  const prev = filteredPassages[filteredIndex === 0 ? filteredPassages.length - 1 : filteredIndex - 1];
+                  if (prev) goToReading(passages.indexOf(prev), "right");
+                } else setSwipeOffset(0);
                 dragStartX.current = null; dragDeltaX.current = 0;
               }}
               style={{ cursor: "grab", userSelect: "none", touchAction: "pan-y" }}
@@ -3527,30 +3019,7 @@ export default function PhiloApp() {
                 <span style={{ fontFamily: rf, fontSize: `${fontSize + 11}px`, color: t.textMuted, lineHeight: 0, position: "relative", top: "6px", marginLeft: "2px" }}>"</span>
               </p>
               <p style={{ textAlign: "right", margin: 0, fontSize: "11px", color: t.textMuted, fontWeight: 400, letterSpacing: "1px", fontFamily: "'DM Sans', sans-serif" }}>
-                — {(() => {
-                  // ── Passage author lookup ─────────────────────────────────────
-                  // Maps every ref pattern to its correct author.
-                  // ADD NEW ENTRIES HERE whenever new passages are added —
-                  // never rely on a catch-all fallback.
-                  const r = p.ref;
-                  // Miyamoto Musashi — The Book of Five Rings
-                  if (r.includes("Ground Book") || r.includes("Water Book") || r.includes("Fire Book") || r.includes("Wind Book") || r.includes("Book of the Void")) return "Miyamoto Musashi";
-                  // Sun Tzu — The Art of War
-                  if (r.includes("The Art of War")) return "Sun Tzu";
-                  // Plato — The Republic
-                  if (r.includes("The Republic")) return "Plato";
-                  // Jean-Jacques Rousseau — The Social Contract
-                  if (r.includes("Social Contract")) return "Jean-Jacques Rousseau";
-                  // Epictetus — Enchiridion
-                  if (r.includes("Enchiridion")) return "Epictetus";
-                  // Seneca — On the Shortness of Life
-                  if (r.includes("Shortness of Life")) return "Seneca";
-                  // Marcus Aurelius — Meditations (Book I–XII refs)
-                  if (r.startsWith("Book ")) return "Marcus Aurelius";
-                  // Safety net — should NEVER be reached; log a warning so it gets fixed
-                  console.warn("[PRAXIS] Unknown passage ref — author attribution missing:", r);
-                  return r;
-                })()}
+                — {p.ref.includes("Social Contract") ? "Jean-Jacques Rousseau" : p.ref.includes("Enchiridion") ? "Epictetus" : p.ref.includes("Shortness of Life") ? "Seneca" : p.ref.includes("The Republic") ? "Plato" : p.ref.includes("The Art of War") ? "Sun Tzu" : "Marcus Aurelius"}
               </p>
             </div>
 
@@ -3574,6 +3043,37 @@ export default function PhiloApp() {
             }}>
               <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>REFLECT</p>
               <p style={{ fontSize: `${fontSize - 1}px`, color: t.textSecondary, lineHeight: 1.7, margin: 0, fontWeight: 300, fontFamily: rf }}>{p.reflect}</p>
+
+              {/* Reflect capture — user's own thoughts, saved per passage */}
+              <div style={{ marginTop: "16px", borderTop: `1px solid ${t.borderLight}`, paddingTop: "14px" }}>
+                <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 8px", fontWeight: 500 }}>YOUR THOUGHTS</p>
+                <textarea
+                  className="reflect-input"
+                  value={reflectNotes[safeReadingIndex] || ""}
+                  onChange={e => saveReflectNote(safeReadingIndex, e.target.value)}
+                  placeholder="What does this make you think? Write anything..."
+                  rows={3}
+                  style={{
+                    width: "100%", boxSizing: "border-box",
+                    background: "transparent",
+                    border: "none",
+                    outline: "none",
+                    resize: "none",
+                    fontSize: `${fontSize - 2}px`,
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 300,
+                    color: t.text,
+                    lineHeight: 1.6,
+                    padding: 0,
+                    // Placeholder color via CSS class added below
+                  }}
+                />
+                {reflectNotes[safeReadingIndex] && (
+                  <p style={{ fontSize: "10px", color: t.textMuted, margin: "6px 0 0", fontWeight: 300, letterSpacing: "0.5px" }}>
+                    ✓ saved
+                  </p>
+                )}
+              </div>
             </div>
             </div>
 
@@ -4094,7 +3594,7 @@ export default function PhiloApp() {
                   <input
                     value={profileName}
                     onChange={(e) => {
-                      const clean = validateProfileName(e.target.value);
+                      const clean = sanitize(e.target.value).slice(0, 50);
                       setProfileName(clean);
                       try { localStorage.setItem("praxis_name", clean); } catch {}
                     }}
@@ -4163,116 +3663,27 @@ export default function PhiloApp() {
                 </div>
               )}
 
-              {/* Journal History */}
-              {(() => {
-                const fmt = (iso) => {
-                  const d = new Date(iso + "T00:00:00");
-                  return d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
-                };
-                return (
-                  <div style={{ padding: "16px 20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "12px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                      <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: 0, textTransform: "uppercase", fontWeight: 600 }}>JOURNAL HISTORY</p>
-                      {journalHistory.length > 0 && (
-                        <button onClick={() => { if (window.confirm("Delete all journal entries?")) persistJournalHistory([]); }}
-                          style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: "11px", color: "#ef4444", fontFamily: "'DM Sans', sans-serif", padding: 0 }}>
-                          Clear all
-                        </button>
-                      )}
-                    </div>
-                    {journalHistory.length === 0 ? (
-                      <p style={{ fontSize: "13px", color: t.textMuted, margin: 0, fontWeight: 300, fontStyle: "italic" }}>
-                        Nothing yet — your journal entries will appear here as you write them.
-                      </p>
-                    ) : (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                      {journalHistory.map((entry) => (
-                        <div key={entry.id} style={{
-                          padding: "14px 16px", borderRadius: "10px",
-                          background: mode === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
-                          border: `1px solid ${t.border}`,
-                        }}>
-                          {editingJournalId === entry.id ? (
-                            <div>
-                              <textarea
-                                value={editingJournalText}
-                                onChange={(e) => setEditingJournalText(validateJournal(e.target.value))}
-                                spellCheck={false}
-                                style={{
-                                  width: "100%", minHeight: "100px", resize: "vertical",
-                                  background: "transparent", border: `1px solid ${t.accent}`,
-                                  borderRadius: "8px", padding: "10px", fontSize: "13px",
-                                  color: t.text, fontFamily: "'DM Sans', sans-serif",
-                                  fontWeight: 300, lineHeight: 1.65, outline: "none",
-                                  boxSizing: "border-box",
-                                }}
-                              />
-                              <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
-                                <button
-                                  onClick={() => {
-                                    const updated = journalHistory.map(e =>
-                                      e.id === entry.id ? { ...e, text: editingJournalText, updatedAt: new Date().toISOString() } : e
-                                    );
-                                    persistJournalHistory(updated);
-                                    setEditingJournalId(null);
-                                  }}
-                                  style={{
-                                    flex: 1, padding: "8px", borderRadius: "8px", cursor: "pointer", border: "none",
-                                    background: t.accentBg, color: t.accentText, fontSize: "12px", fontWeight: 600,
-                                    fontFamily: "'DM Sans', sans-serif",
-                                  }}>Save</button>
-                                <button
-                                  onClick={() => setEditingJournalId(null)}
-                                  style={{
-                                    padding: "8px 14px", borderRadius: "8px", cursor: "pointer",
-                                    background: "transparent", border: `1px solid ${t.borderLight}`,
-                                    color: t.textMuted, fontSize: "12px", fontFamily: "'DM Sans', sans-serif",
-                                  }}>Cancel</button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div>
-                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                                <div>
-                                  <span style={{ fontSize: "10px", color: t.accent, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>{entry.dayLabel}</span>
-                                  <span style={{ fontSize: "10px", color: t.textMuted, marginLeft: "8px", fontWeight: 300 }}>{fmt(entry.date)}</span>
-                                  {entry.updatedAt && <span style={{ fontSize: "9px", color: t.textMuted, marginLeft: "6px", fontStyle: "italic" }}>edited</span>}
-                                </div>
-                                <div style={{ display: "flex", gap: "8px" }}>
-                                  <button
-                                    onClick={() => { setEditingJournalId(entry.id); setEditingJournalText(entry.text); }}
-                                    style={{
-                                      background: "transparent", border: "none", cursor: "pointer",
-                                      fontSize: "11px", color: t.textMuted, fontFamily: "'DM Sans', sans-serif",
-                                      padding: "2px 6px", borderRadius: "4px",
-                                    }}>Edit</button>
-                                  <button
-                                    onClick={() => persistJournalHistory(journalHistory.filter(e => e.id !== entry.id))}
-                                    style={{
-                                      background: "transparent", border: "none", cursor: "pointer",
-                                      fontSize: "11px", color: "#ef4444", fontFamily: "'DM Sans', sans-serif",
-                                      padding: "2px 6px", borderRadius: "4px",
-                                    }}>Delete</button>
-                                </div>
-                              </div>
-                              <p style={{ fontSize: "13px", color: t.textSecondary, margin: 0, lineHeight: 1.65, fontWeight: 300, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
-                                {entry.text.length > 280 ? entry.text.slice(0, 280) + "…" : entry.text}
-                              </p>
-                              {entry.text.length > 280 && (
-                                <button
-                                  onClick={() => { setEditingJournalId(entry.id); setEditingJournalText(entry.text); }}
-                                  style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: "11px", color: t.accent, padding: "4px 0 0", fontFamily: "'DM Sans', sans-serif" }}
-                                >Read more</button>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    )}
-                  </div>
-                );
-              })()}
+              {/* Journal History — opens full screen */}
+              <button
+                onClick={() => setShowJournalHistory(true)}
+                style={{
+                  width: "100%", padding: "16px 20px",
+                  background: t.surface, border: `1px solid ${t.border}`,
+                  borderRadius: "12px", marginBottom: "12px",
+                  cursor: "pointer", textAlign: "left",
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <p style={{ fontSize: "10px", color: t.textMuted, letterSpacing: "3px", margin: "0 0 4px", textTransform: "uppercase", fontWeight: 600 }}>JOURNAL HISTORY</p>
+                  <p style={{ fontSize: "14px", color: t.text, margin: 0, fontWeight: 400, fontFamily: "'DM Sans', sans-serif" }}>
+                    {journalHistory.length === 0 ? "No entries yet" : `${journalHistory.length} entr${journalHistory.length === 1 ? "y" : "ies"}`}
+                  </p>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
 
               {/* Settings */}
               <div style={{ padding: "16px 20px", background: t.surface, border: `1px solid ${t.border}`, borderRadius: "12px", marginBottom: "12px" }}>
@@ -4360,20 +3771,20 @@ export default function PhiloApp() {
         }}>
           <div style={{ display: "flex", gap: "10px" }}>
             <button
-              onClick={() => { const prev = filteredPassages[filteredIndex === 0 ? filteredPassages.length - 1 : filteredIndex - 1]; goToReading(passages.indexOf(prev), "right"); }}
+              onClick={() => { const prev = filteredPassages[filteredIndex === 0 ? filteredPassages.length - 1 : filteredIndex - 1]; if (prev) goToReading(passages.indexOf(prev), "right"); }}
               style={{
                 width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text,
                 fontSize: "18px", cursor: "pointer",
-                opacity: tourStep === 3 ? 0 : 1,
-                pointerEvents: tourStep === 3 ? "none" : "auto",
+                opacity: tourStep === 4 ? 0 : 1,
+                pointerEvents: tourStep === 4 ? "none" : "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
             >←</button>
             <button
-              className="btn-continue"
+              className={`btn-continue${tourStep === 4 ? " tour-glow" : ""}`}
               onPointerDown={() => setBtnPressed("read")}
               onPointerUp={() => { setBtnPressed(false); setBtnBounce(true); setTimeout(() => setBtnBounce(false), 250); }}
               onPointerLeave={() => setBtnPressed(false)}
@@ -4401,18 +3812,153 @@ export default function PhiloApp() {
               }}
             >{readDone.has(safeReadingIndex) ? "Mark as Unread" : "Mark as Read"}</button>
             <button
-              onClick={() => { const next = filteredPassages[filteredIndex === filteredPassages.length - 1 ? 0 : filteredIndex + 1]; goToReading(passages.indexOf(next), "left"); }}
+              onClick={() => { const next = filteredPassages[filteredIndex === filteredPassages.length - 1 ? 0 : filteredIndex + 1]; if (next) goToReading(passages.indexOf(next), "left"); }}
               style={{
                 width: "48px", height: "48px", borderRadius: "50%", flexShrink: 0,
                 background: "transparent", border: `1px solid ${t.borderLight}`,
                 color: t.text,
                 fontSize: "18px", cursor: "pointer",
-                opacity: tourStep === 3 ? 0 : 1,
-                pointerEvents: tourStep === 3 ? "none" : "auto",
+                opacity: tourStep === 4 ? 0 : 1,
+                pointerEvents: tourStep === 4 ? "none" : "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s ease",
               }}
             >→</button>
+          </div>
+        </div>
+      )}
+
+      {/* Journal History — full screen overlay */}
+      {showJournalHistory && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 250,
+          background: t.bg,
+          display: "flex", flexDirection: "column",
+          maxWidth: "520px", margin: "0 auto",
+        }}>
+          {/* Header */}
+          <div style={{
+            padding: "calc(env(safe-area-inset-top, 44px) + 16px) 24px 16px",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            borderBottom: `1px solid ${t.border}`,
+            flexShrink: 0,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <button
+                onClick={() => { setShowJournalHistory(false); setEditingJournalId(null); }}
+                style={{
+                  background: "transparent", border: "none", cursor: "pointer",
+                  color: t.text, fontSize: "18px", padding: 0,
+                  width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center",
+                  marginLeft: "-10px",
+                }}
+              >←</button>
+              <div>
+                <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "24px", fontWeight: 800, margin: 0 }}>Journal</h2>
+                <p style={{ fontSize: "12px", color: t.textMuted, margin: 0, fontWeight: 300 }}>
+                  {journalHistory.length === 0 ? "No entries yet" : `${journalHistory.length} entr${journalHistory.length === 1 ? "y" : "ies"}`}
+                </p>
+              </div>
+            </div>
+            {journalHistory.length > 0 && (
+              <button
+                onClick={() => { if (window.confirm("Delete all journal entries?")) { persistJournalHistory([]); } }}
+                style={{
+                  background: "transparent", border: "none", cursor: "pointer",
+                  fontSize: "12px", color: "#ef4444", fontFamily: "'DM Sans', sans-serif",
+                }}
+              >Clear all</button>
+            )}
+          </div>
+
+          {/* Entries list */}
+          <div style={{
+            flex: 1, overflowY: "auto",
+            padding: "16px 24px calc(env(safe-area-inset-bottom, 16px) + 24px)",
+            WebkitOverflowScrolling: "touch",
+          }}>
+            {journalHistory.length === 0 ? (
+              <div style={{ textAlign: "center", paddingTop: "60px" }}>
+                <p style={{ fontSize: "40px", margin: "0 0 12px" }}>📝</p>
+                <p style={{ fontSize: "16px", fontWeight: 700, fontFamily: "'Nunito', sans-serif", color: t.text, margin: "0 0 6px" }}>Nothing here yet</p>
+                <p style={{ fontSize: "13px", color: t.textMuted, fontWeight: 300, margin: 0 }}>Your daily journal entries will appear here as you write them.</p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                {[...journalHistory].reverse().map((entry) => {
+                  const fmt = (iso) => {
+                    const d = new Date(iso + "T00:00:00");
+                    return d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+                  };
+                  return (
+                    <div key={entry.id} style={{
+                      padding: "16px 18px",
+                      background: t.surface,
+                      border: `1px solid ${t.border}`,
+                      borderRadius: "14px",
+                    }}>
+                      {/* Date header */}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+                        <div>
+                          <p style={{ fontSize: "11px", color: t.accent, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", margin: "0 0 2px" }}>{entry.dayLabel}</p>
+                          <p style={{ fontSize: "12px", color: t.textMuted, fontWeight: 300, margin: 0 }}>{fmt(entry.date)}{entry.updatedAt && <span style={{ fontStyle: "italic", marginLeft: "6px" }}>· edited</span>}</p>
+                        </div>
+                        <div style={{ display: "flex", gap: "6px" }}>
+                          <button
+                            onClick={() => { setEditingJournalId(entry.id); setEditingJournalText(entry.text); }}
+                            style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: "12px", color: t.textMuted, fontFamily: "'DM Sans', sans-serif", padding: "2px 6px" }}
+                          >Edit</button>
+                          <button
+                            onClick={() => persistJournalHistory(journalHistory.filter(e => e.id !== entry.id))}
+                            style={{ background: "transparent", border: "none", cursor: "pointer", fontSize: "12px", color: "#ef4444", fontFamily: "'DM Sans', sans-serif", padding: "2px 6px" }}
+                          >Delete</button>
+                        </div>
+                      </div>
+
+                      {/* Entry text or edit mode */}
+                      {editingJournalId === entry.id ? (
+                        <div>
+                          <textarea
+                            autoFocus
+                            value={editingJournalText}
+                            onChange={(e) => setEditingJournalText(sanitize(e.target.value).slice(0, 5000))}
+                            spellCheck={false}
+                            style={{
+                              width: "100%", minHeight: "120px", resize: "vertical",
+                              background: "transparent", border: `1px solid ${t.accent}`,
+                              borderRadius: "8px", padding: "10px", fontSize: "14px",
+                              color: t.text, fontFamily: "'DM Sans', sans-serif",
+                              fontWeight: 300, lineHeight: 1.65, outline: "none",
+                              boxSizing: "border-box",
+                            }}
+                          />
+                          <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
+                            <button
+                              onClick={() => {
+                                const updated = journalHistory.map(e =>
+                                  e.id === entry.id ? { ...e, text: editingJournalText, updatedAt: new Date().toISOString() } : e
+                                );
+                                persistJournalHistory(updated);
+                                setEditingJournalId(null);
+                              }}
+                              style={{ flex: 1, padding: "9px", borderRadius: "8px", border: "none", cursor: "pointer", background: t.accentBg, color: t.accentText, fontSize: "13px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}
+                            >Save</button>
+                            <button
+                              onClick={() => setEditingJournalId(null)}
+                              style={{ padding: "9px 16px", borderRadius: "8px", border: `1px solid ${t.borderLight}`, cursor: "pointer", background: "transparent", color: t.textMuted, fontSize: "13px", fontFamily: "'DM Sans', sans-serif" }}
+                            >Cancel</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <p style={{ fontSize: "14px", color: t.textSecondary, margin: 0, lineHeight: 1.7, fontWeight: 300, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                          {entry.text}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -4429,84 +3975,79 @@ export default function PhiloApp() {
           {(() => {
             const W = Math.min(window.innerWidth, 520);
             const H = window.innerHeight;
-            const pct = (x) => (x / W * 100) + "%";
 
-            // Safe area bottom — 34px on iPhone home screen PWA, 0 in browser
             const safeBottom = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 34 : 0;
+            const safeTop = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 54 : 20;
             const tabBarH = 85 + safeBottom;
             const tabBarPadX = 16;
             const tabW = (W - tabBarPadX * 2) / 5;
-            const tabCenters = [0, 1, 2, 3, 4].map(n => tabBarPadX + (n + 0.5) * tabW);
-            const pad = 6;
-            const cardH = 170;
 
-            // Safe area top — ~54px on iPhone PWA (status bar), ~20px in browser
-            const safeTop = typeof window !== "undefined" && window.navigator && /iPhone|iPad/.test(window.navigator.userAgent) ? 54 : 20;
-            // Shuffle button: safeTop + PRAXIS title bar (~60px) + subtitle row (~30px) + button area
-            const shuffleY = safeTop + 90;
+            // Tab card: just above tab bar — the Daily Tasks gold standard position
+            const tabCardTop = H - tabBarH - 182;
 
-            const spots = [
-              // 0: Read tab — 3rd tab (index 2): Screen · Tasks · Read · Life · Profile
-              { x: tabBarPadX + tabW * 2,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              // 1: Philosopher cards — spotlight covers full cards area
-              { x: 0,                       y: 0,            w: W,      h: H - tabBarH, r: 0 },
-              // 2: Shuffle button
-              { x: W - 94,                  y: shuffleY,    w: 32,              h: 32,      r: 10 },
-              // 3: Mark as Read
-              { x: 64,                      y: H - tabBarH - 66, w: W - 128,    h: 48,      r: 28 },
-              // 4: Tasks tab — 2nd tab (index 1)
-              { x: tabBarPadX + tabW,       y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              // 5: Screen tab — 1st tab (index 0)
-              { x: tabBarPadX,              y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-              // 6: Life tab — 4th tab (index 3)
-              { x: tabBarPadX + tabW * 3,   y: H - tabBarH, w: tabW,            h: tabBarH, r: 12 },
-            ];
+            // Tab spots for SVG cutout
+            const tabSpots = {
+              read: { x: tabBarPadX + tabW * 2, y: H - tabBarH, w: tabW, h: tabBarH, r: 12 },
+              todo: { x: tabBarPadX + tabW * 1, y: H - tabBarH, w: tabW, h: tabBarH, r: 12 },
+              time: { x: tabBarPadX + tabW * 0, y: H - tabBarH, w: tabW, h: tabBarH, r: 12 },
+              life: { x: tabBarPadX + tabW * 3, y: H - tabBarH, w: tabW, h: tabBarH, r: 12 },
+            };
 
-            const spot = spots[tourStep];
-            const isTabSpot = [0, 4, 5, 6].includes(tourStep);
-            const isMarkAsRead = tourStep === 3;
-            const rx = spot.x - pad;
-            const ry = isTabSpot ? spot.y : spot.y - pad;
-            const rw = spot.w + pad * 2;
-            const rh = isTabSpot ? spot.h : spot.h + pad * 2;
-
-            const tabCardTop = Math.round(H * 0.58);
-            const shuffleCardTop = shuffleY + 32 + pad + 16;
-            const markCardTop = spots[3].y - cardH - 90;
-
+            // ── Step definitions ──────────────────────────────────────────────
+            // overlay: true  = dark background (tab steps, user needs focus)
+            // overlay: false = NO background dim (user must SEE the element clearly)
+            // cardTop: explicit pixel from top, or null to use tabCardTop
             const steps = [
-              { tab: "read", readScreen: "gallery",
-                title: "Daily Reading", text: "One passage a day from history's greatest minds. Choose a philosopher to begin.",
-                cardTop: tabCardTop, cardLeft: "16px",
-                arrowDir: "down", arrowCenterX: tabCenters[2] },  // Read = tab index 2
-              { tab: "read", readScreen: "gallery",
-                title: "Choose a Philosopher", text: "Tap a philosopher to begin reading. More coming soon.",
-                isBanner: true,
-                arrowDir: "none" },
-              { tab: "read", readScreen: "reading",
-                title: "Shuffle", text: "Jump to a random passage whenever you need it.",
-                cardTop: shuffleCardTop,
-                cardLeft: Math.min(spots[2].x + spots[2].w / 2 - 130, W - 280) + "px",
-                arrowDir: "up", arrowCenterX: spots[2].x + spots[2].w / 2 },
-              { tab: "read", readScreen: "reading",
-                title: "Mark as Read", text: "Track your streak. Show up every day.",
-                cardTop: markCardTop, cardLeft: "16px", cardWidth: "calc(100% - 32px)",
-                arrowDir: "down", arrowCenterX: spots[2].x + spots[2].w / 2 },
-              { tab: "todo", readScreen: "gallery",
-                title: "Daily Tasks", text: "Set intentions for each day. Discipline compounds.",
-                cardTop: tabCardTop, cardLeft: "16px",
-                arrowDir: "down", arrowCenterX: tabCenters[1] },
-              { tab: "time", readScreen: "gallery",
-                title: "Screen Time", text: "See exactly where your hours go. Less scrolling, more living.",
-                cardTop: tabCardTop, cardLeft: "16px",
-                arrowDir: "down", arrowCenterX: tabCenters[2] },
-              { tab: "life", readScreen: "gallery",
-                title: "Your Life in Years", text: "Every dot is one year. Count what remains.",
-                cardTop: tabCardTop, cardLeft: "16px",
-                arrowDir: "down", arrowCenterX: tabCenters[3] },
+              // 0: Read tab — dark overlay + tab cutout, card near bottom
+              { tab: "read", readScreen: "gallery", tabCutout: "read", overlay: true,
+                title: "Daily Reading",
+                text: "One passage a day from history's greatest minds.",
+                cardTop: tabCardTop },
+
+              // 1: Surprise Me first — glow on Surprise Me card
+              { tab: "read", readScreen: "gallery", tabCutout: null, overlay: false,
+                title: "Surprise Me",
+                text: "Not sure who to pick? Tap this for a random passage from any philosopher.",
+                cardTop: 0 },
+
+              // 2: Choose a Philosopher second
+              { tab: "read", readScreen: "gallery", tabCutout: null, overlay: false,
+                title: "Choose a Philosopher",
+                text: "Tap any philosopher card to start reading their passages.",
+                cardTop: 0 },
+
+              // 3: Shuffle — NO overlay, card just below the top reading toolbar
+              // Shuffle is in the toolbar row ~60-95px from top
+              { tab: "read", readScreen: "reading", tabCutout: null, overlay: false,
+                title: "Shuffle",
+                text: "Jump to a random passage from your selected philosopher.",
+                cardTop: safeTop + 100 }, // sits below the toolbar row
+
+              // 4: Mark as Read — NO overlay, card sits above the button
+              // Button is fixed ~90px above tab bar
+              { tab: "read", readScreen: "reading", tabCutout: null, overlay: false,
+                title: "Mark as Read",
+                text: "Tap here every day to track your streak. Consistency is everything.",
+                cardTop: H - tabBarH - 310 }, // above the fixed button
+
+              // 5-7: Tab steps — dark overlay, card near bottom
+              { tab: "todo", readScreen: "gallery", tabCutout: "todo", overlay: true,
+                title: "Daily Tasks",
+                text: "Set intentions for each day. Discipline compounds.",
+                cardTop: tabCardTop },
+              { tab: "time", readScreen: "gallery", tabCutout: "time", overlay: true,
+                title: "Screen Time",
+                text: "See exactly where your hours go. Less scrolling, more living.",
+                cardTop: tabCardTop },
+              { tab: "life", readScreen: "gallery", tabCutout: "life", overlay: true,
+                title: "Your Life in Years",
+                text: "Every dot is one year. Count what remains.",
+                cardTop: tabCardTop },
             ];
 
             const s = steps[tourStep];
+            if (!s) return null;
+            const spot = s.tabCutout ? tabSpots[s.tabCutout] : null;
 
             const advanceTour = () => {
               if (tourStep < steps.length - 1) {
@@ -4526,85 +4067,53 @@ export default function PhiloApp() {
               }
             };
 
-            const arrowFromY = s.arrowDir === "down"
-              ? s.cardTop + cardH + 8
-              : spot.y + spot.h + pad + 8;
-            const arrowToY = s.arrowDir === "down"
-              ? spot.y - pad - 8
-              : s.cardTop - 8;
-            const arrowH = Math.max(20, arrowToY - arrowFromY);
-
             return (
               <>
-                {/* Dimmed overlay with cutout */}
-                <svg
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-                  viewBox={"0 0 " + W + " " + H}
-                  preserveAspectRatio="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <mask id="tour-mask">
-                      <rect width={W} height={H} fill="white" />
-                      <rect x={rx} y={ry} width={rw} height={rh} rx={spot.r + pad} ry={spot.r + pad} fill="black" />
-                    </mask>
-                  </defs>
-                  <rect width={W} height={H} fill="rgba(0,0,0,0.72)" mask="url(#tour-mask)" />
-                </svg>
+                {/* Overlay — only for tab steps. Non-tab steps: transparent so user sees the UI */}
+                {s.overlay && (
+                  <svg
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
+                    viewBox={"0 0 " + W + " " + H}
+                    preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <mask id="tour-mask">
+                        <rect width={W} height={H} fill="white" />
+                        {spot && <rect x={spot.x - 6} y={spot.y} width={spot.w + 12} height={spot.h} rx={spot.r + 6} ry={spot.r + 6} fill="black" />}
+                      </mask>
+                    </defs>
+                    <rect width={W} height={H} fill="rgba(0,0,0,0.78)" mask="url(#tour-mask)" />
+                  </svg>
+                )}
 
-                {/* Tooltip card — banner style for philosopher step, frosted card for others */}
-                {s.isBanner ? (
-                  <div className="tour-card" key={tourStep} style={{
-                    position: "absolute",
-                    top: "calc(env(safe-area-inset-top, 44px) + 56px)",
-                    left: "16px", right: "16px",
-                    pointerEvents: "all",
-                    zIndex: 10,
-                    background: "rgba(20,20,20,0.82)",
-                    backdropFilter: "blur(20px)",
-                    WebkitBackdropFilter: "blur(20px)",
-                    borderRadius: "14px",
-                    padding: "14px 16px",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    display: "flex", alignItems: "center", gap: "12px",
-                  }}>
-                    <div style={{ flex: 1 }}>
-                      <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 2px" }}>{s.title}</p>
-                      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", fontWeight: 300, color: "rgba(255,255,255,0.7)", margin: 0 }}>{s.text}</p>
-                    </div>
-                    <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
-                      <button onClick={goBack} style={{ padding: "7px 12px", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>← Back</button>
-                      <button onClick={advanceTour} style={{ padding: "7px 14px", background: "#FFFFFF", border: "none", borderRadius: "8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "12px", fontWeight: 700, color: "#0A0A0A" }}>Next →</button>
-                    </div>
-                  </div>
-                ) : (
+                {/* Tooltip card — positioned right next to the element being described */}
                 <div className="tour-card" key={tourStep} style={{
                   position: "absolute",
                   top: s.cardTop,
-                  left: s.cardLeft,
-                  transform: s.cardTransform ? "translateX(" + s.cardTransform + ")" : "none",
-                  width: s.cardWidth || "260px",
+                  left: "16px",
+                  right: "16px",
                   pointerEvents: "all",
-                  zIndex: 10,
-                  background: "rgba(20,20,20,0.72)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
+                  zIndex: 310,
+                  // Non-tab steps: slightly more opaque so it's readable over the live UI
+                  background: s.overlay ? "rgba(20,20,20,0.95)" : "rgba(10,10,10,0.97)",
                   borderRadius: "18px",
-                  padding: "18px 18px 14px",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  padding: "16px 18px 14px",
+                  border: "1px solid rgba(255,255,255,0.14)",
+                  // Non-tab steps get a subtle shadow so card lifts off the UI below it
+                  boxShadow: s.overlay ? "none" : "0 8px 32px rgba(0,0,0,0.6)",
                 }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 6px", lineHeight: 1.2 }}>{s.title}</p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: 300, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.6 }}>{s.text}</p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.35)", margin: "8px 0 0", textAlign: "right" }}>{tourStep + 1} / {steps.length}</p>
-                  <div style={{ display: "flex", gap: "8px", marginTop: "14px" }}>
-                    <button onClick={dismissTour} style={{ flex: 1, padding: "9px", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Skip</button>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "19px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 5px", lineHeight: 1.2 }}>{s.title}</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 300, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.55 }}>{s.text}</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", margin: "7px 0 0", textAlign: "right" }}>{tourStep + 1} / {steps.length}</p>
+                  <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
+                    <button onClick={dismissTour} style={{ flex: 1, padding: "9px", background: "rgba(255,255,255,0.08)", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)" }}>Skip</button>
                     {tourStep > 0 && (
-                      <button onClick={goBack} style={{ flex: 1, padding: "9px", background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>← Back</button>
+                      <button onClick={goBack} style={{ flex: 1, padding: "9px", background: "rgba(255,255,255,0.08)", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>← Back</button>
                     )}
                     <button onClick={advanceTour} style={{ flex: 2, padding: "9px", background: "#FFFFFF", border: "none", borderRadius: "10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", fontWeight: 700, color: "#0A0A0A" }}>{tourStep < steps.length - 1 ? "Next →" : "Got it!"}</button>
                   </div>
                 </div>
-                )}
               </>
             );
           })()}
@@ -4816,10 +4325,19 @@ export default function PhiloApp() {
           const isActive = activeTab === tab.key;
           const color = isActive ? t.text : t.textMuted;
           return (
-            <button key={tab.key} onClick={() => { if (tab.key === "read") { setActiveTab("read"); setReadScreen("gallery"); } else { setActiveTab(tab.key); setCelebrating(false); setReadScreen("gallery"); } }} style={{
+            <button key={tab.key} onClick={() => { if (tab.key === "read") { setActiveTab("read"); setReadScreen("gallery"); } else { setActiveTab(tab.key); setCelebrating(false); setReadScreen("gallery"); } }}
+              className={
+                (tourStep === 0 && tab.key === "read") ||
+                (tourStep === 5 && tab.key === "todo") ||
+                (tourStep === 6 && tab.key === "time") ||
+                (tourStep === 7 && tab.key === "life")
+                  ? "tour-glow" : ""
+              }
+              style={{
               background: "transparent", border: "none", cursor: "pointer",
               display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
               padding: "6px 16px", flex: 1,
+              borderRadius: "12px",
             }}>
               {tab.shape(isActive, color)}
               <span style={{ fontSize: "12px", fontFamily: "'Nunito', sans-serif", fontWeight: isActive ? 700 : 400, letterSpacing: "0.5px", color, transition: "color 0.3s ease" }}>{tab.label}</span>
@@ -4838,6 +4356,11 @@ const globalCSS = `
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
   }
   html, body { margin: 0; padding: 0; height: 100%; background: #0A0A0A; }
+  @keyframes tourGlow {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(255,255,255,0.9), 0 0 0 6px rgba(255,255,255,0.3), 0 0 20px 8px rgba(255,255,255,0.15); }
+    50%       { box-shadow: 0 0 0 3px rgba(255,255,255,1),   0 0 0 9px rgba(255,255,255,0.15), 0 0 28px 12px rgba(255,255,255,0.08); }
+  }
+  .tour-glow { animation: tourGlow 1.4s ease-in-out infinite; position: relative; z-index: 301; }
   @keyframes slideUpIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes slideDownIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -4868,6 +4391,8 @@ const globalCSS = `
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
   ::-webkit-scrollbar { display: none; }
+  .reflect-input::placeholder { color: rgba(150,150,150,0.45); }
+  .reflect-input { caret-color: #c9a96e; }
 
   @keyframes btnBounce {
     0% { transform: translateY(0) scale(1); }
