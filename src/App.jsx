@@ -2413,6 +2413,15 @@ export default function PhiloApp() {
     try { localStorage.setItem("praxis_tour_done", "true"); } catch {}
   };
 
+  // Always scroll gallery to top when landing on step 1 (Surprise Me) or 2 (Choose a Philosopher)
+  useEffect(() => {
+    if (tourStep === 1 || tourStep === 2) {
+      if (galleryScrollRef.current) {
+        galleryScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  }, [tourStep]);
+
   // Daily check-in popup
   const [showCheckin, setShowCheckin] = useState(() => {
     try {
@@ -4443,7 +4452,7 @@ export default function PhiloApp() {
             const tabW = (W - tabBarPadX * 2) / 5;
 
             // Tab card: just above tab bar — the Daily Tasks gold standard position
-            const tabCardTop = H - tabBarH - 182;
+            const tabCardTop = null; // overlay cards use bottom anchor instead of top
 
             // Tab spots for SVG cutout
             const tabSpots = {
@@ -4476,11 +4485,11 @@ export default function PhiloApp() {
                 text: "Tap any philosopher card to start reading their passages.",
                 cardTop: safeTop + 100, scrollToTop: true },
 
-              // 3: Shuffle — sits just below the toolbar row so the shuffle button is visible above
+              // 3: Shuffle — card top aligns with start of passage text (toolbar ~160px on iPhone)
               { tab: "read", readScreen: "reading", tabCutout: null, overlay: false,
                 title: "Shuffle",
                 text: "Jump to a random passage from your selected philosopher.",
-                cardTop: safeTop + 95 },
+                cardTop: safeTop + 160 },
 
               // 4: Mark as Read — NO overlay, card sits above the button
               // Button is fixed ~90px above tab bar
@@ -4552,20 +4561,19 @@ export default function PhiloApp() {
                   </svg>
                 )}
 
-                {/* Tooltip card — positioned right next to the element being described */}
+                {/* Tooltip card — overlay steps anchor to bottom above tab bar; others use top */}
                 <div className="tour-card" key={tourStep} style={{
                   position: "absolute",
-                  top: s.cardTop,
-                  left: "16px",
-                  right: "16px",
+                  ...(s.cardTop === null
+                    ? { bottom: tabBarH + 12, left: "16px", right: "16px" }
+                    : { top: s.cardTop,      left: "16px", right: "16px" }
+                  ),
                   pointerEvents: "all",
                   zIndex: 310,
-                  // Non-tab steps: slightly more opaque so it's readable over the live UI
                   background: s.overlay ? "rgba(20,20,20,0.95)" : "#111111",
                   borderRadius: "18px",
                   padding: "16px 18px 14px",
                   border: "1px solid rgba(255,255,255,0.14)",
-                  // Non-tab steps get a subtle shadow so card lifts off the UI below it
                   boxShadow: s.overlay ? "none" : "0 8px 32px rgba(0,0,0,0.6)",
                 }}>
                   <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "19px", fontWeight: 800, color: "#FFFFFF", margin: "0 0 5px", lineHeight: 1.2 }}>{s.title}</p>
